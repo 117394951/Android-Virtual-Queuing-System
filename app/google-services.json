@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "169212743573",
+    "firebase_url": "https://sociallysafe-f43b8.firebaseio.com",
+    "project_id": "sociallysafe-f43b8",
+    "storage_bucket": "sociallysafe-f43b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169212743573:android:7f6942720e6bb877b7b09c",
+        "android_client_info": {
+          "package_name": "com.app.is4401.sociallysafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169212743573-3qrm3olrgq0ao1cdqng1c6082198nhjt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRDLQz-_spZxpQl2YrU-BZc1dpT9-6CwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169212743573-3qrm3olrgq0ao1cdqng1c6082198nhjt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

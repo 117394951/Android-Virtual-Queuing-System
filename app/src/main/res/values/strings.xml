@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">SociallySafe</string>
+    <string name="number_of_guests">Number of Guests:</string>
+    <string name="join_the_queue">Join The Queue</string>
+    <string name="first_name">First Name:</string>
+    <string name="last_name">Last Name:</string>
+    <string name="email_address">Email Address:</string>
+    <string name="mobile_number">Mobile Number:</string>
+
+    <string-array name="Num_Guests">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string name="title_activity_confirmation">Confirmation</string>
+    <string name="leave_queue">Leave Queue</string>
+    <string name="retrieve_data">Retrieve Data</string>
+    <string name="save_details">Save Details</string>
+</resources>
