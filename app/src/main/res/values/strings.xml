@@ -19,8 +19,14 @@
         <item>9</item>
         <item>10</item>
     </string-array>
+
     <string name="title_activity_confirmation">Confirmation</string>
     <string name="leave_queue">Leave Queue</string>
     <string name="retrieve_data">Retrieve Data</string>
     <string name="save_details">Save Details</string>
+    <string name="name">Name:</string>
+    <string name="email">Email:</string>
+    <string name="mobile_number1">Mobile Number:</string>
+    <string name="party_size">Party Size:</string>
+    <string name="time">Time:</string>
 </resources>
