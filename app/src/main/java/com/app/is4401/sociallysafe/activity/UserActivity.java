@@ -14,12 +14,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
+import com.app.is4401.sociallysafe.model.LinkedListQueue;
 import com.app.is4401.sociallysafe.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Random;
 
 public class UserActivity extends AppCompatActivity {
     private static final String TAG = "*****UserActivity";
@@ -30,6 +33,11 @@ public class UserActivity extends AppCompatActivity {
     Button btnInsertUser;
     User user;
     long maxId = 0;
+    int Highest = 0;
+    int Wait =0;
+
+    LinkedListQueue<String> list = new LinkedListQueue<>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +66,7 @@ public class UserActivity extends AppCompatActivity {
                     Toast.makeText(UserActivity.this, "Please Fill out All Details", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Invalid attempt to submit");
                 } else {
-                    writeNewUser(etFName, etLName, etEmailAdd, etMobileN , spNumGuests2.getSelectedItem().toString());
+                    writeNewUser(etFName, etLName, etEmailAdd, etMobileN, spNumGuests2.getSelectedItem().toString());
                     Toast.makeText(UserActivity.this, "data inserted successfully", Toast.LENGTH_LONG).show();
                     Log.d(TAG, "Data Inserted into the Database");
 
@@ -69,7 +77,14 @@ public class UserActivity extends AppCompatActivity {
                     intent.putExtra("MOBILE", etMobileN);
                     intent.putExtra("NUMGUESTS", spNumGuests2.getSelectedItem().toString());
                     startActivity(intent);
-                    Log.d(TAG,"sending user details by intent");
+                    Log.d(TAG, "sending user details by intent");
+
+
+                    //Add to LinkedList Queue
+                    String user = etFName + ", " + etLName + ", " + etEmailAdd + ", " + etMobileN;
+                    btnAddAction(user);
+
+
 
                     //Closes UserActivity class
                     finish();
@@ -77,6 +92,35 @@ public class UserActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void btnAddAction(String user) {
+        Random rand = new Random();
+
+        int  time = rand.nextInt(30) + 1;
+
+        int partySize = Integer.parseInt(spNumGuests2.getSelectedItem().toString());
+
+
+        if (partySize > Highest){
+            Highest = partySize;
+            Log.d(TAG, "Highest is " + Highest + " Wait time is " + time);
+        }
+        list.enqueue(user);
+        Wait++;
+        showList();
+
+    }
+
+    private void showList() {
+        String user;
+        int s;
+        int size = list.size();
+        for (s = 0; s < size; s++) {
+            user = list.dequeue();
+            Log.d(TAG, user);
+
+        }
+        }
 
     //reference youtube video : https://www.youtube.com/watch?v=PqCpz5YtzF4
     private Long getCurrentTimestamp() {
@@ -105,4 +149,5 @@ public class UserActivity extends AppCompatActivity {
             }
         });
     }
+
 }
