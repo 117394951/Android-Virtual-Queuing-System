@@ -25,8 +25,13 @@ public class LinkedListQueue<E> implements QueueInterface<E> {
             return list.first();
         }
 
+
         public E dequeue() {
             return list.removeFirst();
+        }
+
+        public E last(){
+            return list.last();
         }
 
     }

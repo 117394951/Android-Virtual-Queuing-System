@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,12 +30,19 @@ public class UserActivity extends AppCompatActivity {
 
     DatabaseReference ref, leaveRef, retrieveRef;
     EditText etFirstName2, etLastName2, etEmail2, etMobile2;
+    TextView tvWaitTimeEst;
     Spinner spNumGuests2;
     Button btnInsertUser;
     User user;
     long maxId = 0;
     int Highest = 0;
     int Wait =0;
+
+
+    Random rand = new Random();
+
+    int  time = rand.nextInt(30) + 1;
+
 
     LinkedListQueue<String> list = new LinkedListQueue<>();
 
@@ -43,6 +51,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insert_user);
+
 
         etFirstName2 = findViewById(R.id.etFirstName2);
         etLastName2 = findViewById(R.id.etLastName2);
@@ -62,6 +71,7 @@ public class UserActivity extends AppCompatActivity {
                 String etEmailAdd = etEmail2.getText().toString();
                 String etMobileN = etMobile2.getText().toString();
 
+
                 if (etFName.isEmpty() || etLName.isEmpty() || etEmailAdd.isEmpty() || etMobileN.isEmpty()) {
                     Toast.makeText(UserActivity.this, "Please Fill out All Details", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Invalid attempt to submit");
@@ -76,15 +86,14 @@ public class UserActivity extends AppCompatActivity {
                     intent.putExtra("EMAIL", etEmailAdd);
                     intent.putExtra("MOBILE", etMobileN);
                     intent.putExtra("NUMGUESTS", spNumGuests2.getSelectedItem().toString());
+                    //intent.putExtra("TIME", time);
                     startActivity(intent);
                     Log.d(TAG, "sending user details by intent");
 
 
                     //Add to LinkedList Queue
-                    String user = etFName + ", " + etLName + ", " + etEmailAdd + ", " + etMobileN;
-                    btnAddAction(user);
-
-
+                    String result = etFName + ", " + etLName + ", " + etEmailAdd + ", " + etMobileN + ", " + time;
+                    btnAddAction(result);
 
                     //Closes UserActivity class
                     finish();
@@ -93,32 +102,21 @@ public class UserActivity extends AppCompatActivity {
         });
     }
 
-    private void btnAddAction(String user) {
-        Random rand = new Random();
-
-        int  time = rand.nextInt(30) + 1;
-
-        int partySize = Integer.parseInt(spNumGuests2.getSelectedItem().toString());
-
-
-        if (partySize > Highest){
-            Highest = partySize;
-            Log.d(TAG, "Highest is " + Highest + " Wait time is " + time);
-        }
-        list.enqueue(user);
+    private void btnAddAction(String result) {
+        int queueSize = list.size();
+        list.enqueue(result);
         Wait++;
+        Log.d(TAG, "User is number " + queueSize + " in the queue. The estimated wait time is " + time);
         showList();
-
     }
 
     private void showList() {
-        String user;
+        String result;
         int s;
         int size = list.size();
         for (s = 0; s < size; s++) {
-            user = list.dequeue();
-            Log.d(TAG, user);
-
+            result = (String)list.dequeue();
+            Log.d(TAG, result);
         }
         }
 

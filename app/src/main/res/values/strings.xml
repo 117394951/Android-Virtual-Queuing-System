@@ -29,4 +29,5 @@
     <string name="mobile_number1">Mobile Number:</string>
     <string name="party_size">Party Size:</string>
     <string name="time">Time:</string>
+    <string name="wait_time">Wait Time:</string>
 </resources>

@@ -22,10 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "***********";
 
-    TextView tvFullName, tvEmail, tvMobile, tvNumGuest;
+    TextView tvFullName, tvEmail, tvMobile, tvNumGuest, tvWaitTime;
     Button btnJoin, btnLeave;
     DatabaseReference ref, leaveRef;
     long maxId = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         tvMobile = findViewById(R.id.tvMobile);
         tvNumGuest = findViewById(R.id.tvNumGuests);
 
+
         //variable to connect to database
         ref = FirebaseDatabase.getInstance().getReference().child("User");
         addValueEventListener();
@@ -54,17 +57,22 @@ public class MainActivity extends AppCompatActivity {
             String Email = getIntent().getExtras().getString("EMAIL");
             String Mobile = getIntent().getExtras().getString("MOBILE");
             String NumGuest = getIntent().getExtras().getString("NUMGUESTS");
+            //String WaitTime = getIntent().getExtras().getString("TIME");
 
             tvFullName.setText(FullName);
             tvEmail.setText(Email);
             tvMobile.setText(Mobile);
             tvNumGuest.setText(NumGuest);
+            //tvWaitTime.setText(WaitTime);
         }
     }
 
     private void deleteUser(){
         leaveRef = FirebaseDatabase.getInstance().getReference().child("User").child(String.valueOf(maxId));
         leaveRef.removeValue();
+
+
+
     }
 
     private void addValueEventListener(){

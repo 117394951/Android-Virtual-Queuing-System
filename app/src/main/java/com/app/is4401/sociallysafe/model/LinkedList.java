@@ -32,7 +32,7 @@ public class LinkedList<E> {
             }
         }
 
-        public E last(String user) {
+        public E last() {
             if ( isEmpty() ) {
                 return null;
             }
@@ -86,10 +86,12 @@ public class LinkedList<E> {
             private E element;
             private Node<E> next;
 
+
             // custom constructor
             public Node(E e, Node<E> n) {
                 element = e;
                 next = n;
+
             }
 
             // get element
@@ -104,6 +106,7 @@ public class LinkedList<E> {
             public void setNext(Node<E> n) {
                 next = n;
             }
+
         } // end nested node class
 
     } // end of LinkedList
