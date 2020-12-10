@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference ref, leaveRef;
     long maxId = 0;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +34,16 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Firebase connection Success", Toast.LENGTH_LONG).show();
         Log.d(TAG, "Connection to Database Successful");
 
-
-        btnJoin = findViewById(R.id.btnJoinQueue);
         btnLeave = findViewById(R.id.btnLeave);
+        btnJoin = findViewById(R.id.btnJoinQueue);
         tvFullName = findViewById(R.id.tvFullName);
         tvEmail = findViewById(R.id.tvEmail);
         tvMobile = findViewById(R.id.tvMobile);
         tvNumGuest = findViewById(R.id.tvNumGuests);
+        tvWaitTime = findViewById(R.id.tvWaitTime);
 
+
+        btnLeave.setVisibility(View.INVISIBLE);
 
         //variable to connect to database
         ref = FirebaseDatabase.getInstance().getReference().child("User");
@@ -51,31 +51,28 @@ public class MainActivity extends AppCompatActivity {
         setBtnJoin();
         setBtnLeave();
 
-        if(getIntent().hasExtra("FULLNAME") || getIntent().hasExtra("EMAIL") || getIntent().hasExtra("MOBILE") || getIntent().hasExtra("NUMGUESTS") || getIntent().hasExtra("TIME")) {
+        if (getIntent().hasExtra("FULLNAME") || getIntent().hasExtra("EMAIL") || getIntent().hasExtra("MOBILE") || getIntent().hasExtra("NUMGUESTS") || getIntent().hasExtra("TIME")) {
 
             String FullName = getIntent().getExtras().getString("FULLNAME");
             String Email = getIntent().getExtras().getString("EMAIL");
             String Mobile = getIntent().getExtras().getString("MOBILE");
             String NumGuest = getIntent().getExtras().getString("NUMGUESTS");
-            //String WaitTime = getIntent().getExtras().getString("TIME");
+            String WaitTime = getIntent().getExtras().getString("TIME");
+
+            String presentWaitTime = WaitTime + " minutes.";
 
             tvFullName.setText(FullName);
             tvEmail.setText(Email);
             tvMobile.setText(Mobile);
             tvNumGuest.setText(NumGuest);
-            //tvWaitTime.setText(WaitTime);
+            tvWaitTime.setText(presentWaitTime);
+
+            btnLeave.setVisibility(View.VISIBLE);
+
         }
     }
 
-    private void deleteUser(){
-        leaveRef = FirebaseDatabase.getInstance().getReference().child("User").child(String.valueOf(maxId));
-        leaveRef.removeValue();
-
-
-
-    }
-
-    private void addValueEventListener(){
+    private void addValueEventListener() {
         //https://www.youtube.com/watch?v=r-g2R_COMqo&list=PLjMaHayx2gDG6bxZEoMuILMVv1Cv-6ua6&index=3 reference to database snapshot and maxId code
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setBtnJoin(){
+    private void setBtnJoin() {
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View e) {
@@ -102,13 +99,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setBtnLeave(){
+    private void setBtnLeave() {
         btnLeave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteUser();
                 Log.d(TAG, "Data deleted from the database");
+                btnLeave.setVisibility(View.INVISIBLE);
+                Toast.makeText(MainActivity.this, "You have been removed from the waitlist.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void deleteUser() {
+        leaveRef = FirebaseDatabase.getInstance().getReference().child("User").child(String.valueOf(maxId));
+        leaveRef.removeValue();
     }
 }
