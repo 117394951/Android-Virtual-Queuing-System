@@ -30,4 +30,13 @@
     <string name="party_size">Party Size:</string>
     <string name="time">Time:</string>
     <string name="wait_time">Wait Time:</string>
+    <string name="update_details">Update Details</string>
+    <string name="name1">Name:</string>
+    <string name="email2">Email:</string>
+    <string name="mobile_number3">Mobile Number:</string>
+    <string name="party_size4">Party Size:</string>
+    <string name="update">Update</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="surname">Surname:</string>
 </resources>

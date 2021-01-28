@@ -5,7 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class User {
 
-    //****Alternative to getter and setter methods below
+    //Alternative to getter and setter methods below
     //These will be my fields in the database, they are JSON keys
     public String Key;
     public String FirstName, LastName, Email, Mobile;
@@ -24,5 +24,4 @@ public class User {
         this.NumGuests = NumGuests;
         this.time = time;
     }
-
 }
