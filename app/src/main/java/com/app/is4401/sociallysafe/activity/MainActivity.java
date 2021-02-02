@@ -9,13 +9,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.is4401.sociallysafe.Admin.AdminLogin;
 import com.app.is4401.sociallysafe.R;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "* MainActivity";
 
-    Button btnJoin;
+    Button btnJoin, btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,15 @@ public class MainActivity extends AppCompatActivity {
 
         btnJoin = findViewById(R.id.btnJoinQueue);
         setBtnJoin();
+
+        btnLogin = findViewById(R.id.btnLoginAdmin);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AdminLogin.class));
+            }
+        });
 
     }
 

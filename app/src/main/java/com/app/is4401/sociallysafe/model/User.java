@@ -7,7 +7,6 @@ public class User {
 
     //Alternative to getter and setter methods below
     //These will be my fields in the database, they are JSON keys
-    public String Key;
     public String FirstName, LastName, Email, Mobile;
     public String NumGuests;
     public Long time;
