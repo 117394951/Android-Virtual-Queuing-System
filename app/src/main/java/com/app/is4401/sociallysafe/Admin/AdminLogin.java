@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AdminLogin extends AppCompatActivity implements View.OnClickListener {
 
@@ -84,14 +85,23 @@ public class AdminLogin extends AppCompatActivity implements View.OnClickListene
 
         /**
         * sign in code https://www.youtube.com/watch?v=KB2BIm_m1Os&list=LL&index=1
+         * email verification code https://www.youtube.com/watch?v=15WRCpH-VG0&list=PL65Ccv9j4eZJ_bg0TlmxA7ZNbS8IMyl5i&index=5
          **/
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    startActivity(new Intent(AdminLogin.this, AdminActivity.class));
-                    Toast.makeText(AdminLogin.this, "Signing In", Toast.LENGTH_LONG).show();
+                    //email verification and user authentication with log in
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                    if (user.isEmailVerified()){
+                        //redirect to profile
+                        startActivity(new Intent(AdminLogin.this, AdminActivity.class));
+                        Toast.makeText(AdminLogin.this, "Signing In", Toast.LENGTH_LONG).show();
+                    } else{
+                        user.sendEmailVerification();
+                        Toast.makeText(AdminLogin.this, "Check your email to verify your account!", Toast.LENGTH_LONG).show();
+                    }
 
                 }else{
                     Toast.makeText(AdminLogin.this, "Login failed! Please check your credentials.", Toast.LENGTH_LONG).show();
