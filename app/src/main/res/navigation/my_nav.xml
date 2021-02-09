@@ -8,7 +8,7 @@
         android:id="@+id/firstFragment"
         android:name="com.app.is4401.sociallysafe.Admin.AdminHomePage"
         android:label="fragment_first"
-        tools:layout="@layout/activity_admin" />
+        tools:layout="@layout/admin_homepage" />
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.app.is4401.sociallysafe.Admin.AdminManageQueue"
@@ -16,7 +16,7 @@
         tools:layout="@layout/activity_admin_manage_queue" />
     <fragment
         android:id="@+id/thirdFragment"
-        android:name="com.app.is4401.sociallysafe.ThirdFragment"
+        android:name="com.app.is4401.sociallysafe.Admin.Admin_Edit"
         android:label="fragment_third"
-        tools:layout="@layout/fragment_third" />
+        tools:layout="@layout/admin_edit" />
 </navigation>

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.ThirdFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Admin_Main extends AppCompatActivity {
@@ -44,7 +43,7 @@ public class Admin_Main extends AppCompatActivity {
                             selectedFragment = new AdminManageQueue();
                             break;
                         case R.id.thirdFragment:
-                            selectedFragment = new ThirdFragment();
+                            selectedFragment = new Admin_Edit();
                             break;
 
 

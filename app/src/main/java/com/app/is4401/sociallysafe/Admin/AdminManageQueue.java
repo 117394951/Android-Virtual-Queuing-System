@@ -1,5 +1,6 @@
 package com.app.is4401.sociallysafe.Admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-/**
- * in the admin main activity class, try to call this class as a fragment instead of it being started as an activity.
- * it shouldn't be an activity.
- */
-
 public class AdminManageQueue extends Fragment {
 
     private RecyclerView recyclerView;
@@ -52,7 +48,7 @@ public class AdminManageQueue extends Fragment {
 
     private DatabaseReference queueDatabaseRef, customerDatabaseReference;
 
-    public AdminManageQueue(){
+    public AdminManageQueue() {
 
     }
 
@@ -80,6 +76,15 @@ public class AdminManageQueue extends Fragment {
         c8 = view.findViewById(R.id.c8);
         c9 = view.findViewById(R.id.c9);
         c10 = view.findViewById(R.id.c10);
+
+        operate = view.findViewById(R.id.btnOperate);
+        operate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Admin_OperateQueue.class);
+                startActivity(intent);
+            }
+        });
 
         refresh = view.findViewById(R.id.btnRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
@@ -461,15 +466,6 @@ public class AdminManageQueue extends Fragment {
             }
         });
 
-        operate = view.findViewById(R.id.btnOperate);
-        operate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getContext(),Merc_QueueDisplay.class);
-//                startActivity(intent);
-            }
-        });
-
         return view;
     }
-    }
+}
