@@ -53,6 +53,9 @@ public class UserUpdate extends AppCompatActivity {
         setBtnLeave();
         setBtnUpdate();
 
+// Intents, QuickLauncherApp tutorial, Michael Gleeson, IS447 module lecturer
+// SCREENSHOTS OF CODE AVAILABLE UPON REQUEST
+
         //getting variables passed by an intent from UserActivity
         if (getIntent().hasExtra("FIRST NAME") || getIntent().hasExtra("LAST NAME") || getIntent().hasExtra("EMAIL") || getIntent().hasExtra("MOBILE") || getIntent().hasExtra("NUMGUESTS") || getIntent().hasExtra("TIME")) {
 
@@ -63,6 +66,7 @@ public class UserUpdate extends AppCompatActivity {
             _PARTY = getIntent().getExtras().getString("NUMGUESTS");
             String WaitTime = getIntent().getExtras().getString("TIME");
             String presentWaitTime = WaitTime + " minutes.";
+//END
 
             tvFirstName.setText(_FNAME);
             tvLastName.setText(_LNAME);
@@ -73,10 +77,8 @@ public class UserUpdate extends AppCompatActivity {
         }
     }
 
-        // https://www.youtube.com/watch?v=r-g2R_COMqo&list=PLjMaHayx2gDG6bxZEoMuILMVv1Cv-6ua6&index=3 reference video of this code.
-        // Showing how to get a database snapshot by using the maxId increment of the database
-        // This allows me to see what is in my database in the log cat file
 
+//DataSnapshot Code below Referenced from a Youtube video by Educatree, at 5:00 minutes in. link https://www.youtube.com/watch?v=r-g2R_COMqo&list=PLjMaHayx2gDG6bxZEoMuILMVv1Cv-6ua6&index=3
         private void addValueEventListener() {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -92,6 +94,7 @@ public class UserUpdate extends AppCompatActivity {
                 }
             });
         }
+//END
 
         private void setBtnLeave() {
             btnLeave.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +110,8 @@ public class UserUpdate extends AppCompatActivity {
             });
         }
 
-        private void deleteUser() {
+    // remove data from database, a built in function, Firebase RealTime Database documents, https://firebase.google.com/docs/database/web/read-and-write
+    private void deleteUser() {
             lastRef = FirebaseDatabase.getInstance().getReference().child("User").child(String.valueOf(maxId)); //points to max Id key of the database (last id)
             lastRef.removeValue();
         }

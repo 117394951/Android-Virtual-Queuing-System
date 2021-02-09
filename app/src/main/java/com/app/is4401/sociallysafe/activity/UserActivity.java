@@ -32,7 +32,13 @@ public class UserActivity extends AppCompatActivity {
     Button btnInsertUser, btnUpdateUser;
     long maxId = 0;
 
-    // Implementing a random wait time
+    /**
+     * generates a random number from stream of numbers
+     * declaring this random number as integer
+     * nextInt is to ensure it's a whole positive number
+     * min number = 1
+     * range = 30 numbers
+     **/
     Random rand = new Random();
     int time = rand.nextInt(30) + 1;
 
@@ -53,26 +59,7 @@ public class UserActivity extends AppCompatActivity {
         addValueEventListener();
 
         setBtnInsert();
-        //setBtnUpdate();
-        
-        
     }
-
-//    private void setBtnUpdate() {
-//        String etFName = etFirstName2.getText().toString();
-//        String etLName = etLastName2.getText().toString();
-//        String etEmailAdd = etEmail2.getText().toString();
-//        String etMobileN = etMobile2.getText().toString();
-//
-//        if (etFName.isEmpty() || etLName.isEmpty() || etEmailAdd.isEmpty() || etMobileN.isEmpty()) { //error handling
-//            Toast.makeText(UserActivity.this, "Please Fill out All Details", Toast.LENGTH_SHORT).show();
-//            Log.d(TAG, "Invalid attempt to submit");
-//        } else {
-//            updateUser(etFName, etLName, etEmailAdd, etMobileN, spNumGuests2.getSelectedItem().toString());
-//            Toast.makeText(UserActivity.this, "data inserted successfully", Toast.LENGTH_LONG).show();
-//            Log.d(TAG, "Data Inserted into the Database");
-//        }
-//    }
 
 
     private void setBtnInsert(){
@@ -93,7 +80,8 @@ public class UserActivity extends AppCompatActivity {
                     Toast.makeText(UserActivity.this, "data inserted successfully", Toast.LENGTH_LONG).show();
                     Log.d(TAG, "Data Inserted into the Database");
 
-                    // Intent to send details to previous activity (MainActivity)
+// Intents, QuickLauncherApp tutorial, Michael Gleeson, IS447 module lecturer
+// SCREENSHOTS OF CODE AVAILABLE UPON REQUEST
                     Intent intent = new Intent(getApplicationContext(), UserUpdate.class);
                     intent.putExtra("FIRST NAME", etFName);
                     intent.putExtra("LAST NAME", etLName);
@@ -103,6 +91,7 @@ public class UserActivity extends AppCompatActivity {
                     intent.putExtra("TIME", String.valueOf(time));
                     startActivity(intent);
                     Log.d(TAG, "sending user details by intent");
+//END
 
 
                     Intent intent2 = new Intent(getApplicationContext(), UserUpdate.class);
@@ -116,43 +105,19 @@ public class UserActivity extends AppCompatActivity {
     }
 
 
-//     old Linked List code, saving for a rainy day if needed
-
-//    LinkedListQueue<String> list = new LinkedListQueue<>();
-
-//    private void btnAddAction(String result) {
-//        int queueSize = list.size();
-//        list.enqueue(result);
-//        Wait++;
-//        Log.d(TAG, "User is number + queueSize + in the queue. The estimated wait time is " + time);
-//        showList();
-//    }
-//
-//    private void showList() {
-//        String result;
-//        int s;
-//        int size = list.size();
-//        for (s = 0; s < size; s++) {
-//            result = (String) list.dequeue();
-//            Log.d(TAG, result);
-//        }
-//    }
-
-    // reference youtube video to get timestamp: https://www.youtube.com/watch?v=PqCpz5YtzF4
+//CurrentTimeStamp function is 7:06 minutes into a Youtube video by SimCoder, https://www.youtube.com/watch?v=PqCpz5YtzF4 7:06 minutes for this method
     private Long getCurrentTimestamp() {
         return System.currentTimeMillis() / 1000;
     }
+//END
 
+//Insert using incremental id. Code below Referenced from a Youtube video by Educatree, at 5:25 minutes in. link https://www.youtube.com/watch?v=r-g2R_COMqo&list=PLjMaHayx2gDG6bxZEoMuILMVv1Cv-6ua6&index=3
     private void writeNewUser(String FirstName, String LastName, String Email, String Mobile, String NumGuests) {
         Long time = getCurrentTimestamp();
         User user = new User(FirstName, LastName, Email, Mobile, NumGuests, time);
         ref.child(String.valueOf(maxId + 1)).setValue(user);
     }
-
-//    private void updateUser(String FirstName, String LastName, String Email, String Mobile, String NumGuests) {
-//        Long time = getCurrentTimestamp();
-//
-//    }
+//END
 
     // code referenced in Main Activity
     private void addValueEventListener() {

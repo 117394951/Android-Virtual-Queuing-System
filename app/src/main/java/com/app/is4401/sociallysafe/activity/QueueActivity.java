@@ -12,8 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class QueueActivity extends AppCompatActivity {
-    private static final String TAG = "***** Queue Activity";
 
+    private static final String TAG = "***** Queue Activity";
 
     DatabaseReference userRef, lastRef, firstRef;
     DataSnapshot dataSnapshot;

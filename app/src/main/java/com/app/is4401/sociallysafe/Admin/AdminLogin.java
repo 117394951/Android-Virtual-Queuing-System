@@ -96,7 +96,7 @@ public class AdminLogin extends AppCompatActivity implements View.OnClickListene
 
                     if (user.isEmailVerified()){
                         //redirect to profile
-                        startActivity(new Intent(AdminLogin.this, AdminActivity.class));
+                        startActivity(new Intent(AdminLogin.this, Admin_Main.class));
                         Toast.makeText(AdminLogin.this, "Signing In", Toast.LENGTH_LONG).show();
                     } else{
                         user.sendEmailVerification();

@@ -20,23 +20,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
 import com.app.is4401.sociallysafe.model.Admin;
+import com.app.is4401.sociallysafe.model.Queue;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+
 
 public class AdminRegister extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private EditText etName, etEmail, etPassword, etAddress, etDesc;
+    private EditText etName, etEmail, etPassword, etAddress, etDesc, etAveWait;
     private Button btnRegister, btnLogo;
     private ImageView ivLogo;
     private ProgressBar progressBar;
@@ -47,6 +52,8 @@ public class AdminRegister extends AppCompatActivity {
     String getimageURL;
 
     private StorageReference reference;
+    private DatabaseReference queue_databaseReference;
+    private FirebaseUser user;
 
     // Create a storage reference from the app
     @Override
@@ -56,7 +63,11 @@ public class AdminRegister extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseStorage.getInstance().getReference();
+        queue_databaseReference = FirebaseDatabase.getInstance().getReference("Queue");
+        user = mAuth.getCurrentUser();
 
+
+        etAveWait = findViewById(R.id.etAveWait);
         etName = findViewById(R.id.etAdminName);
         etEmail = findViewById(R.id.etAdminEmail);
         etPassword = findViewById(R.id.etAdminPassword);
@@ -88,8 +99,8 @@ public class AdminRegister extends AppCompatActivity {
         final String password = etPassword.getText().toString().trim();
         final String address = etAddress.getText().toString().trim();
         final String desc = etDesc.getText().toString().trim();
-        //!!!???
-        final String imageUrl = ivLogo.toString();
+        final int aveWait =Integer.parseInt(etAveWait.getText().toString().trim());
+
 
 
         Log.d(TAG, "button clicked");
@@ -104,7 +115,6 @@ public class AdminRegister extends AppCompatActivity {
             etEmail.requestFocus();
             return;
         }
-
 
         if (name.isEmpty()) {
             etName.setError("Name is required!");
@@ -147,6 +157,20 @@ public class AdminRegister extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Admin admin = new Admin(name, email, address, desc, getimageURL);
 
+                            //upload business details to queue to database
+                            Queue upload = new Queue(name, getimageURL,desc, address, aveWait );
+                            ArrayList<String> testqueue = upload.getQueue();
+                            if(testqueue != null){
+                                for(String s:testqueue){
+                                    System.out.println("extra consumers: " +s);
+                                }
+                            }
+
+                            queue_databaseReference.child(user.getUid()).setValue(upload);
+
+                            Toast.makeText(AdminRegister.this, "Admin info saved in database", Toast.LENGTH_LONG).show();
+
+
                             FirebaseDatabase.getInstance().getReference("Admin")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(admin).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -156,6 +180,7 @@ public class AdminRegister extends AppCompatActivity {
                                         Toast.makeText(AdminRegister.this, "Admin has been registered successfully!", Toast.LENGTH_LONG).show();
                                         //progressBar.setVisibility(View.GONE);
                                         Log.d(TAG, "successful authorisation");
+                                        finish();
                                     } else {
                                         Toast.makeText(AdminRegister.this, "failed to register admin!", Toast.LENGTH_LONG).show();
                                         //progressBar.setVisibility(View.GONE);
@@ -187,11 +212,6 @@ public class AdminRegister extends AppCompatActivity {
                 gallery.setAction(Intent.ACTION_GET_CONTENT);
 
                 startActivityForResult(gallery, PICK_IMAGE);
-
-
-                //ignore
-                //startActivityForResult(gallery, 2);
-                //startActivityForResult(Intent.createChooser(gallery, "Select logo from Gallery."), PICK_IMAGE);
             }
 
         });
@@ -207,20 +227,6 @@ public class AdminRegister extends AppCompatActivity {
         }else{
             Log.d(TAG, "ERROR LOADING");
         }
-
-
-        //ignore
-        //            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-//                ivLogo.setImageBitmap(bitmap);
-//            } catch (IOException e){
-//                e.printStackTrace();
-//            }
-//
-//        }
-
-//        if (requestCode == 2 && requestCode == RESULT_OK && data != null) {
-//            imageUri = data.getData();
     }
 
     private void setLogoUpload() {

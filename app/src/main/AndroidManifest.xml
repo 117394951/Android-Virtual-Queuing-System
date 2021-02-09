@@ -9,12 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Admin.AdminActivity"></activity>
-        <activity android:name=".activity.QueueActivity"></activity>
+        <activity android:name=".Admin.Admin_Main">
+
+        </activity>
+        <activity android:name=".activity.QueueActivity" />
         <activity
             android:name=".activity.UserActivity"
             android:label="UserActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,15 +27,15 @@
         <activity
             android:name=".activity.UserUpdate"
             android:label="UserUpdate"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Admin.AdminRegister"
             android:label="AdminRegister"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Admin.AdminLogin"
             android:label="AdminLogin"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
