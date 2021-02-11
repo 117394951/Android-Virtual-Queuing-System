@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_nav"
+    app:startDestination="@id/mainActivity">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.app.is4401.sociallysafe.activity.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/user_QueueGallery"
+        android:name="com.app.is4401.sociallysafe.User.User_QueueGallery"
+        android:label="activity_user__queue_gallery"
+        tools:layout="@layout/activity_user__queue_gallery" />
+    <fragment
+        android:id="@+id/cust_profile"
+        android:name="com.app.is4401.sociallysafe.User.cust_profile"
+        android:label="fragment_cust_profile"
+        tools:layout="@layout/fragment_cust_profile" />
+</navigation>
