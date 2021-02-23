@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Home"
+        android:title="Configure"
         android:id="@+id/firstFragment"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/ic__settings_24"/>
 
     <item
         android:title="Queue"

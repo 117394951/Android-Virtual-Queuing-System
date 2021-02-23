@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -113,9 +112,9 @@ public class UserActivity extends AppCompatActivity {
 
 //Insert using incremental id. Code below Referenced from a Youtube video by Educatree, at 5:25 minutes in. link https://www.youtube.com/watch?v=r-g2R_COMqo&list=PLjMaHayx2gDG6bxZEoMuILMVv1Cv-6ua6&index=3
     private void writeNewUser(String FirstName, String LastName, String Email, String Mobile, String NumGuests) {
-        Long time = getCurrentTimestamp();
-        User user = new User(FirstName, LastName, Email, Mobile, NumGuests, time);
-        ref.child(String.valueOf(maxId + 1)).setValue(user);
+//        Long time = getCurrentTimestamp();
+//        User user = new User(FirstName, LastName, Email, Mobile,  NumGuests, time);
+//        ref.child(String.valueOf(maxId + 1)).setValue(user);
     }
 //END
 

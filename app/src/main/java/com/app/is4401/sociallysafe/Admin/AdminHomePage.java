@@ -32,7 +32,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
-import java.util.Objects;
 
 public class AdminHomePage extends Fragment {
 
@@ -98,6 +97,8 @@ public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup c
                 String businessDescription = adminProfile.desc;
 
 
+
+
                 tvName.setText(businessName);
                 location.setText(businessAddress);
                 description.setText(businessDescription);
@@ -121,31 +122,19 @@ public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup c
         }
     });
 
-    queueRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+    queueRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
-        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-            if (dataSnapshot.hasChild(user.getUid())) {
-                queueRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        /**
-                         * est waiting time not correct
-                         */
-//                      String time = dataSnapshot.child("avewaiting").getValue().toString();
-                        String time = Objects.requireNonNull(dataSnapshot.child("avewaiting").getValue()).toString();
-                        waitTime.setText(time);
-                        queueInformation = dataSnapshot.getValue(Queue.class);
-                        len = queueInformation.queue.size();
-                        queueSize.setText(Integer.toString(len));
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            Queue queue = snapshot.getValue(Queue.class);
 
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+            if (queue != null){
+                String time = snapshot.child("avewaiting").getValue().toString();
+                waitTime.setText(time);
+                len = queue.queue.size();
+                queueSize.setText(Integer.toString(len));
             }
+
         }
 
         @Override
@@ -160,12 +149,6 @@ public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup c
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
-
-
     }
 
 

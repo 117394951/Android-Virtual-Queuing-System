@@ -6,9 +6,9 @@
     app:startDestination="@id/firstFragment">
     <fragment
         android:id="@+id/firstFragment"
-        android:name="com.app.is4401.sociallysafe.Admin.AdminHomePage"
+        android:name="com.app.is4401.sociallysafe.Admin.Admin_QueueConfiguration"
         android:label="fragment_first"
-        tools:layout="@layout/admin_homepage" />
+        tools:layout="@layout/admin__queue_configuration" />
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.app.is4401.sociallysafe.Admin.AdminManageQueue"

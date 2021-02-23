@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,13 +19,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.model.Admin;
 import com.app.is4401.sociallysafe.model.Queue;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -33,44 +30,46 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
+public class Admin_QueueActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-public class AdminRegister extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuth;
     private EditText etName, etEmail, etPassword, etAddress, etDesc, etAveWait;
     private Button btnRegister, btnLogo;
     private ImageView ivLogo;
     private ProgressBar progressBar;
-    private String TAG = "*** AdminRegister";
+    private String TAG = "*** Admin Queue Configuration";
     private static final int PICK_IMAGE = 1;
     private Uri imageUri;
-
     String getimageURL;
-
-    private StorageReference reference;
+    private StorageReference mStorageRef;
     private DatabaseReference queue_databaseReference;
     private FirebaseUser user;
+    private StorageTask mUploadTask;
 
-    // Create a storage reference from the app
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Log.d(TAG,"onCreate");
 
-        mAuth = FirebaseAuth.getInstance();
-        reference = FirebaseStorage.getInstance().getReference();
+
+        //Firebase Instances
+        firebaseAuth = FirebaseAuth.getInstance();
         queue_databaseReference = FirebaseDatabase.getInstance().getReference("Queue");
-        user = mAuth.getCurrentUser();
+        mStorageRef = FirebaseStorage.getInstance().getReference("Admin");
+        user = firebaseAuth.getCurrentUser();
 
-
+        //UI Variables
         etAveWait = findViewById(R.id.etAveWait);
         etName = findViewById(R.id.etAdminName);
-        etEmail = findViewById(R.id.etAdminEmail);
-        etPassword = findViewById(R.id.etAdminPassword);
         btnRegister = findViewById(R.id.btnAdminRegister);
         etAddress = findViewById(R.id.etAddress);
         etDesc = findViewById(R.id.etDesc);
@@ -82,7 +81,6 @@ public class AdminRegister extends AppCompatActivity {
         setbtnRegister();
     }
 
-
     private void setbtnRegister() {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,29 +90,13 @@ public class AdminRegister extends AppCompatActivity {
         });
     }
 
-
-    private void registerUser() {
-        final String email = etEmail.getText().toString().trim();
+    private void registerUser(){
         final String name = etName.getText().toString().trim();
-        final String password = etPassword.getText().toString().trim();
         final String address = etAddress.getText().toString().trim();
         final String desc = etDesc.getText().toString().trim();
         final int aveWait =Integer.parseInt(etAveWait.getText().toString().trim());
 
 
-
-        Log.d(TAG, "button clicked");
-
-        if (email.isEmpty()) {
-            etEmail.setError("Email is required!");
-            etEmail.requestFocus();
-            return;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Please provide valid email!");
-            etEmail.requestFocus();
-            return;
-        }
 
         if (name.isEmpty()) {
             etName.setError("Name is required!");
@@ -133,75 +115,26 @@ public class AdminRegister extends AppCompatActivity {
             return;
         }
 
-        if (password.isEmpty()) {
-            etPassword.setError("Password is required!");
-            etPassword.requestFocus();
-            return;
+
+
+
+        //upload business details to queue to database
+        Queue upload = new Queue(name, getimageURL,desc, address, aveWait );
+        ArrayList<String> testqueue = upload.getQueue();
+        if(testqueue != null){
+            for(String s:testqueue){
+                System.out.println("extra consumers: " +s);
+            }
         }
 
-        if (password.length() < 6) {
-            etPassword.setError("Password must be longer than 6 characters");
-            etPassword.requestFocus();
-            return;
-        }
+        queue_databaseReference.child(user.getUid()).setValue(upload);
+        Log.d(TAG, "Merchant info saved");
+        Toast.makeText(Admin_QueueActivity.this, "Merchant info saved in the database", Toast.LENGTH_SHORT).show();
 
-
-        /**
-         * Authentication code adapted from youtube video https://www.youtube.com/watch?v=Z-RE1QuUWPg
-         */
-        //progressBar.setVisibility(View.VISIBLE);
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Admin admin = new Admin(name, email, address, desc, getimageURL);
-
-                            //upload business details to queue to database
-                            Queue upload = new Queue(name, getimageURL,desc, address, aveWait );
-                            ArrayList<String> testqueue = upload.getQueue();
-                            if(testqueue != null){
-                                for(String s:testqueue){
-                                    System.out.println("extra consumers: " +s);
-                                }
-                            }
-
-                            queue_databaseReference.child(user.getUid()).setValue(upload);
-
-                            Toast.makeText(AdminRegister.this, "Admin info saved in database", Toast.LENGTH_LONG).show();
-
-
-                            FirebaseDatabase.getInstance().getReference("Admin")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(admin).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(AdminRegister.this, "Admin has been registered successfully!", Toast.LENGTH_LONG).show();
-                                        //progressBar.setVisibility(View.GONE);
-                                        Log.d(TAG, "successful authorisation");
-                                        finish();
-                                    } else {
-                                        Toast.makeText(AdminRegister.this, "failed to register admin!", Toast.LENGTH_LONG).show();
-                                        //progressBar.setVisibility(View.GONE);
-                                        Log.d(TAG, "unsuccessful authorisation");
-
-                                    }
-                                }
-                            });
-                        } else {
-                            Toast.makeText(AdminRegister.this, "Failed to register, try again!", Toast.LENGTH_LONG).show();
-                            //progressBar.setVisibility(View.GONE);
-                            Log.d(TAG, "unsuccessful authorisation 2");
-
-                        }
-                    }
-                });
+        Intent intent= new Intent(Admin_QueueActivity.this, Admin_QueueConfigurated.class);
+        startActivity(intent);
+        finish();
     }
-
-    /**
-     * Code to upload image from gallery https://www.youtube.com/watch?v=b3BEa2drx4w
-     */
 
     private void setLogoChooser() {
         ivLogo.setOnClickListener(new View.OnClickListener() {
@@ -216,7 +149,6 @@ public class AdminRegister extends AppCompatActivity {
 
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -236,7 +168,7 @@ public class AdminRegister extends AppCompatActivity {
                 if (imageUri != null) {
                     uploadToFirebase(imageUri);
                 } else {
-                    Toast.makeText(AdminRegister.this, "Please select image", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Admin_QueueActivity.this, "Please select image", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -248,7 +180,7 @@ public class AdminRegister extends AppCompatActivity {
 
     private void uploadToFirebase(Uri uri) {
 
-        final StorageReference fileRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+        final StorageReference fileRef = mStorageRef.child(System.currentTimeMillis() + "." + getFileExtension(uri));
 
         fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -263,7 +195,7 @@ public class AdminRegister extends AppCompatActivity {
 //                }, 500);
 
                 Log.d(TAG, "Upload successful");
-                Toast.makeText(AdminRegister.this, "Upload successful", Toast.LENGTH_LONG).show();
+                Toast.makeText(Admin_QueueActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
 
                 Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                 while (!urlTask.isSuccessful()) ;
@@ -280,12 +212,12 @@ public class AdminRegister extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AdminRegister.this, "Uploading Failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(Admin_QueueActivity.this, "Uploading Failed", Toast.LENGTH_LONG).show();
                 //progressBar.setVisibility(View.INVISIBLE);
 
             }
         });
-}
+    }
 
     private String getFileExtension(Uri mUri) {
 
@@ -294,5 +226,16 @@ public class AdminRegister extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cr.getType(mUri));
 
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 
 }

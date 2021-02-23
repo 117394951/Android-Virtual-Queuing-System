@@ -25,7 +25,7 @@ public class Admin_Main extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new AdminHomePage()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new Admin_QueueConfiguration()).commit();
 
     }
 
@@ -37,7 +37,7 @@ public class Admin_Main extends AppCompatActivity {
 
                     switch (item.getItemId()) {
                         case R.id.firstFragment:
-                            selectedFragment = new AdminHomePage();
+                            selectedFragment = new Admin_QueueConfiguration();
                             break;
                         case R.id.secondFragment:
                             selectedFragment = new AdminManageQueue();

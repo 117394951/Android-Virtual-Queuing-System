@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class AdminManageQueue extends Fragment {
 
     private RecyclerView recyclerView;
-    private ArrayList<String> mNames;
+    private ArrayList<String> mNames, mImageUrls;
 
     private FirebaseAuth firebaseAuth;
     private TextView queueLength, aveWaitingTime;
@@ -56,6 +56,7 @@ public class AdminManageQueue extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNames = new ArrayList<>();
+        mImageUrls = new ArrayList<>();
     }
 
     @Nullable
@@ -66,6 +67,9 @@ public class AdminManageQueue extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         queueDatabaseRef = FirebaseDatabase.getInstance().getReference("Queue");
+        customerDatabaseReference=FirebaseDatabase.getInstance().getReference("Users");
+
+
         c1 = view.findViewById(R.id.c1);
         c2 = view.findViewById(R.id.c2);
         c3 = view.findViewById(R.id.c3);
