@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.Admin.Admin_Main;
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.activity.MainActivity;
+import com.app.is4401.sociallysafe.User.User_CreateProfile;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SegregationActivity extends AppCompatActivity {
+public class SegregationPostRegistration extends AppCompatActivity {
 
     ImageView user, admin;
     Button btnSignOut;
@@ -22,8 +22,7 @@ public class SegregationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_segregation);
-
+        setContentView(R.layout.activity_segregationpostregistration);
         user = findViewById(R.id.ivUser);
         admin = findViewById(R.id.ivAdmin);
         btnSignOut = findViewById(R.id.btnSignOut);
@@ -33,7 +32,7 @@ public class SegregationActivity extends AppCompatActivity {
         user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent userHome = new Intent(SegregationActivity.this, MainActivity.class);
+                Intent userHome = new Intent(SegregationPostRegistration.this, User_CreateProfile.class);
                 startActivity(userHome);
             }
         });
@@ -41,7 +40,7 @@ public class SegregationActivity extends AppCompatActivity {
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent adminHome = new Intent(SegregationActivity.this, Admin_Main.class);
+                Intent adminHome = new Intent(SegregationPostRegistration.this, Admin_Main.class);
                 startActivity(adminHome);
             }
         });
@@ -50,7 +49,7 @@ public class SegregationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
-                startActivity(new Intent(SegregationActivity.this, FirebaseLogin.class));
+                startActivity(new Intent(SegregationPostRegistration.this, FirebaseLogin.class));
             }
         });
     }

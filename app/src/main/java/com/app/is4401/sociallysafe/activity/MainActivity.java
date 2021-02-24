@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.is4401.sociallysafe.Login.FirebaseLogin;
 import com.app.is4401.sociallysafe.R;
 import com.app.is4401.sociallysafe.User.User_QueueGallery;
 import com.app.is4401.sociallysafe.model.Queue;
@@ -30,8 +29,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -59,17 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Firebase connection Success", Toast.LENGTH_LONG).show();
         Log.d(TAG, "Connection to Database Successful");
 
-        btnJoin = findViewById(R.id.btnJoinQueue);
 
-
-        btnLogin = findViewById(R.id.btnLoginAdmin);
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FirebaseLogin.class));
-            }
-        });
 
         list = findViewById(R.id.recycler1);
         list.setLayoutManager(new LinearLayoutManager(this));
@@ -111,17 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//
-//    private void setBtnJoin() {
-//        btnJoin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View e) {
-//                startActivity(new Intent(MainActivity.this, User_LogIn.class));
-//                Log.d(TAG, "UserActivity started");
-//
-//            }
-//        });
-//}
 
 
 
@@ -159,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
             //from AdminHomePage.class
             new GetImageFromURL(user_image).execute(imageUrl);
 
+
+            //to bring details to specific queues page
             user_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -173,47 +156,86 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            //when join Q is clicked, user added to queue
 
-//            joinQ.setOnClickListener(new View.OnClickListener() {
+//            //User priority code
+//            customerRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
-//                public void onClick(final View v) {
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    if (snapshot.child("priority").getValue() != null) {
+//                        priority = snapshot.child("priority").getValue().toString();
+//                    }
+//                    if (snapshot.hasChild("merchantID")) {
+//                        joinQButton.setClickable(false);
+//                        joinQButton.setBackgroundResource(R.drawable.already_join_button);
+//                    }
+//                    else {
+//                        joinQButton.setClickable(true);
+//                    }
+//                }
 //
-////                    queueRef.orderByChild("name").equalTo(name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-////                        @Override
-////                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                            for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-////                                Queue queue = childSnapshot.getValue(Queue.class);
-////                                String adminId = childSnapshot.getKey();
-////
-////                                if (queue.queue.contains(user.getUid())) {
-////                                    Log.d("Join Queue!", "Already in queue");
-////                                } else {
-////                                    queueRef.child(adminId).setValue(queue);
-////                                    customerRef.child(user.getUid()).child("adminId").setValue(adminId);
-////                                    qNumPeople.setText(String.valueOf(queue.getNumPeople()));
-//////                                Log.d(TAG, "adding customer to queue");
-////
-////                                    Toast.makeText(v.getContext(), "Joined Queue!", Toast.LENGTH_LONG).show();
-////
-////                                    Intent intent = new Intent(v.getContext(), UserActivity.class);
-////                                    v.getContext().startActivity(intent);
-////                                }
-////                            }
-////                        }
-////
-////                        @Override
-////                        public void onCancelled(@NonNull DatabaseError error) {
-////
-////                            Log.e("database", "error");
-////                        }
-////                    });
-//
-//                    Intent intent = new Intent(MainActivity.this, User_LogIn.class);
-//                    startActivity(intent);
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
 //
 //                }
 //            });
+
+
+
+            //when join Q is clicked, user added to queue
+
+            joinQ.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+
+                    Log.d(TAG, "Join queue button clicked");
+
+                    queueRef.orderByChild("name").equalTo(name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            for(DataSnapshot childSnapshot: snapshot.getChildren()){
+                                user = firebaseAuth.getCurrentUser();
+                                Queue queueInfo = childSnapshot.getValue(Queue.class);
+                                String adminId = childSnapshot.getKey();
+
+
+
+                                if(queueInfo.queue.contains(user.getUid())){
+                                    Log.d("Join Queue", "Already in queue.");
+                                    Toast.makeText(MainActivity.this, "Already in this queue!", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    if (priority.equals("true")) {
+                                        queueInfo.queue.add(0, user.getUid());
+                                    } else {
+                                        queueInfo.queue.add(user.getUid());
+                                    }
+
+
+                                    queueRef.child(adminId).setValue(queueInfo);
+                                    customerRef.child(user.getUid()).child("adminId").setValue(adminId);
+                                    qNumPeople.setText(String.valueOf(queueInfo.getNumPeople()));
+                                    Log.d(TAG, "adding customer to queue");
+
+                                    Toast.makeText(MainActivity.this, "Joined Queue!", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e("Database", "Error");
+                        }
+                    });
+
+
+
+
+
+
+                }
+            });
 
 
         }

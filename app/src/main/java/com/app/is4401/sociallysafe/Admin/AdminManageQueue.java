@@ -154,11 +154,12 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name1 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name1 = dataSnapshot.child("Name").getValue().toString();
                                                 cc1 = cust_name1;
                                                 c1.setText(cust_name1);
-                                                //final String[] cust = new String[(cust_name1)];
+                                                System.out.println(cust_name1);
+
                                             } else {
                                                 c1.setText("No name entered");
                                                 cc1 = "-1-";
@@ -183,8 +184,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name2 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name2 = dataSnapshot.child("Name").getValue().toString();
                                                 c2.setText(cust_name2);
                                                 cc2 = cust_name2;
 
@@ -216,8 +217,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name3 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name3 = dataSnapshot.child("Name").getValue().toString();
                                                 c3.setText(cust_name3);
                                                 cc3 = cust_name3;
 
@@ -248,8 +249,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name4 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name4 = dataSnapshot.child("Name").getValue().toString();
                                                 c4.setText(cust_name4);
                                                 cc4 = cust_name4;
 
@@ -279,8 +280,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name5 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name5 = dataSnapshot.child("Name").getValue().toString();
                                                 c5.setText(cust_name5);
                                                 cc5 = cust_name5;
 
@@ -310,8 +311,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name6 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name6 = dataSnapshot.child("Name").getValue().toString();
                                                 c6.setText(cust_name6);
                                                 cc6 = cust_name6;
 
@@ -341,8 +342,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name7 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name7 = dataSnapshot.child("Name").getValue().toString();
                                                 c7.setText(cust_name7);
                                                 cc7 = cust_name7;
 
@@ -372,8 +373,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name8 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name8 = dataSnapshot.child("Name").getValue().toString();
                                                 c8.setText(cust_name8);
                                                 cc8 = cust_name8;
 
@@ -403,8 +404,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name9 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name9 = dataSnapshot.child("Name").getValue().toString();
                                                 c9.setText(cust_name9);
                                                 cc9 = cust_name9;
 
@@ -434,8 +435,8 @@ public class AdminManageQueue extends Fragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                            if (dataSnapshot.child("name").exists()) {
-                                                cust_name10 = dataSnapshot.child("name").getValue().toString();
+                                            if (dataSnapshot.child("Name").exists()) {
+                                                cust_name10 = dataSnapshot.child("Name").getValue().toString();
                                                 c10.setText(cust_name10);
                                                 cc10 = cust_name10;
 

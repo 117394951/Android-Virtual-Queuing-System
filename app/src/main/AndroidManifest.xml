@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".User.User_CreateProfile"></activity>
+        <activity android:name=".Login.SegregationPostRegistration"></activity>
+        <activity android:name=".User.User_CreateProfile" />
         <activity android:name=".Admin.Admin_QueueConfigurated" />
         <activity android:name=".Login.SegregationActivity" />
         <activity android:name=".Login.FirebaseRegister" />
@@ -19,12 +20,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-<!--        <activity android:name=".User.User_Register" />-->
-<!--        <activity-->
-<!--            android:name=".User.User_LogIn"-->
-<!--            android:label="@string/title_activity_user__log_in"-->
-<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+        </activity> <!-- <activity android:name=".User.User_Register" /> -->
+        <!-- <activity -->
+        <!-- android:name=".User.User_LogIn" -->
+        <!-- android:label="@string/title_activity_user__log_in" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar" /> -->
         <activity android:name=".Admin.Admin_OperateQueue" />
         <activity android:name=".Admin.Admin_Main" />
         <activity android:name=".activity.QueueActivity" />
