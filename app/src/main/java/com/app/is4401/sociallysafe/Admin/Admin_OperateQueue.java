@@ -242,7 +242,6 @@ public class Admin_OperateQueue extends AppCompatActivity {
 
 
                                 if (childSnapshot.getKey().equals(current_user)) {
-                                    NOTIFICATION_SERVICE.notify();
                                     System.out.println(customerDatabaseReference.child(childSnapshot.getKey()).child("adminId").toString());
                                     customerDatabaseReference.child(childSnapshot.getKey()).child("adminId").removeValue();
 
