@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "* MainActivity";
 
-    Button btnJoin, btnLogin;
     RecyclerView list;
     DatabaseReference queueRef, baseRef;
     Context context;
+    Spinner spNumGuests;
 
 
     @Override
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Firebase connection Success", Toast.LENGTH_LONG).show();
         Log.d(TAG, "Connection to Database Successful");
 
+
+        spNumGuests = findViewById(R.id.spNumGuests);
 
 
         list = findViewById(R.id.recycler1);
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public class UserViewHolder extends RecyclerView.ViewHolder {
+    public class UserViewHolder extends RecyclerView.ViewHolder{
 
         View view;
 
@@ -157,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
             });
 
 
+
+
 //            //User priority code
 //            customerRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
@@ -181,11 +186,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
             //when join Q is clicked, user added to queue
 
             joinQ.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
+
+                    final String partySize = spNumGuests.getSelectedItem().toString();
 
                     Log.d(TAG, "Join queue button clicked");
 
@@ -214,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     queueRef.child(adminId).setValue(queueInfo);
                                     customerRef.child(user.getUid()).child("adminId").setValue(adminId);
+                                    customerRef.child(user.getUid()).child("NumGuests").setValue(partySize);
                                     qNumPeople.setText(String.valueOf(queueInfo.getNumPeople()));
                                     Log.d(TAG, "adding customer to queue");
 
@@ -239,6 +248,43 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
+//        private void showGuestDialog() {
+//
+//            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+//            View view = layoutInflater.inflate(R.layout.numguests_dialog, null);
+//
+//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+//            alertDialogBuilder.setView(view);
+//
+//            Spinner spinner = findViewById(R.id.spinner);
+//            final String numGuests = spinner.getSelectedItem().toString() ;
+//
+//            alertDialogBuilder
+//                    .setCancelable(true)
+//                    .setPositiveButton("Join", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    })
+//                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//
+//            final AlertDialog alertDialog = alertDialogBuilder.create();
+//            alertDialog.show();
+//
+//            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    customerRef.child(user.getUid()).child("NumGuests").setValue(numGuests);
+//                }
+//            });
+//        }
     }
 
 
