@@ -35,10 +35,9 @@ public class Admin_OperateQueue extends AppCompatActivity {
     private TextView c1, c2, c3, c4;
     public int len;
     Queue queueInfo;
+    String nextCustEmail, subject, message;
     private DatabaseReference queueDatabaseRef, customerDatabaseReference;
     private MyFirebaseInstanceService notification;
-
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -83,6 +82,7 @@ public class Admin_OperateQueue extends AppCompatActivity {
 
         queueDatabaseRef = FirebaseDatabase.getInstance().getReference("Queue");
         customerDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
 
 
         queueDatabaseRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -215,26 +215,16 @@ public class Admin_OperateQueue extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-
-
-
                 if (len >= 1) {
                     System.out.println(queueInfo.queue.size());
                     final String current_user = queueInfo.queue.get(0);
                     queueInfo.queue.remove(0);
                     System.out.println(current_user);
+
+
                     customerDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -256,8 +246,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
 
                         }
                     });
-                    Toast.makeText(Admin_OperateQueue.this, "Queue updated", Toast.LENGTH_SHORT).show();
 
+                    Toast.makeText(Admin_OperateQueue.this, "Queue updated", Toast.LENGTH_SHORT).show();
                     queueDatabaseRef.child(user.getUid()).child("queue").setValue(queueInfo.queue);
                     len--;
                     queueDatabaseRef.child(user.getUid()).child("numPeople").setValue(len);
@@ -410,4 +400,6 @@ public class Admin_OperateQueue extends AppCompatActivity {
 
 
     }
+
+
 }

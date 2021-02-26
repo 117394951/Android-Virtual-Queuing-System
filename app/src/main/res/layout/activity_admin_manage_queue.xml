@@ -138,8 +138,8 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:padding="12dp">
+                android:layout_marginRight="20dp"
+                android:padding="20dp">
 
                 <TextView
                     android:id="@+id/c1"
@@ -148,12 +148,45 @@
                     android:layout_alignParentTop="true"
                     android:gravity="center" />
 
+                <ImageView
+                    android:id="@+id/imageView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="150dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView21"
+                    android:src="@drawable/ic_baseline_phone_24" />
+
                 <TextView
                     android:id="@+id/c2"
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_below="@id/c1"
                     android:gravity="center"/>
+
+
+                <ImageView
+                    android:id="@+id/imageView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView21"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView22"
+                    android:layout_below="@id/imageView21"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
 
                 <TextView
                     android:id="@+id/c3"
@@ -162,12 +195,48 @@
                     android:layout_below="@id/c2"
                     android:gravity="center"/>
 
+                <ImageView
+                android:id="@+id/imageView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView22"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView22"
+                    android:layout_below="@id/imageView22"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
+
                 <TextView
                     android:id="@+id/c4"
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_below="@id/c3"
                     android:gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/imageView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView23"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView23"
+                    android:layout_below="@id/imageView23"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
 
                 <TextView
                     android:id="@+id/c5"
@@ -176,12 +245,48 @@
                     android:layout_below="@id/c4"
                     android:gravity="center"/>
 
+                <ImageView
+                    android:id="@+id/imageView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView24"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView24"
+                    android:layout_below="@id/imageView24"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
+
                 <TextView
                     android:id="@+id/c6"
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_below="@id/c5"
                     android:gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/imageView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView25"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView25"
+                    android:layout_below="@id/imageView25"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
 
                 <TextView
                     android:id="@+id/c7"
@@ -190,12 +295,48 @@
                     android:layout_below="@id/c6"
                     android:gravity="center"/>
 
+                <ImageView
+                    android:id="@+id/imageView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView26"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView26"
+                    android:layout_below="@id/imageView26"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
+
                 <TextView
                     android:id="@+id/c8"
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_below="@id/c7"
                     android:gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/imageView28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView27"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView38"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView27"
+                    android:layout_below="@id/imageView27"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
 
                 <TextView
                     android:id="@+id/c9"
@@ -204,12 +345,49 @@
                     android:layout_below="@id/c8"
                     android:gravity="center"/>
 
+                <ImageView
+                    android:id="@+id/imageView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView28"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView39"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView28"
+                    android:layout_below="@id/imageView28"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
+
                 <TextView
                     android:id="@+id/c10"
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_below="@id/c9"
                     android:gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/imageView30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView29"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_textsms_24" />
+
+                <ImageView
+                    android:id="@+id/imageView40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imageView39"
+                    android:layout_below="@id/imageView39"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_baseline_phone_24" />
+
             </RelativeLayout>
 
         </LinearLayout>
