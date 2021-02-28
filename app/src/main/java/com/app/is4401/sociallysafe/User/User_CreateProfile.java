@@ -140,7 +140,7 @@ public class User_CreateProfile extends AppCompatActivity {
                                         }
                                     });
 
-                            User userInfo = new User(getName, getEmail, getMobile, getimageURL, numGuests, time, priority);
+                            User userInfo = new User(getName, getEmail, getMobile, getimageURL, numGuests, priority);
                             databaseReference.child(user.getUid()).setValue(userInfo);
                             Toast.makeText(User_CreateProfile.this, "Information saved! Welcome to SociallySafe", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(User_CreateProfile.this, MainActivity.class);

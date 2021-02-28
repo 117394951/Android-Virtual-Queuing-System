@@ -50,7 +50,7 @@ public class AdminManageQueue extends Fragment implements ActivityCompat.OnReque
 
     private final int REQUEST_READ_PHONE_STATE = 1;
     private final int REQUEST_CALL =2;
-
+private ImageView ivAdd;
     private FirebaseUser user;
     private TextView c1, c2, c3, c4, c5, c6, c7, c8, c9, c10;
     String cust_name1, cust_name2, cust_name3, cust_name4, cust_name5, cust_name6, cust_name7, cust_name8, cust_name9, cust_name10;
@@ -97,6 +97,16 @@ public class AdminManageQueue extends Fragment implements ActivityCompat.OnReque
         user = firebaseAuth.getCurrentUser();
         queueDatabaseRef = FirebaseDatabase.getInstance().getReference("Queue");
         customerDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+        ivAdd = view.findViewById(R.id.ivAdd);
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Admin_AddCust.class);
+                startActivity(intent);
+
+            }
+        });
 
         //message visibility
         iv1 = view.findViewById(R.id.imageView21);

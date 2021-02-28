@@ -20,13 +20,13 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String Name, String Email, String Mobile, String imageUrl, String NumGuests, Long time, Boolean priority) {
+    public User(String Name, String Email, String Mobile, String imageUrl, String NumGuests, Boolean priority) {
         this.Name = Name;
         this.Email = Email;
         this.Mobile = Mobile;
         this.imageUrl = imageUrl;
         this.NumGuests = NumGuests;
-        this.time = time;
+//        this.time = time;
         this.priority = priority;
         user = new ArrayList<>();
 

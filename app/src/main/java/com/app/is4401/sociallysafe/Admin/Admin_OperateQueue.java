@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class Admin_OperateQueue extends AppCompatActivity {
     String nextCustEmail, subject, message;
     private DatabaseReference queueDatabaseRef, customerDatabaseReference;
     private MyFirebaseInstanceService notification;
+    private ImageView ivAdd;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -79,9 +81,20 @@ public class Admin_OperateQueue extends AppCompatActivity {
         c2 = findViewById(R.id.cust2);
         c3 = findViewById(R.id.cust3);
         c4 = findViewById(R.id.cust4);
+        ivAdd = findViewById(R.id.ivAdd);
 
         queueDatabaseRef = FirebaseDatabase.getInstance().getReference("Queue");
         customerDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+
+//        ivAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Admin_OperateQueue.this, Admin_AddCust.class);
+//                startActivity(intent);
+//
+//            }
+//        });
 
 
 
@@ -397,6 +410,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                 });
             }
         });
+
+
 
 
     }

@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             view = itemView;
             customerRef = FirebaseDatabase.getInstance().getReference("Users");
             queueRef = FirebaseDatabase.getInstance().getReference("Queue");
+
             firebaseAuth = FirebaseAuth.getInstance();
         }
 
@@ -237,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("Database", "Error");
                         }
                     });
+
 
 
 

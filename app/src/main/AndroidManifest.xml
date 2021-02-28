@@ -35,19 +35,27 @@
         <activity android:name=".Admin.Admin_OperateQueue" />
         <activity android:name=".Admin.Admin_Main" />
         <activity android:name=".activity.QueueActivity" />
-        <activity
-            android:name=".activity.UserActivity"
-            android:label="UserActivity"
-            android:theme="@style/AppTheme" />
+<!--        <activity-->
+<!--            android:name=".activity.UserActivity"-->
+<!--            android:label="UserActivity"-->
+<!--            android:theme="@style/AppTheme" />-->
         <activity android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.UserUpdate"
             android:label="UserUpdate"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".Admin.VerifyLogin"
+            android:label="Verify Account"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".Admin.Admin_QueueActivity"
             android:label="Queue ACtivity"
             android:theme="@style/AppTheme" />
+        <activity android:name=".Admin.Admin_AddCust"
+            android:label="Admin Add Customer"
+            android:theme="@style/AppTheme" />
+
 
         <service
             android:name=".Services.MyFirebaseInstanceService">
