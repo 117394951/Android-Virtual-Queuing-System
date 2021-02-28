@@ -59,9 +59,9 @@ public class Admin_AddCust extends AppCompatActivity {
 
 
         FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
-                .setDatabaseUrl("https://console.firebase.google.com/u/3/project/sociallysafe-f43b8/database/sociallysafe-f43b8/data")
-                .setApiKey("AIzaSyAnWJr2g4bDKrJYRqb7hBfNnwtanS7n8XY")
-                .setApplicationId("sociallysafe-f43b8").build();
+                .setDatabaseUrl("***")
+                .setApiKey("****")
+                .setApplicationId("***").build();
 
         try {
             FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "SociallySafe");
