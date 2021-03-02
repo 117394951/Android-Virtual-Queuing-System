@@ -7,6 +7,7 @@ public class Queue{
     private String imageUrl;
     private String Desc;
     private String Location;
+    private Boolean online = true;
     private int Avewaiting;
     public ArrayList<String> queue;
 
@@ -16,17 +17,27 @@ public class Queue{
         this.Desc="No Desc";
         this.Location = "No Location";
         this.Avewaiting=1;
+        this.online = true;
         queue = new ArrayList<>();
     }
 
-    public Queue(String name, String imageUrl, String Location, String Desc, int Avewaiting) {
+    public Queue(String name, String imageUrl, String Location, String Desc, int Avewaiting, boolean online) {
         this.Name = name;
         this.imageUrl = imageUrl;
         this.Desc=Desc;
         this.Location=Location;
         this.Avewaiting=Avewaiting;
+        this.online=online;
         queue = new ArrayList<>();
 
+    }
+
+    public Boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
     }
 
     public String getName() {

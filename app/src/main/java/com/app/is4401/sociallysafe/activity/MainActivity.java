@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "* MainActivity";
 
+    TextView name, waitTime, qNumPeople, queueWaitTimeHeader, minutes, queueNumPeopleHeader;
+    Button btnJoinQ;
+    ImageView user_image;
     RecyclerView list;
     DatabaseReference queueRef, baseRef;
     Context context;
@@ -94,9 +97,18 @@ public class MainActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull Queue model) {
                 int total_wait_time = model.getAvewaiting() * model.getNumPeople();
 
-                holder.setDetails(getApplicationContext(), model.getName(), Integer.toString(total_wait_time), model.getimageUrl(),
-                        Integer.toString(model.getNumPeople()),
-                        model.getDesc(), model.getLocation());
+                if(model.getOnline().equals(true)){
+                    holder.setDetails(getApplicationContext(), model.getName(), Integer.toString(total_wait_time), model.getimageUrl(),
+                            Integer.toString(model.getNumPeople()),
+                            model.getDesc(), model.getLocation());
+                }else{
+
+//                    https://stackoverflow.com/questions/41223413/how-to-hide-an-item-from-recycler-view-on-a-particular-condition
+                    holder.view.setVisibility(View.GONE);
+                    holder.view.setLayoutParams(new RecyclerView.LayoutParams(0,0));
+                }
+
+
                 Log.d(TAG, "adapter binded");
             }
         };
@@ -123,7 +135,12 @@ public class MainActivity extends AppCompatActivity {
         @Keep
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
+
+
+
             view = itemView;
+
+
             customerRef = FirebaseDatabase.getInstance().getReference("Users");
             queueRef = FirebaseDatabase.getInstance().getReference("Queue");
 
@@ -132,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         public void setDetails(Context ctx, final String queueName, final String avgWaiting, final String imageUrl, final String numPeople, final String desc, final String location) {
-            final TextView name = view.findViewById(R.id.queueName);
+             final TextView name = view.findViewById(R.id.queueName);
             TextView waitTime = view.findViewById(R.id.queueWaitTime);
             final ImageView user_image = view.findViewById(R.id.queueImage);
             final TextView qNumPeople = view.findViewById(R.id.queueNumPeople);

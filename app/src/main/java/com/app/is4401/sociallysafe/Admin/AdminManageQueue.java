@@ -57,7 +57,9 @@ private ImageView ivAdd;
     String cc1, cc2, cc3, cc4, cc5, cc6, cc7, cc8, cc9, cc10;
 
 
-    ImageView iv1, iv2, iv3, iv4, iv5, iv6, iv7, iv8, iv9, iv10, iv11,iv12, iv13,iv14,iv15,iv16,iv17,iv18,iv19,iv20;
+    ImageView iv1, iv2, iv3, iv4, iv5, iv6, iv7, iv8, iv9, iv10, iv11,iv12, iv13,iv14,iv15,iv16,iv17,iv18,iv19,iv20, iv21,iv22,iv23,iv24,iv25,iv26,iv27,iv28,iv29,iv30, iv31,iv32,iv33,iv34,iv35,iv36,iv37,iv38,iv39,iv40;
+
+    TextView party1, party2, party3, party4, party5, party6 ,party7,party8,party9,party10;
 
     String mobile1 = "";
     String mobile2 = "";
@@ -69,6 +71,29 @@ private ImageView ivAdd;
     String mobile8 = "";
     String mobile9 = "";
     String mobile10 = "";
+
+    String id1 = "";
+    String id2 = "";
+    String id10 = "";
+    String id3 = "";
+    String id4 = "";
+    String id5 = "";
+    String id6 = "";
+    String id7 = "";
+    String id8 = "";
+    String id9 = "";
+
+    String p1 = "";
+    String p2 = "";
+    String p3 = "";
+    String p4 = "";
+    String p5 = "";
+    String p6 = "";
+    String p7 = "";
+    String p8 = "";
+    String p9 = "";
+    String p10 = "";
+
 
     String message = "Good news! You are next in queue, please come to the restaurant!";
 
@@ -151,6 +176,61 @@ private ImageView ivAdd;
         iv19.setVisibility(INVISIBLE);
         iv20 = view.findViewById(R.id.imageView40);
         iv20.setVisibility(INVISIBLE);
+
+        //remove user visibility
+        //phone visibility
+        iv21 = view.findViewById(R.id.imageView41);
+        iv21.setVisibility(INVISIBLE);
+        iv22 = view.findViewById(R.id.imageView42);
+        iv22.setVisibility(INVISIBLE);
+        iv23 = view.findViewById(R.id.imageView43);
+        iv23.setVisibility(INVISIBLE);
+        iv24 = view.findViewById(R.id.imageView44);
+        iv24.setVisibility(INVISIBLE);
+        iv25 = view.findViewById(R.id.imageView45);
+        iv25.setVisibility(INVISIBLE);
+        iv26 = view.findViewById(R.id.imageView46);
+        iv26.setVisibility(INVISIBLE);
+        iv27 = view.findViewById(R.id.imageView47);
+        iv27.setVisibility(INVISIBLE);
+        iv28 = view.findViewById(R.id.imageView48);
+        iv28.setVisibility(INVISIBLE);
+        iv29 = view.findViewById(R.id.imageView49);
+        iv29.setVisibility(INVISIBLE);
+        iv30 = view.findViewById(R.id.imageView50);
+        iv30.setVisibility(INVISIBLE);
+
+        party1 = view.findViewById(R.id.party1);
+        iv31 = view.findViewById(R.id.imageView51);
+        iv31.setVisibility(INVISIBLE);
+        party2 = view.findViewById(R.id.party2);
+        iv32 = view.findViewById(R.id.imageView52);
+        iv32.setVisibility(INVISIBLE);
+        party3 = view.findViewById(R.id.party3);
+        iv33 = view.findViewById(R.id.imageView53);
+        iv33.setVisibility(INVISIBLE);
+        party4 = view.findViewById(R.id.party4);
+        iv34 = view.findViewById(R.id.imageView54);
+        iv34.setVisibility(INVISIBLE);
+        party5 = view.findViewById(R.id.party5);
+        iv35 = view.findViewById(R.id.imageView55);
+        iv35.setVisibility(INVISIBLE);
+        party6 = view.findViewById(R.id.party6);
+        iv36 = view.findViewById(R.id.imageView56);
+        iv36.setVisibility(INVISIBLE);
+        party7 = view.findViewById(R.id.party7);
+        iv37 = view.findViewById(R.id.imageView57);
+        iv37.setVisibility(INVISIBLE);
+        party8 = view.findViewById(R.id.party8);
+        iv38 = view.findViewById(R.id.imageView58);
+        iv38.setVisibility(INVISIBLE);
+        party9 = view.findViewById(R.id.party9);
+        iv39 = view.findViewById(R.id.imageView59);
+        iv39.setVisibility(INVISIBLE);
+        party10 = view.findViewById(R.id.party10);
+        iv40 = view.findViewById(R.id.imageView60);
+        iv40.setVisibility(INVISIBLE);
+
 
 
 
@@ -254,6 +334,21 @@ private ImageView ivAdd;
                                             if (dataSnapshot.child("Name").exists()) {
                                                 cust_name1 = dataSnapshot.child("Name").getValue().toString();
                                                 mobile1 = dataSnapshot.child("Mobile").getValue().toString();
+
+                                                p1 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv31.setVisibility(VISIBLE);
+                                                party1.setText(p1);
+
+
+                                                iv21.setVisibility(VISIBLE);
+                                                id1 = dataSnapshot.getKey().toString();
+                                                iv21.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id1);
+                                                    }
+                                                });
+
                                                 cc1 = cust_name1;
 
                                                 iv1.setVisibility(VISIBLE);
@@ -307,6 +402,19 @@ private ImageView ivAdd;
                                                 c2.setText(cust_name2);
                                                 cc2 = cust_name2;
                                                 mobile2 = dataSnapshot.child("Mobile").getValue().toString();
+
+                                                iv22.setVisibility(VISIBLE);
+                                                id2 = dataSnapshot.getKey().toString();
+                                                iv22.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id2);
+                                                    }
+                                                });
+
+                                                p2 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv32.setVisibility(VISIBLE);
+                                                party2.setText(p2);
 
                                                 System.out.println(cust_name2);
                                                 iv2.setVisibility(VISIBLE);
@@ -366,6 +474,14 @@ private ImageView ivAdd;
                                                         callMobile(mobile3);
                                                     }
                                                 });
+                                                iv23.setVisibility(VISIBLE);
+                                                id3 = dataSnapshot.getKey().toString();
+                                                iv23.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id3);
+                                                    }
+                                                });
 
                                                 iv3.setOnClickListener(new View.OnClickListener() {
                                                     @Override
@@ -373,6 +489,11 @@ private ImageView ivAdd;
                                                         SendSMS(mobile3);
                                                     }
                                                 });
+
+
+                                                p3 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv33.setVisibility(VISIBLE);
+                                                party3.setText(p3);
 
                                                 System.out.println("myname" + cust_name3);
 
@@ -421,6 +542,18 @@ private ImageView ivAdd;
                                                         callMobile(mobile4);
                                                     }
                                                 });
+                                                iv24.setVisibility(VISIBLE);
+                                                id4= dataSnapshot.getKey().toString();
+                                                iv24.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id4);
+                                                    }
+                                                });
+
+                                                p4 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv34.setVisibility(VISIBLE);
+                                                party4.setText(p4);
 
                                                 System.out.println("myname" + cust_name4);
                                             } else {
@@ -470,6 +603,18 @@ private ImageView ivAdd;
                                                     }
                                                 });
 
+                                                p5 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv35.setVisibility(VISIBLE);
+                                                party5.setText(p5);
+
+                                                iv25.setVisibility(VISIBLE);
+                                                id5 = dataSnapshot.getKey().toString();
+                                                iv25.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id5);
+                                                    }
+                                                });
                                                 System.out.println("myname" + cust_name5);
                                             } else {
                                                 c5.setText("No name entered");
@@ -508,6 +653,20 @@ private ImageView ivAdd;
                                                         SendSMS(mobile6);
                                                     }
                                                 });
+
+                                                p6 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv36.setVisibility(VISIBLE);
+                                                party6.setText(p6);
+
+                                                iv26.setVisibility(VISIBLE);
+                                                id6 = dataSnapshot.getKey().toString();
+                                                iv26.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id6);
+                                                    }
+                                                });
+
                                                 iv16.setVisibility(VISIBLE);
                                                 iv16.setOnClickListener(new View.OnClickListener() {
                                                     @Override
@@ -553,11 +712,25 @@ private ImageView ivAdd;
                                                         SendSMS(mobile7);
                                                     }
                                                 });
+
+                                                p7 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv37.setVisibility(VISIBLE);
+                                                party7.setText(p7);
+
                                                 iv17.setVisibility(VISIBLE);
                                                 iv17.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
                                                         callMobile(mobile7);
+                                                    }
+                                                });
+
+                                                iv27.setVisibility(VISIBLE);
+                                                id7= dataSnapshot.getKey().toString();
+                                                iv27.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id7);
                                                     }
                                                 });
 
@@ -599,11 +772,26 @@ private ImageView ivAdd;
                                                         SendSMS(mobile8);
                                                     }
                                                 });
+
+                                                p8 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv38.setVisibility(VISIBLE);
+                                                party8.setText(p8);
+
+
                                                 iv18.setVisibility(VISIBLE);
                                                 iv18.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
                                                         callMobile(mobile8);
+                                                    }
+                                                });
+
+                                                iv28.setVisibility(VISIBLE);
+                                                id8 = dataSnapshot.getKey().toString();
+                                                iv28.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id8);
                                                     }
                                                 });
 
@@ -653,6 +841,19 @@ private ImageView ivAdd;
                                                     }
                                                 });
 
+                                                p9 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv39.setVisibility(VISIBLE);
+                                                party9.setText(p9);
+
+                                                iv29.setVisibility(VISIBLE);
+                                                id9 = dataSnapshot.getKey().toString();
+                                                iv29.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id9);
+                                                    }
+                                                });
+
                                                 System.out.println("myname" + cust_name9);
                                             } else {
                                                 c9.setText("No name entered");
@@ -689,6 +890,19 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         SendSMS(mobile10);
+                                                    }
+                                                });
+
+                                                p10 = dataSnapshot.child("NumGuests").getValue().toString();
+                                                iv40.setVisibility(VISIBLE);
+                                                party10.setText(p10);
+
+                                                iv30.setVisibility(VISIBLE);
+                                                id10 = dataSnapshot.getKey().toString();
+                                                iv30.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        removeUser(id10);
                                                     }
                                                 });
                                                 iv20.setVisibility(VISIBLE);
@@ -730,6 +944,28 @@ private ImageView ivAdd;
         });
 
         return view;
+    }
+
+    private void removeUser(final String id) {
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Queue queueInfo = snapshot.getValue(Queue.class);
+                queueInfo.queue.remove(id);
+                queueDatabaseRef.child(user.getUid()).setValue(queueInfo);
+
+                customerDatabaseReference.child(id).child("adminId").removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        queueDatabaseRef.child(user.getUid()).addListenerForSingleValueEvent(valueEventListener);
+
+
     }
 
     private void callMobile(String mobile) {

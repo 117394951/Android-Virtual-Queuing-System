@@ -29,8 +29,6 @@ public class FirebaseLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_login);
         btnLogin = findViewById(R.id.btnLogin);
-
-
         btnRegister = findViewById(R.id.btnRegister);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
