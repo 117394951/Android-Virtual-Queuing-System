@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.model.Queue;
+import com.app.is4401.sociallysafe.Model.Queue;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,15 +32,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class Admin_QueueConfiguration extends Fragment {
 
     private Button btnCreateQ;
-    TextView tvName, waitTime, queueSize;
-    ImageView ivLogo;
+    TextView tvName, waitTime, queueSize, tv1, tv20,tv23, location, description;
+    ImageView ivLogo, iv2, ivReview;
     Bitmap bitmap;
-    EditText location, description;
     Switch swOnline;
     private FirebaseUser user;
     private DatabaseReference imageRef, queueRef;
@@ -64,13 +63,30 @@ public class Admin_QueueConfiguration extends Fragment {
         imageRef = queueRef.child("imageUrl");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        ivReview = view.findViewById(R.id.ivReview);
+        ivReview.setVisibility(INVISIBLE);
+        iv2 = view.findViewById(R.id.imageView2);
+        iv2.setVisibility(INVISIBLE);
+        tv20 = view.findViewById(R.id.textView20);
+        tv20.setVisibility(View.INVISIBLE);
+        tv23 = view.findViewById(R.id.textView23);
+        tv23.setVisibility(View.INVISIBLE);
+        tv1 = view.findViewById(R.id.textview1);
+        tv1.setVisibility(View.INVISIBLE);
         swOnline = view.findViewById(R.id.swOnline);
+        swOnline.setVisibility(View.INVISIBLE);
         tvName = view.findViewById(R.id.tvBusinessName);
+        tvName.setVisibility(View.INVISIBLE);
         ivLogo = view.findViewById(R.id.ivLogo1);
+        ivLogo.setVisibility(View.INVISIBLE);
         waitTime = view.findViewById(R.id.tvMinutes);
+        waitTime.setVisibility(View.INVISIBLE);
         queueSize = view.findViewById(R.id.tvQueueSize);
+        queueSize.setVisibility(View.INVISIBLE);
         location = view.findViewById(R.id.etLocation);
+        location.setVisibility(View.INVISIBLE);
         description = view.findViewById(R.id.etDescription);
+        description.setVisibility(View.INVISIBLE);
         btnCreateQ = view.findViewById(R.id.btnCreateQ);
 
 
@@ -129,6 +145,20 @@ public class Admin_QueueConfiguration extends Fragment {
                     queueRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            tv20.setVisibility(View.VISIBLE);
+                            tv23.setVisibility(View.VISIBLE);
+                            tv1.setVisibility(View.VISIBLE);
+                            tvName.setVisibility(View.VISIBLE);
+                            waitTime.setVisibility(View.VISIBLE);
+                            location.setVisibility(View.VISIBLE);
+                            description.setVisibility(View.VISIBLE);
+                            ivLogo.setVisibility(View.VISIBLE);
+                            swOnline.setVisibility(View.VISIBLE);
+                            queueSize.setVisibility(View.VISIBLE);
+
+
+
 
                             btnCreateQ.setVisibility(View.INVISIBLE);
                             queueInfo = snapshot.getValue(Queue.class);

@@ -6,24 +6,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
+        android:orientation="horizontal"
+        android:layout_marginStart="8dp">
+
+        <ImageView
+            android:id="@+id/imageView61"
+            android:layout_width="60dp"
+            android:layout_height="45dp"
+            android:cropToPadding="false"
+            app:srcCompat="@drawable/logo" />
+
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Party Size: "
-            android:textSize="24dp"/>
+            android:layout_height="35dp"
+            android:src="@drawable/ic_baseline_people2_outline_24"
+            android:layout_marginStart="105dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="My Queues"
+            android:id="@+id/btnMyQueue"
+            android:layout_gravity="right"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimary"/>
 
 
-        <Spinner
-            android:id="@+id/spNumGuests"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:entries="@array/Num_Guests" />
+        <ImageView
+            app:srcCompat="@drawable/ic_baseline_person_outline_24"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:id="@+id/ivProfile"
+            android:padding="8dp"/>
 
 
     </LinearLayout>

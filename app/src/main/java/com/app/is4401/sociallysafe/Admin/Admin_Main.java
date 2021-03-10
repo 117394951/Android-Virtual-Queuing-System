@@ -15,6 +15,10 @@ public class Admin_Main extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
+    public Admin_Main(){
+        //empty public construction
+    }
+
     // code for navigation and fragment https://www.youtube.com/watch?v=tPV8xA7m-iw&t=838s
 
     @Override

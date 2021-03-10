@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.model.Queue;
+import com.app.is4401.sociallysafe.Model.Queue;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -120,7 +120,7 @@ public class Admin_QueueActivity extends AppCompatActivity implements AdapterVie
 
 
         //upload business details to queue to database
-        Queue upload = new Queue(name, getimageURL,desc, address, aveWait, online );
+        Queue upload = new Queue(name, getimageURL, address, desc, aveWait, online );
         ArrayList<String> testqueue = upload.getQueue();
         if(testqueue != null){
             for(String s:testqueue){

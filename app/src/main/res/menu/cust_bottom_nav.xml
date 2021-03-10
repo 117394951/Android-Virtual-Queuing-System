@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="Queues"
+        android:title="My Queues"
         android:id="@+id/firstFragment"
+        android:icon="@drawable/ic_baseline_group_24"/>
+
+    <item
+        android:title="Explore"
+        android:id="@+id/secondFragment"
         android:icon="@drawable/ic_home"/>
 
     <item
-        android:title="Poos"
-        android:id="@+id/secondFragment"
-        android:icon="@drawable/ic_queue"/>
-
-    <item
-        android:title="Moos"
+        android:title="Settings"
         android:id="@+id/thirdFragment"
-        android:icon="@drawable/ic_edit"/>
+        android:icon="@drawable/ic__settings_24"/>
 </menu>

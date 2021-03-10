@@ -1,4 +1,4 @@
-package com.app.is4401.sociallysafe.model;
+package com.app.is4401.sociallysafe.Model;
 
 import java.util.ArrayList;
 

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:id="@+id/btnBack"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_queue"
+                android:layout_marginStart="230dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="My Queues"
+            android:id="@+id/btnMyQueue"
+            android:layout_gravity="right"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
+            android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorWhite">
+
+            <TextView
+                style="@style/card_outlet_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="16dp"/>
+
+            <LinearLayout
+                android:id="@+id/cust_profile_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_margin="12dp"
+                android:orientation="vertical">
+
+
+                <ImageButton
+                    android:id="@+id/cust_profile_image_new"
+                    style="@style/Widget.Design.FloatingActionButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="12dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_search" />
+
+                <TextView
+                    android:id="@+id/cust_profile_nameOld"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Customer Name"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <LinearLayout
+                    android:id="@+id/cust_profile_id_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"></LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cust_profile_general_settings_layout"
+                style="@style/profile_category_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/cust_profile_email_header"
+                    style="@style/profile_detail_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email" />
+
+                <EditText
+                    android:id="@+id/cust_profile_email_editText"
+                    style="@style/profile_detail_toEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:inputType="textEmailAddress"
+                    android:text="Email"
+                    android:textColor="@color/colorGrey"/>
+
+                <TextView
+                    android:id="@+id/cust_profile_mobile_header"
+                    style="@style/profile_detail_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile" />
+
+                <EditText
+                    android:id="@+id/cust_profile_mobile"
+                    style="@style/profile_detail_toEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:textColor="@color/colorGrey"
+                    android:hint="Mobile"
+                    android:inputType="number" />
+
+                <Button
+                    android:id="@+id/btnUpdateProfile"
+                    style="@style/profileButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Update Details" />
+
+                <Button
+                    android:id="@+id/cust_profile_CancelButton"
+                    style="@style/profileCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/cust_profile_switchModeButton"
+            style="@style/profileCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Sign Out" />
+
+    </LinearLayout>
+</ScrollView>

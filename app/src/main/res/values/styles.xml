@@ -16,4 +16,118 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <!-- Button Styles -->
+    <style name="floatJoinQ">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="joinQ">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+    </style>
+
+
+    <style name="LogIn">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Register">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:backgroundTint">@color/colorAccent</item>
+    </style>
+
+
+    <style name="recyclerJoinQ">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
+    <!-- Commonly used styles -->
+    <style name="queueing_now">
+        <item name="android:textSize">11dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="normalText">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+
+
+
+    <!-- Explore related styles -->
+
+    <style name="explore_header">
+        <item name="android:textSize">30dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="card_outlet_name">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+    <style name="card_estimated_time">
+        <item name="android:textSize">11dp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
+    <style name="card_estimated_time_header">
+        <item name="android:textSize">11dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <!-- Stall Desc Styles -->
+    <style name="stall_desc_name">
+        <item name="android:textSize">26dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="stall_desc_header">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <!-- Profile Styles -->
+    <style name="profile_setting_header">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+    <style name="profile_category_layout">
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="profileButton">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="profile_detail_header">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
+    <style name="profileCancel">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:padding">6dp</item>
+    </style>
+    <style name="profile_detail_toEdit">
+        <item name="android:textSize">11dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:background">@color/colorTransparentGrey</item>
+    </style>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.app.is4401.sociallysafe.model;
+package com.app.is4401.sociallysafe.Model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -30,6 +30,10 @@ public class User {
         this.priority = priority;
         user = new ArrayList<>();
 
+    }
+
+    public String getMobile() {
+        return Mobile;
     }
 
     public ArrayList<String> getUser() {return user;}

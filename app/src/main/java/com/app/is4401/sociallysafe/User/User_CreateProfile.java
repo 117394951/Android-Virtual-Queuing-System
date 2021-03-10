@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.activity.MainActivity;
-import com.app.is4401.sociallysafe.model.User;
+import com.app.is4401.sociallysafe.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,9 +54,10 @@ public class User_CreateProfile extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private static final String TAG = "User_ProfileInit";
 
+    private ImageView btnBack;
     private EditText name, mobile;
     private ImageButton ivLogo;
-    private Button save;
+    private Button save,  btnMyQueue;
     protected static Boolean priority=false;
 
 
@@ -70,8 +71,14 @@ public class User_CreateProfile extends AppCompatActivity {
         user = firebaseAuth.getCurrentUser();
         mStorageRef = FirebaseStorage.getInstance().getReference("Users");
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
         name= findViewById(R.id.nickname);
+        btnMyQueue = findViewById(R.id.btnMyQueue);
+        btnMyQueue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(User_CreateProfile.this, User_MyQueues.class));
+            }
+        });
         mobile = findViewById(R.id.mobile);
         ivLogo = findViewById(R.id.init_profile_image);
         setLogoChooser();
@@ -79,6 +86,14 @@ public class User_CreateProfile extends AppCompatActivity {
         prioritycheckbox=findViewById(R.id.priorityCheckbox);
         textViewUserEmail= findViewById(R.id.textviewemail);
         textViewUserEmail.setText("Welcome "+user.getEmail());
+        btnBack = findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         prioritycheckbox.setOnClickListener(new View.OnClickListener() {
             @Override

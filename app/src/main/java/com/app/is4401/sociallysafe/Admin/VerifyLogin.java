@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.model.Queue;
+import com.app.is4401.sociallysafe.Model.Queue;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

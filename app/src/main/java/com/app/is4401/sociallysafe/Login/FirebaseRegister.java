@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.User.User_CreateProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -67,7 +66,7 @@ public class FirebaseRegister extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
 
-                    Intent segregate= new Intent(FirebaseRegister.this, User_CreateProfile.class);
+                    Intent segregate= new Intent(FirebaseRegister.this, SegregationPostRegistration.class);
                     startActivity(segregate);
 
 

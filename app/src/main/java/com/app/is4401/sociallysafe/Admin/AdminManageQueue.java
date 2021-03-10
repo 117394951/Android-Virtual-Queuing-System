@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.model.Queue;
+import com.app.is4401.sociallysafe.Model.Queue;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

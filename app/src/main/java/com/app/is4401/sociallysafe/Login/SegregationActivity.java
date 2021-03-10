@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.Admin.Admin_Main;
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.activity.MainActivity;
+import com.app.is4401.sociallysafe.User.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SegregationActivity extends AppCompatActivity {

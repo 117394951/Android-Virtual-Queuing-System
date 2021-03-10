@@ -14,8 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.Services.MyFirebaseInstanceService;
-import com.app.is4401.sociallysafe.model.Queue;
+import com.app.is4401.sociallysafe.Model.Queue;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +37,6 @@ public class Admin_OperateQueue extends AppCompatActivity {
     Queue queueInfo;
     String nextCustEmail, subject, message;
     private DatabaseReference queueDatabaseRef, customerDatabaseReference;
-    private MyFirebaseInstanceService notification;
     private ImageView ivAdd;
 
 

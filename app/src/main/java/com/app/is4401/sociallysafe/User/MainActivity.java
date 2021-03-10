@@ -1,7 +1,9 @@
-package com.app.is4401.sociallysafe.activity;
+package com.app.is4401.sociallysafe.User;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,13 +21,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.User.User_QueueGallery;
-import com.app.is4401.sociallysafe.model.Queue;
+import com.app.is4401.sociallysafe.Model.Queue;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +41,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        //implements ActivityCompat.OnRequestPermissionsResultCallback
+{
 
     /**
      * https://www.geeksforgeeks.org/how-to-populate-recyclerview-with-firebase-data-using-firebaseui-in-android-studio/
@@ -49,34 +53,39 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "* MainActivity";
 
     TextView name, waitTime, qNumPeople, queueWaitTimeHeader, minutes, queueNumPeopleHeader;
-    Button btnJoinQ;
-    ImageView user_image;
+    Button btnJoinQ, btnMyQueue;
+    ImageView ivProfile;
     RecyclerView list;
     DatabaseReference queueRef, baseRef;
     Context context;
-    Spinner spNumGuests;
-
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ArrayList<Queue> queue = new ArrayList<>();
 
-        Toast.makeText(MainActivity.this, "Firebase connection Success", Toast.LENGTH_LONG).show();
-        Log.d(TAG, "Connection to Database Successful");
-
-
-        spNumGuests = findViewById(R.id.spNumGuests);
-
+        btnMyQueue = findViewById(R.id.btnMyQueue);
+        btnMyQueue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, User_MyQueues.class));
+            }
+        });
 
         list = findViewById(R.id.recycler1);
-        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+        ivProfile = findViewById(R.id.ivProfile);
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), User_Profile.class));
+            }
+        });
 
         queueRef = FirebaseDatabase.getInstance().getReference().child("Queue");
         queueRef.keepSynced(true);
-
-
         FirebaseRecyclerOptions<Queue> options = new FirebaseRecyclerOptions.Builder<Queue>()
                 .setQuery(queueRef, Queue.class)
                 .setLifecycleOwner(this)
@@ -97,31 +106,29 @@ public class MainActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull Queue model) {
                 int total_wait_time = model.getAvewaiting() * model.getNumPeople();
 
-                if(model.getOnline().equals(true)){
+                if (model.getOnline().equals(true)) {
                     holder.setDetails(getApplicationContext(), model.getName(), Integer.toString(total_wait_time), model.getimageUrl(),
                             Integer.toString(model.getNumPeople()),
                             model.getDesc(), model.getLocation());
-                }else{
+                } else {
 
 //                    https://stackoverflow.com/questions/41223413/how-to-hide-an-item-from-recycler-view-on-a-particular-condition
                     holder.view.setVisibility(View.GONE);
-                    holder.view.setLayoutParams(new RecyclerView.LayoutParams(0,0));
+                    holder.view.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                 }
 
 
                 Log.d(TAG, "adapter binded");
             }
         };
+
         list.setAdapter(adpater);
-        ArrayList<Queue> queue = new ArrayList<>();
 
 
     }
 
 
-
-
-    public class UserViewHolder extends RecyclerView.ViewHolder{
+    public class UserViewHolder extends RecyclerView.ViewHolder {
 
         View view;
 
@@ -137,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
 
 
-
             view = itemView;
 
 
@@ -149,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         public void setDetails(Context ctx, final String queueName, final String avgWaiting, final String imageUrl, final String numPeople, final String desc, final String location) {
-             final TextView name = view.findViewById(R.id.queueName);
+            final TextView name = view.findViewById(R.id.queueName);
             TextView waitTime = view.findViewById(R.id.queueWaitTime);
             final ImageView user_image = view.findViewById(R.id.queueImage);
             final TextView qNumPeople = view.findViewById(R.id.queueNumPeople);
@@ -162,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
             new GetImageFromURL(user_image).execute(imageUrl);
 
 
-            //to bring details to specific queues page
+// Intents, QuickLauncherApp tutorial, Michael Gleeson, IS447 module lecturer
+// SCREENSHOTS OF CODE AVAILABLE UPON REQUEST
             user_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -176,9 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     v.getContext().startActivity(i);
                 }
             });
-
-
-
+// END
 
 //            //User priority code
 //            customerRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -203,15 +208,11 @@ public class MainActivity extends AppCompatActivity {
 //            });
 
 
-
-
             //when join Q is clicked, user added to queue
 
             joinQ.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-
-                    final String partySize = spNumGuests.getSelectedItem().toString();
 
                     Log.d(TAG, "Join queue button clicked");
 
@@ -219,34 +220,44 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                            for(DataSnapshot childSnapshot: snapshot.getChildren()){
+                            for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                                 user = firebaseAuth.getCurrentUser();
                                 Queue queueInfo = childSnapshot.getValue(Queue.class);
+
                                 String adminId = childSnapshot.getKey();
 
-
-
-                                if(queueInfo.queue.contains(user.getUid())){
+                                if (queueInfo.queue.contains(user.getUid())) {
                                     Log.d("Join Queue", "Already in queue.");
-                                    Toast.makeText(MainActivity.this, "Already in this queue!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Already in this queue!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    showGuestDialog(queueInfo, adminId);
                                 }
-                                else {
-                                    if (priority.equals("true")) {
-                                        queueInfo.queue.add(0, user.getUid());
-                                    } else {
-                                        queueInfo.queue.add(user.getUid());
-                                    }
+                                qNumPeople.setText(String.valueOf(queueInfo.getNumPeople()));
+//
+//
+//
+//                                if(queueInfo.queue.contains(user.getUid())){
+//                                    Log.d("Join Queue", "Already in queue.");
+//                                    Toast.makeText(getContext(), "Already in this queue!", Toast.LENGTH_SHORT).show();
+//                                }
+//                                else {
+//                                    if (priority.equals("true")) {
+//                                        queueInfo.queue.add(0, user.getUid());
+//                                        showGuestDialog();
+//                                    } else {
+//                                        queueInfo.queue.add(user.getUid());
+//                                        showGuestDialog();
+//                                    }
+//
+////                                    queueRef.child(adminId).setValue(queueInfo);
+////                                    customerRef.child(user.getUid()).child("adminId").setValue(adminId);
+//////                                    customerRef.child(user.getUid()).child("NumGuests").setValue(partySize);
+////                                    qNumPeople.setText(String.valueOf(queueInfo.getNumPeople()));
+////                                    Log.d(TAG, "adding customer to queue");
+////
+////                                    Toast.makeText(getContext(), "Joined Queue!", Toast.LENGTH_SHORT).show();
 
-
-                                    queueRef.child(adminId).setValue(queueInfo);
-                                    customerRef.child(user.getUid()).child("adminId").setValue(adminId);
-                                    customerRef.child(user.getUid()).child("NumGuests").setValue(partySize);
-                                    qNumPeople.setText(String.valueOf(queueInfo.getNumPeople()));
-                                    Log.d(TAG, "adding customer to queue");
-
-                                    Toast.makeText(MainActivity.this, "Joined Queue!", Toast.LENGTH_SHORT).show();
-
-                                }
+//                                }
                             }
                         }
 
@@ -257,53 +268,78 @@ public class MainActivity extends AppCompatActivity {
                     });
 
 
-
-
-
-
-
                 }
             });
 
 
         }
 
-//        private void showGuestDialog() {
-//
-//            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-//            View view = layoutInflater.inflate(R.layout.numguests_dialog, null);
-//
-//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-//            alertDialogBuilder.setView(view);
-//
-//            Spinner spinner = findViewById(R.id.spinner);
-//            final String numGuests = spinner.getSelectedItem().toString() ;
-//
-//            alertDialogBuilder
-//                    .setCancelable(true)
-//                    .setPositiveButton("Join", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                        }
-//                    })
-//                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.cancel();
-//                        }
-//                    });
-//
-//            final AlertDialog alertDialog = alertDialogBuilder.create();
-//            alertDialog.show();
-//
-//            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    customerRef.child(user.getUid()).child("NumGuests").setValue(numGuests);
-//                }
-//            });
-//        }
+        private void showGuestDialog(final Queue queueInfo, final String adminId) {
+
+
+            LayoutInflater layoutInflater = LayoutInflater.from(getBaseContext());
+            final View view = layoutInflater.inflate(R.layout.numguests_dialog, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setView(view);
+
+            final Spinner spinner = view.findViewById(R.id.spinner);
+
+
+            alertDialogBuilder
+                    .setCancelable(true)
+                    .setPositiveButton("Join", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            final AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String numGuests = spinner.getSelectedItem().toString();
+
+
+                        if (priority.equals("true")) {
+                            queueInfo.queue.add(0, user.getUid());
+
+                        } else {
+                            queueInfo.queue.add(user.getUid());
+                        }
+
+                        queueRef.child(adminId).setValue(queueInfo);
+                        customerRef.child(user.getUid()).child("adminId").setValue(adminId);
+                        customerRef.child(user.getUid()).child("NumGuests").setValue(numGuests);
+
+                        Log.d(TAG, "adding customer to queue");
+
+                        Toast.makeText(getApplicationContext(), "Joined Queue!", Toast.LENGTH_SHORT).show();
+
+                        alertDialog.cancel();
+                        alertDialog.hide();
+                }
+            });
+
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.cancel();
+                    alertDialog.hide();
+
+                }
+            });
+        }
     }
 
 
