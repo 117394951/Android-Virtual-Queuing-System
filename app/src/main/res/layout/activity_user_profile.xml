@@ -3,8 +3,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,33 +16,36 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_arrow_back_24"
                 android:id="@+id/btnBack"/>
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_queue"
-                android:layout_marginStart="230dp"/>
+                android:layout_marginStart="205dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="My Queues"
-            android:id="@+id/btnMyQueue"
-            android:layout_gravity="right"
-            android:textColor="@color/colorPrimaryDark"
-            android:background="@color/colorAccent"
-            android:layout_marginStart="8dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="My Queues"
+                android:textSize="18dp"
+                android:id="@+id/btnMyQueue"
+                android:layout_gravity="right"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@color/colorWhite"
+                android:layout_marginStart="8dp"/>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/colorWhite">
+            android:background="@drawable/seach_layout"
+            android:backgroundTint="@color/colorPrimary">
 
             <TextView
                 style="@style/card_outlet_name"
@@ -52,7 +54,8 @@
                 android:text="Profile"
                 android:layout_gravity="center"
                 android:textStyle="bold"
-                android:textSize="16dp"/>
+                android:textSize="28dp"
+                android:layout_marginTop="8dp"/>
 
             <LinearLayout
                 android:id="@+id/cust_profile_header"
@@ -66,8 +69,8 @@
                 <ImageButton
                     android:id="@+id/cust_profile_image_new"
                     style="@style/Widget.Design.FloatingActionButton"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="12dp"
                     android:scaleType="centerCrop"
@@ -95,8 +98,10 @@
                 style="@style/profile_category_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:orientation="vertical">
+                android:layout_margin="12dp"
+                android:orientation="vertical"
+                android:background="@drawable/seach_layout"
+                android:backgroundTint="@color/colorWhite">
 
                 <TextView
                     android:id="@+id/cust_profile_email_header"
@@ -131,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="16dp"
                     android:ellipsize="start"
                     android:gravity="center"
                     android:textColor="@color/colorGrey"
@@ -141,6 +146,7 @@
                 <Button
                     android:id="@+id/btnUpdateProfile"
                     style="@style/profileButton"
+                    android:background="@drawable/round_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -149,6 +155,7 @@
                 <Button
                     android:id="@+id/cust_profile_CancelButton"
                     style="@style/profileCancel"
+                    android:background="@drawable/secondary_round"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Cancel" />
@@ -160,10 +167,12 @@
         <Button
             android:id="@+id/cust_profile_switchModeButton"
             style="@style/profileCancel"
+            android:background="@drawable/secondary_round"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Sign Out" />
+            android:text="Sign Out"
+            android:layout_marginTop="12dp"/>
 
     </LinearLayout>
 </ScrollView>

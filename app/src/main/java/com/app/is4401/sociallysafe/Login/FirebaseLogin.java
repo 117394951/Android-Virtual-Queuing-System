@@ -11,18 +11,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.is4401.sociallysafe.Admin.Admin_Main;
+import com.app.is4401.sociallysafe.Model.User;
 import com.app.is4401.sociallysafe.R;
+import com.app.is4401.sociallysafe.User.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseLogin extends AppCompatActivity {
 
     private Button btnLogin, btnRegister;
     private EditText etEmail, etPassword;
     private FirebaseAuth mAuth;
+    private DatabaseReference custRef;
+    User userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +97,37 @@ public class FirebaseLogin extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+
+                custRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
                 if(task.isSuccessful()){
                     //email verification and user authentication with log in
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     if (user.isEmailVerified()){
-                        //redirect to profile
-                        startActivity(new Intent(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, SegregationActivity.class));
-                        Toast.makeText(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, "Signing In", Toast.LENGTH_LONG).show();
+
+                        custRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                String isAdmin = snapshot.child("admin").getValue().toString();
+
+                                if(isAdmin.equals("true")) {
+                                    //redirect to profile
+                                    startActivity(new Intent(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, Admin_Main.class));
+                                    Toast.makeText(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, "Signing In", Toast.LENGTH_LONG).show();
+                                }else{
+                                    startActivity(new Intent(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, MainActivity.class));
+                                    Toast.makeText(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, "Signing In", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
                     } else{
                         user.sendEmailVerification();
                         Toast.makeText(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, "Check your email to verify your account!", Toast.LENGTH_LONG).show();

@@ -143,7 +143,7 @@ private ImageView btnBack;
 
     private boolean isMobileChanged() {
 
-        String _MOBILE = custRef.child(user.getUid()).child("Mobile").toString();
+        String _MOBILE = custRef.child(user.getUid()).child("mobile").toString();
 
 
         //if user is trying to change their details, the intent will not be equal to the updated text
@@ -157,7 +157,7 @@ private ImageView btnBack;
 
     private boolean isEmailChanged() {
 
-        String _EMAIL = custRef.child(user.getUid()).child("Email").toString();
+        String _EMAIL = custRef.child(user.getUid()).child("email").toString();
         String accEmail = user.getEmail();
 
         //if user is trying to change their details, the intent will not be equal to the updated text
@@ -215,12 +215,12 @@ private ImageView btnBack;
                            public void onComplete(@NonNull Task<Void> task) {
                                if (task.isSuccessful()) {
                                    Log.d(TAG, "User email address updated.");
-                                   custRef.child(user.getUid()).child("Email").setValue(email.getText().toString());
+                                   custRef.child(user.getUid()).child("email").setValue(email.getText().toString());
                                }
                            }
                        });
 
-               custRef.child(user.getUid()).child("Mobile").setValue(mobile.getText().toString());
+               custRef.child(user.getUid()).child("mobile").setValue(mobile.getText().toString());
            }
        });
 

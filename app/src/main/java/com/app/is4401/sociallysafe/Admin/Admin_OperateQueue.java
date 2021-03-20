@@ -117,8 +117,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                if (dataSnapshot.child("Name").exists()) {
-                                    String cust_name = dataSnapshot.child("Name").getValue().toString();
+                                if (dataSnapshot.child("name").exists()) {
+                                    String cust_name = dataSnapshot.child("name").getValue().toString();
                                     c1.setText(cust_name);
                                     System.out.println("myname" + cust_name);
                                 } else {
@@ -144,8 +144,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                if (dataSnapshot.child("Name").exists()) {
-                                    String cust_name2 = dataSnapshot.child("Name").getValue().toString();
+                                if (dataSnapshot.child("name").exists()) {
+                                    String cust_name2 = dataSnapshot.child("name").getValue().toString();
                                     c2.setText(cust_name2);
                                     System.out.println("myname" + cust_name2);
                                 } else {
@@ -171,8 +171,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                if (dataSnapshot.child("Name").exists()) {
-                                    String cust_name3 = dataSnapshot.child("Name").getValue().toString();
+                                if (dataSnapshot.child("name").exists()) {
+                                    String cust_name3 = dataSnapshot.child("name").getValue().toString();
                                     c3.setText(cust_name3);
                                     System.out.println("myname" + cust_name3);
                                 } else {
@@ -198,8 +198,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                if (dataSnapshot.child("Name").exists()) {
-                                    String cust_name4 = dataSnapshot.child("Name").getValue().toString();
+                                if (dataSnapshot.child("name").exists()) {
+                                    String cust_name4 = dataSnapshot.child("name").getValue().toString();
                                     c4.setText(cust_name4);
                                     System.out.println("myname" + cust_name4);
                                 } else {
@@ -289,8 +289,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        if (dataSnapshot.child("Name").exists()) {
-                                            String cust_name = dataSnapshot.child("Name").getValue().toString();
+                                        if (dataSnapshot.child("name").exists()) {
+                                            String cust_name = dataSnapshot.child("name").getValue().toString();
                                             c1.setText(cust_name);
                                             System.out.println("myname" + cust_name);
                                         } else {
@@ -318,8 +318,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        if (dataSnapshot.child("Name").exists()) {
-                                            String cust_name2 = dataSnapshot.child("Name").getValue().toString();
+                                        if (dataSnapshot.child("name").exists()) {
+                                            String cust_name2 = dataSnapshot.child("name").getValue().toString();
                                             c2.setText(cust_name2);
                                             System.out.println("myname" + cust_name2);
                                         } else {
@@ -347,8 +347,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        if (dataSnapshot.child("Name").exists()) {
-                                            String cust_name3 = dataSnapshot.child("Name").getValue().toString();
+                                        if (dataSnapshot.child("name").exists()) {
+                                            String cust_name3 = dataSnapshot.child("name").getValue().toString();
                                             c3.setText(cust_name3);
                                             System.out.println("myname" + cust_name3);
                                         } else {
@@ -376,8 +376,8 @@ public class Admin_OperateQueue extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        if (dataSnapshot.child("Name").exists()) {
-                                            String cust_name4 = dataSnapshot.child("Name").getValue().toString();
+                                        if (dataSnapshot.child("name").exists()) {
+                                            String cust_name4 = dataSnapshot.child("name").getValue().toString();
                                             c4.setText(cust_name4);
                                             System.out.println("myname" + cust_name4);
                                         } else {

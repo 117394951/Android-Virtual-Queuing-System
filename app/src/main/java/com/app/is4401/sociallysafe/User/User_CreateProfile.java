@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.is4401.sociallysafe.Admin.Admin_Main;
 import com.app.is4401.sociallysafe.R;
 import com.app.is4401.sociallysafe.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,7 +45,7 @@ public class User_CreateProfile extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StorageTask mUploadTask;
     private Context mContext;
-
+User userInfo;
     private TextView textViewUserEmail;
     private CheckBox prioritycheckbox;
     private Uri imageUri;
@@ -58,7 +59,8 @@ public class User_CreateProfile extends AppCompatActivity {
     private EditText name, mobile;
     private ImageButton ivLogo;
     private Button save,  btnMyQueue;
-    protected static Boolean priority=false;
+    private CheckBox cbAdmin;
+    protected static Boolean priority=false, admin = false;
 
 
     @Override
@@ -67,18 +69,12 @@ public class User_CreateProfile extends AppCompatActivity {
         setContentView(R.layout.activity_user__create_profile);
         mContext = this;
 
+        cbAdmin = findViewById(R.id.checkBoxAdmin);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         mStorageRef = FirebaseStorage.getInstance().getReference("Users");
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         name= findViewById(R.id.nickname);
-        btnMyQueue = findViewById(R.id.btnMyQueue);
-        btnMyQueue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(User_CreateProfile.this, User_MyQueues.class));
-            }
-        });
         mobile = findViewById(R.id.mobile);
         ivLogo = findViewById(R.id.init_profile_image);
         setLogoChooser();
@@ -86,12 +82,14 @@ public class User_CreateProfile extends AppCompatActivity {
         prioritycheckbox=findViewById(R.id.priorityCheckbox);
         textViewUserEmail= findViewById(R.id.textviewemail);
         textViewUserEmail.setText("Welcome "+user.getEmail());
-        btnBack = findViewById(R.id.btnBack);
+        save = findViewById(R.id.btnsaveinfo);
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        cbAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                cbAdmin.setChecked(true);
+                admin=true;
             }
         });
 
@@ -155,11 +153,17 @@ public class User_CreateProfile extends AppCompatActivity {
                                         }
                                     });
 
-                            User userInfo = new User(getName, getEmail, getMobile, getimageURL, numGuests, priority);
+                            User userInfo = new User(getName, getEmail, getMobile, getimageURL, numGuests, priority, admin);
                             databaseReference.child(user.getUid()).setValue(userInfo);
                             Toast.makeText(User_CreateProfile.this, "Information saved! Welcome to SociallySafe", Toast.LENGTH_LONG).show();
+
+
+                            if (userInfo.isAdmin()) {
+                                startActivity(new Intent(User_CreateProfile.this, Admin_Main.class));
+                            } else {
                             Intent i = new Intent(User_CreateProfile.this, MainActivity.class);
                             startActivity(i);
+                        }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

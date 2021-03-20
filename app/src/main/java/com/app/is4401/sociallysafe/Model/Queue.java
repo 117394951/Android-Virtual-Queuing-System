@@ -16,7 +16,7 @@ public class Queue{
         this.Name = "No Queue Name";
         this.Desc="No Desc";
         this.Location = "No Location";
-        this.Avewaiting=1;
+        this.Avewaiting=0;
         this.online = true;
         queue = new ArrayList<>();
     }
@@ -64,9 +64,10 @@ public class Queue{
         this.Avewaiting = w;
     }
 
+
     public String getLocation() {return Location;}
 
-    public void setLocation() {this.Location = Location;}
+    public void setLocation(String Location) {this.Location = Location;}
 
     public int getNumPeople() {return queue.size();}
 

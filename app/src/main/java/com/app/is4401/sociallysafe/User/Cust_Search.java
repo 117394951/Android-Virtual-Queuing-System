@@ -14,15 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,58 +36,46 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
-        //implements ActivityCompat.OnRequestPermissionsResultCallback
-{
+public class Cust_Search extends AppCompatActivity {
 
-    /**
-     * https://www.geeksforgeeks.org/how-to-populate-recyclerview-with-firebase-data-using-firebaseui-in-android-studio/
-     */
-
-
-    private static final String TAG = "* MainActivity";
-
-    TextView name, waitTime, qNumPeople, queueWaitTimeHeader, minutes, queueNumPeopleHeader;
-    Button btnJoinQ, btnMyQueue, btnSearch;
-    ImageView ivProfile;
-    RecyclerView list;
-    DatabaseReference queueRef, custRef;
-    Context context;
-    Toolbar toolbar;
+    private EditText mSearchField;
+    private ImageView mSearchBtn, btnProfile, btnBack;
+    private Context mContext;
+    private RecyclerView mResultList;
+    private Button btnMyQueue;
     private FirebaseAuth mAuth;
     private  FirebaseUser user;
+    private DatabaseReference custRef;
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ArrayList<Queue> queue = new ArrayList<>();
+        setContentView(R.layout.activity_cust_search);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         custRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        btnSearch = findViewById(R.id.ivSearch);
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Cust_Search.class));
+                startActivity(new Intent(Cust_Search.this, MainActivity.class));
             }
         });
-
         btnMyQueue = findViewById(R.id.btnMyQueue);
         custRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild("adminId")){
+                if (snapshot.hasChild("adminId")) {
                     btnMyQueue.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     btnMyQueue.setVisibility(View.INVISIBLE);
                 }
             }
@@ -98,30 +85,43 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
         btnMyQueue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, User_MyQueues.class));
+                startActivity(new Intent(Cust_Search.this, User_MyQueues.class));
             }
         });
-
-        list = findViewById(R.id.recycler1);
-        list.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-        ivProfile = findViewById(R.id.ivProfile);
-        ivProfile.setOnClickListener(new View.OnClickListener() {
+        btnProfile = findViewById(R.id.ivProfile);
+        btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), User_Profile.class));
+                startActivity(new Intent(Cust_Search.this, User_Profile.class));
             }
         });
+        mSearchField = findViewById(R.id.testcme_editTxt_SearchBar);
+        mSearchBtn = findViewById(R.id.imageView2);
 
+        mResultList = (RecyclerView) findViewById(R.id.testmerchant_search_list);
+        mResultList.setHasFixedSize(true);
+        mResultList.setLayoutManager(new LinearLayoutManager(this));
 
-        queueRef = FirebaseDatabase.getInstance().getReference().child("Queue");
-        queueRef.keepSynced(true);
+        mSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchText = mSearchField.getText().toString();
+                firebaseUserSearch(searchText);
+            }
+        });
+    }
+
+    private void firebaseUserSearch(String searchText) {
+        Toast.makeText(Cust_Search.this, "Started Search", Toast.LENGTH_SHORT).show();
+
+        DatabaseReference queueRef = FirebaseDatabase.getInstance().getReference("Queue");
+        Query fireSearchQuery = queueRef.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
+
         FirebaseRecyclerOptions<Queue> options = new FirebaseRecyclerOptions.Builder<Queue>()
-                .setQuery(queueRef.orderByChild("numPeople"), Queue.class)
+                .setQuery(fireSearchQuery, Queue.class)
                 .setLifecycleOwner(this)
                 .build();
         FirebaseRecyclerAdapter adpater = new FirebaseRecyclerAdapter<Queue, UserViewHolder>(options) {
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity
             public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.cust_list_item, parent, false);
-                Log.d(TAG, "layout inflated");
+//                Log.d(TAG, "layout inflated");
                 return new UserViewHolder(view);
             }
 
@@ -152,15 +152,13 @@ public class MainActivity extends AppCompatActivity
                 }
 
 
-                Log.d(TAG, "adapter binded");
+//                Log.d(TAG, "adapter binded");
             }
+
         };
-
-        list.setAdapter(adpater);
-
+        mResultList.setAdapter(adpater);
 
     }
-
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
 
@@ -176,16 +174,11 @@ public class MainActivity extends AppCompatActivity
         @Keep
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-
-
             view = itemView;
-
-
             customerRef = FirebaseDatabase.getInstance().getReference("Users");
             queueRef = FirebaseDatabase.getInstance().getReference("Queue");
 
             firebaseAuth = FirebaseAuth.getInstance();
-            user = firebaseAuth.getCurrentUser();
         }
 
 
@@ -194,7 +187,7 @@ public class MainActivity extends AppCompatActivity
             TextView waitTime = view.findViewById(R.id.queueWaitTime);
             final ImageView user_image = view.findViewById(R.id.queueImage);
             final TextView qNumPeople = view.findViewById(R.id.queueNumPeople);
-            final Button joinQ = view.findViewById(R.id.joinQ_recycler);
+            Button joinQ = view.findViewById(R.id.joinQ_recycler);
 
             name.setText(queueName);
             qNumPeople.setText(numPeople);
@@ -220,26 +213,6 @@ public class MainActivity extends AppCompatActivity
             });
 // END
 
-            customerRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChild("adminId")) {
-                        joinQ.setClickable(false);
-                        joinQ.setBackgroundResource(R.drawable.already_joined);
-                        joinQ.setText("Already Q-ing!");
-                    } else {
-                        joinQ.setClickable(true);
-                        joinQ.setBackgroundResource(R.drawable.primary_join_btn);
-                        joinQ.setText("Join Q!");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
 //            //User priority code
 //            customerRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
@@ -247,12 +220,12 @@ public class MainActivity extends AppCompatActivity
 //                    if (snapshot.child("priority").getValue() != null) {
 //                        priority = snapshot.child("priority").getValue().toString();
 //                    }
-//                    if (snapshot.hasChild("adminId")) {
-//                        joinQ.setClickable(false);
-//                        joinQ.setBackgroundResource(R.drawable.already_joined);
+//                    if (snapshot.hasChild("merchantID")) {
+//                        joinQButton.setClickable(false);
+//                        joinQButton.setBackgroundResource(R.drawable.already_join_button);
 //                    }
 //                    else {
-//                        joinQ.setClickable(true);
+//                        joinQButton.setClickable(true);
 //                    }
 //                }
 //
@@ -269,7 +242,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(final View v) {
 
-                    Log.d(TAG, "Join queue button clicked");
+//                    Log.d(TAG, "Join queue button clicked");
 
                     queueRef.orderByChild("name").equalTo(name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -335,7 +308,7 @@ public class MainActivity extends AppCompatActivity
             LayoutInflater layoutInflater = LayoutInflater.from(getBaseContext());
             final View view = layoutInflater.inflate(R.layout.numguests_dialog, null);
 
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Cust_Search.this);
             alertDialogBuilder.setView(view);
 
             final Spinner spinner = view.findViewById(R.id.spinner);
@@ -377,7 +350,7 @@ public class MainActivity extends AppCompatActivity
                     customerRef.child(user.getUid()).child("adminId").setValue(adminId);
                     customerRef.child(user.getUid()).child("numGuests").setValue(numGuests);
 
-                    Log.d(TAG, "adding customer to queue");
+//                    Log.d(TAG, "adding customer to queue");
 
                     Toast.makeText(getApplicationContext(), "Joined Queue!", Toast.LENGTH_SHORT).show();
 

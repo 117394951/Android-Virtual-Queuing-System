@@ -20,14 +20,12 @@
     <!-- Button Styles -->
     <style name="floatJoinQ">
         <item name="android:textSize">16dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
     <style name="joinQ">
         <item name="android:textSize">16dp</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
 
@@ -47,6 +45,11 @@
     <style name="recyclerJoinQ">
         <item name="android:textSize">24dp</item>
         <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="searchBtn">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
     </style>
 
 
@@ -83,6 +86,11 @@
         <item name="android:textSize">11dp</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
+<style name="inQueueToolBar">
+    <item name="android:textSize">24dp</item>
+    <item name="android:textColor">@color/colorWhite</item>
+</style>
+
 
     <!-- Stall Desc Styles -->
     <style name="stall_desc_name">
@@ -109,8 +117,7 @@
 
     <style name="profileButton">
         <item name="android:textSize">16dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="backgroundTint">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
     <style name="profile_detail_header">
@@ -118,10 +125,9 @@
         <item name="android:textColor">@color/colorGrey</item>
     </style>
     <style name="profileCancel">
-        <item name="android:textSize">14dp</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:backgroundTint">@color/colorPrimary</item>
-        <item name="android:padding">6dp</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:radius">40dp</item>
     </style>
     <style name="profile_detail_toEdit">
         <item name="android:textSize">11dp</item>

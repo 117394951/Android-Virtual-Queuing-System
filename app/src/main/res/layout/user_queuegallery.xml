@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/btnBack"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:src="@drawable/ic_baseline_arrow2_back_24" />
 
     <include layout="@layout/content_queue_description" />
@@ -24,7 +24,9 @@
         android:layout_gravity="bottom|center"
         android:layout_margin="20dp"
         android:padding="16dp"
-        style="@style/joinQ"/>
+        style="@style/joinQ"
+        android:background="@drawable/primary_join_btn"
+        />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

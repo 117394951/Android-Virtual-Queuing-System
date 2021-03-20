@@ -15,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="0dp"
         android:background="#fff"
+        app:itemTextColor="@color/colorPrimaryDark"
         app:menu="@menu/bottom_menu"/>
 
     <androidx.fragment.app.FragmentContainerView

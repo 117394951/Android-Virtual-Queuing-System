@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
+import com.app.is4401.sociallysafe.User.User_CreateProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,7 +26,7 @@ public class FirebaseRegister extends AppCompatActivity {
     private EditText etUsername, etPassword;
     private FirebaseDatabase mRef;
     private FirebaseAuth firebaseAuth;
-    private CheckBox cbAdmin, cbUser;
+    private CheckBox cbAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class FirebaseRegister extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         etUsername = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
+        cbAdmin = findViewById(R.id.checkBoxAdmin);
 
         firebaseAuth=FirebaseAuth.getInstance();
 
@@ -66,7 +68,7 @@ public class FirebaseRegister extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
 
-                    Intent segregate= new Intent(FirebaseRegister.this, SegregationPostRegistration.class);
+                    Intent segregate= new Intent(FirebaseRegister.this, User_CreateProfile.class);
                     startActivity(segregate);
 
 

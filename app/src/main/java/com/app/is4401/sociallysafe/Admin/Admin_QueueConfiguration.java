@@ -12,16 +12,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import com.app.is4401.sociallysafe.R;
 import com.app.is4401.sociallysafe.Model.Queue;
+import com.app.is4401.sociallysafe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +41,7 @@ public class Admin_QueueConfiguration extends Fragment {
     TextView tvName, waitTime, queueSize, tv1, tv20,tv23, location, description;
     ImageView ivLogo, iv2, ivReview;
     Bitmap bitmap;
-    Switch swOnline;
+    SwitchCompat swOnline;
     private FirebaseUser user;
     private DatabaseReference imageRef, queueRef;
     private DatabaseReference childrenRef;
@@ -98,9 +98,11 @@ public class Admin_QueueConfiguration extends Fragment {
                     online = true;
                     Toast.makeText(getContext(), "Online", Toast.LENGTH_SHORT).show();
                     queueInfo.setOnline(true);
+
                 } else {
                     Toast.makeText(getContext(), "Queue Offline", Toast.LENGTH_SHORT).show();
                     online = false;
+
 
                     queueRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -156,7 +158,6 @@ public class Admin_QueueConfiguration extends Fragment {
                             ivLogo.setVisibility(View.VISIBLE);
                             swOnline.setVisibility(View.VISIBLE);
                             queueSize.setVisibility(View.VISIBLE);
-
 
 
 

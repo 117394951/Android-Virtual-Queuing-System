@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.app.is4401.sociallysafe.Login.FirebaseLogin;
 import com.app.is4401.sociallysafe.R;
 import com.app.is4401.sociallysafe.Model.Queue;
+import com.app.is4401.sociallysafe.User.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +30,7 @@ import static android.view.View.VISIBLE;
 
 public class Admin_Edit extends Fragment {
 
-    Button btnDrop, btnSignOut;
+    Button btnDrop, btnSignOut, btnSwitch;
     Switch sw;
     DatabaseReference queueRef;
     FirebaseUser user;
@@ -45,10 +46,18 @@ public class Admin_Edit extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_edit, container, false);
 
+        btnSwitch = view.findViewById(R.id.btnSwitch);
         btnDrop = view.findViewById(R.id.btnDrop);
         btnDrop.setVisibility(INVISIBLE);
         btnSignOut = view.findViewById(R.id.btnSignOut);
 //        sw = view.findViewById(R.id.switch1);
+
+        btnSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), MainActivity.class));
+            }
+        });
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         queueRef = FirebaseDatabase.getInstance().getReference("Queue");

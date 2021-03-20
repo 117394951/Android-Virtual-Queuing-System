@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".User.Cust_Search">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+        <ImageView
+            android:id="@+id/imageView61"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:cropToPadding="false"
+            app:srcCompat="@drawable/logo" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_people_outline_24"
+            android:layout_marginStart="45dp"
+            android:padding="8dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="My Queues"
+            android:textSize="18dp"
+            android:id="@+id/btnMyQueue"
+            android:layout_gravity="right"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@color/colorWhite"/>
+
+
+        <ImageView
+            app:srcCompat="@drawable/ic_baseline_person_outline_24"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/ivProfile"
+            android:padding="8dp"/>
+
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            android:id="@+id/cme_LY01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center|center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <!--SearchView
+            android:id="@+id/cme_editTxt_SearchBar"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/seach_layout"
+            android:queryHint="Queue ID / Name"
+            android:searchHintIcon="@null"
+            android:iconifiedByDefault="false"
+            android:searchIcon="@null"
+             /-->
+            <EditText
+                android:id="@+id/testcme_editTxt_SearchBar"
+                android:layout_width="137dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="5dp"
+                android:layout_weight="7"
+                android:background="@drawable/seach_layout"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Queue Name"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:paddingLeft="8dp"
+                android:textColor="#adadad"
+                android:windowSoftInputMode="adjustNothing">
+
+            </EditText>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/cme_editTxt_SearchBar"
+                android:layout_margin="5dp"
+                android:layout_toStartOf="@+id/cme_editTxt_SearchBar"
+                android:adjustViewBounds="false"
+                android:padding="5dp"
+                app:srcCompat="@drawable/search_icon" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/cme_LY02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/testSearchText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingBottom="5dp"
+            android:text="Results"
+            android:textColor="@color/colorAccent"
+            style="@style/recyclerJoinQ"
+            android:textSize="24dp"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/testmerchant_search_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

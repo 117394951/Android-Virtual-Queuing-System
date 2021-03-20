@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.model.Queue;
-import com.app.is4401.sociallysafe.model.User;
+import com.app.is4401.sociallysafe.Model.Queue;
+import com.app.is4401.sociallysafe.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -59,9 +59,9 @@ public class Admin_AddCust extends AppCompatActivity {
 
 
         FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
-                .setDatabaseUrl("***")
-                .setApiKey("****")
-                .setApplicationId("***").build();
+                .setDatabaseUrl("https://console.firebase.google.com/u/3/project/sociallysafe-f43b8/database/sociallysafe-f43b8/data")
+                .setApiKey("AIzaSyAnWJr2g4bDKrJYRqb7hBfNnwtanS7n8XY")
+                .setApplicationId("sociallysafe-f43b8").build();
 
         try {
             FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "SociallySafe");
@@ -182,8 +182,8 @@ public class Admin_AddCust extends AppCompatActivity {
                             newCust = newCustAuth.getCurrentUser();
                             final String newCustId = newCust.getUid();
                             tvKey.setText(newCustId);
-
-                            User upload = new User(name, email, mobile, imageUrl, numGuests, priority);
+                            Boolean admin = false;
+                            User upload = new User(name, email, mobile, imageUrl, numGuests, priority,admin);
                             custRef.child(newCustId).setValue(upload);
                             Toast.makeText(Admin_AddCust.this, "New Customer Joined Queue ", Toast.LENGTH_SHORT).show();
 

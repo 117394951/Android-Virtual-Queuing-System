@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
-    android:layout_marginTop="28dp"
+
+    android:layout_marginTop="45dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/user_queuegallery">
 
@@ -14,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/colorWhite"
-        android:layout_margin="12dp">
+        android:backgroundTint="@color/colorWhite"
+        android:background="@drawable/seach_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/stall_image_container"
@@ -29,6 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
                 style="@style/stall_desc_name"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"

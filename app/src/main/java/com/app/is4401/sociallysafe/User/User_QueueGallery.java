@@ -33,6 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class User_QueueGallery extends AppCompatActivity {
 
    private ImageView btnBack;
@@ -45,10 +48,12 @@ public class User_QueueGallery extends AppCompatActivity {
    public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.user_queuegallery);
-      getIncomingIntent();
 
+      firebaseAuth = FirebaseAuth.getInstance();
+      user = firebaseAuth.getCurrentUser();
+
+      getIncomingIntent(user);
       btnBack = findViewById(R.id.btnBack);
-
       btnBack.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -59,7 +64,7 @@ public class User_QueueGallery extends AppCompatActivity {
    }
 
 
-   private void getIncomingIntent(){
+   private void getIncomingIntent(FirebaseUser user){
 
       if( getIntent().getExtras() != null){
          String imageUrl = getIntent().getStringExtra("image_url");
@@ -69,14 +74,16 @@ public class User_QueueGallery extends AppCompatActivity {
          String queueLocation = getIntent().getStringExtra("location");
          String queueDesc = getIntent().getStringExtra("description");
 
-         setGallery(imageUrl,queueName,queueWaitingTime,queueNumPeople,queueLocation,queueDesc);
+         setGallery(user, imageUrl,queueName,queueWaitingTime,queueNumPeople,queueLocation,queueDesc);
       }
    }
 
-   private void setGallery(String imageUrl, String queueName,
+   public void setGallery(final FirebaseUser user, String imageUrl, String queueName,
                            String queueTime, String queueNumPeople,
                            final String queueLocation, String queueDesc) {
 
+      custRef = FirebaseDatabase.getInstance().getReference("Users");
+      queueRef = FirebaseDatabase.getInstance().getReference("Queue");
 
       final TextView name = findViewById(R.id.stall_desc_name);
       name.setText(queueName);
@@ -111,21 +118,37 @@ public class User_QueueGallery extends AppCompatActivity {
       ImageView image = findViewById(R.id.stall_image);
       new GetImageFromURL(image).execute(imageUrl);
 
+      final Button joinQ = findViewById(R.id.joinQ);
 
-      Button joinQ = findViewById(R.id.joinQ);
+      custRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.hasChild("adminId")){
+               joinQ.setClickable(false);
+               joinQ.setBackgroundResource(R.drawable.already_joined);
+               joinQ.setVisibility(INVISIBLE);
+            }else{
+               joinQ.setClickable(true);
+               joinQ.setBackgroundResource(R.drawable.primary_join_btn);
+               joinQ.setVisibility(VISIBLE);
+            }
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError error) {
+
+         }
+      });
+
+
       joinQ.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(final View v) {
             firebaseAuth = FirebaseAuth.getInstance();
-            custRef = FirebaseDatabase.getInstance().getReference("Users");
-            queueRef = FirebaseDatabase.getInstance().getReference("Queue");
-
             queueRef.orderByChild("name").equalTo(name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                   for(DataSnapshot childSnapshot : snapshot.getChildren()){
-                     user = firebaseAuth.getCurrentUser();
                      Queue queue = childSnapshot.getValue(Queue.class);
                      String admin_id = childSnapshot.getKey();
 
@@ -143,6 +166,7 @@ public class User_QueueGallery extends AppCompatActivity {
 //                        queueRef.child(admin_id).setValue(queue);
 //                        custRef.child(user.getUid()).child("adminId").setValue(admin_id);
                         numPeople.setText(String.valueOf(queue.getNumPeople()));
+
                      }
 
 
@@ -209,7 +233,7 @@ public class User_QueueGallery extends AppCompatActivity {
 
             queueRef.child(admin_id).setValue(queue);
             custRef.child(user.getUid()).child("adminId").setValue(admin_id);
-            custRef.child(user.getUid()).child("NumGuests").setValue(numGuests);
+            custRef.child(user.getUid()).child("numGuests").setValue(numGuests);
 
 //            Log.d(TAG, "adding customer to queue");
 

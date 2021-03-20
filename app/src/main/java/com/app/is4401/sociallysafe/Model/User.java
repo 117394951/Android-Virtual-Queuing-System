@@ -9,18 +9,24 @@ public class User {
 
     //Alternative to getter and setter methods below
     //These will be my fields in the database, they are JSON keys
-    public String Name, Email, Mobile, imageUrl;
-    public String NumGuests;
-    public Long time;
-    public boolean priority = false;
+    private String Name, Email, Mobile, imageUrl, NumGuests;
+    private Long time;
+    private boolean priority = false, admin = false;
     public ArrayList<String> user;
 
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        this.Name = "No Name";
+        this.Email = "No Email";
+        this.Mobile = "No mobile";
+        this.imageUrl = "";
+        this.NumGuests = "";
+        this.priority = false;
+        this.admin = false;
     }
 
-    public User(String Name, String Email, String Mobile, String imageUrl, String NumGuests, Boolean priority) {
+    public User(String Name, String Email, String Mobile, String imageUrl, String NumGuests, Boolean priority, Boolean admin) {
         this.Name = Name;
         this.Email = Email;
         this.Mobile = Mobile;
@@ -28,8 +34,73 @@ public class User {
         this.NumGuests = NumGuests;
 //        this.time = time;
         this.priority = priority;
+        this.admin = admin;
         user = new ArrayList<>();
 
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
+    public void setMobile(String Mobile) {
+        this.Mobile = Mobile;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getNumGuests() {
+        return NumGuests;
+    }
+
+    public void setNumGuests(String NumGuests) {
+        this.NumGuests = NumGuests;
+    }
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
+
+    public boolean isPriority() {
+        return priority;
+    }
+
+    public void setPriority(boolean priority) {
+        this.priority = priority;
+    }
+
+    public void setUser(ArrayList<String> user) {
+        this.user = user;
     }
 
     public String getMobile() {

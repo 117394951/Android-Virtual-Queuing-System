@@ -34,7 +34,7 @@ public class User_MyQueues extends AppCompatActivity {
 
 
     private FirebaseAuth firebaseAuth;
-    private TextView queue_name, est_wait, num_people;
+    private TextView queue_name, est_wait, num_people, position;
     private Button btnDropQ, btnRefresh;
     private FirebaseUser user;
     private ImageView ivLogo, ivProfile, btnBack;
