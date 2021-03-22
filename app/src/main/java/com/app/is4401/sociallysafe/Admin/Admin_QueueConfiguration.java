@@ -32,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
-import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class Admin_QueueConfiguration extends Fragment {
@@ -63,10 +62,6 @@ public class Admin_QueueConfiguration extends Fragment {
         imageRef = queueRef.child("imageUrl");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        ivReview = view.findViewById(R.id.ivReview);
-        ivReview.setVisibility(INVISIBLE);
-        iv2 = view.findViewById(R.id.imageView2);
-        iv2.setVisibility(INVISIBLE);
         tv20 = view.findViewById(R.id.textView20);
         tv20.setVisibility(View.INVISIBLE);
         tv23 = view.findViewById(R.id.textView23);
@@ -205,7 +200,6 @@ public class Admin_QueueConfiguration extends Fragment {
         btnCreateQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Configure your Queue!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getContext(), Admin_QueueActivity.class);
                 startActivity(intent);
             }

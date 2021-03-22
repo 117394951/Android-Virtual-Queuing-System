@@ -161,7 +161,7 @@ User userInfo;
                             if (userInfo.isAdmin()) {
                                 startActivity(new Intent(User_CreateProfile.this, Admin_Main.class));
                             } else {
-                            Intent i = new Intent(User_CreateProfile.this, MainActivity.class);
+                            Intent i = new Intent(User_CreateProfile.this, User_Main.class);
                             startActivity(i);
                         }
                         }

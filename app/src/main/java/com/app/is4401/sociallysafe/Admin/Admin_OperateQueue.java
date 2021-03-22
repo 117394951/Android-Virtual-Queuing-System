@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Admin_OperateQueue extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
+    private ImageView btnBack;
     private TextView queuedisplayrefreshButton;
     private Button btnNext;
     private FirebaseUser user;
@@ -55,6 +56,14 @@ public class Admin_OperateQueue extends AppCompatActivity {
 //        decorView.setSystemUiVisibility(uiOptions);
 //        getSupportActionBar().hide();
 
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Admin_OperateQueue.this, AdminManageQueue.class));
+                finish();
+            }
+        });
 
         btnNext = findViewById(R.id.nextCustomer);
         queuedisplayrefreshButton = findViewById(R.id.queuedisplayrefresh);

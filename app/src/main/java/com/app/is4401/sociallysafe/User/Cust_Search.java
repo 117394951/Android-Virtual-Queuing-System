@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,15 +45,13 @@ import java.io.InputStream;
 public class Cust_Search extends AppCompatActivity {
 
     private EditText mSearchField;
-    private ImageView mSearchBtn, btnProfile, btnBack;
-    private Context mContext;
+    private ImageView mSearchBtn,btnBack;
     private RecyclerView mResultList;
-    private Button btnMyQueue;
     private FirebaseAuth mAuth;
     private  FirebaseUser user;
     private DatabaseReference custRef;
 
-
+    @Nullable
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,38 +65,12 @@ public class Cust_Search extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Cust_Search.this, MainActivity.class));
+                finish();
             }
         });
-        btnMyQueue = findViewById(R.id.btnMyQueue);
-        custRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild("adminId")) {
-                    btnMyQueue.setVisibility(View.VISIBLE);
-                } else {
-                    btnMyQueue.setVisibility(View.INVISIBLE);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-        btnMyQueue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Cust_Search.this, User_MyQueues.class));
-            }
-        });
-        btnProfile = findViewById(R.id.ivProfile);
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Cust_Search.this, User_Profile.class));
-            }
-        });
+
         mSearchField = findViewById(R.id.testcme_editTxt_SearchBar);
         mSearchBtn = findViewById(R.id.imageView2);
 
@@ -112,7 +85,10 @@ public class Cust_Search extends AppCompatActivity {
                 firebaseUserSearch(searchText);
             }
         });
+
     }
+
+
 
     private void firebaseUserSearch(String searchText) {
         Toast.makeText(Cust_Search.this, "Started Search", Toast.LENGTH_SHORT).show();
@@ -179,6 +155,7 @@ public class Cust_Search extends AppCompatActivity {
             queueRef = FirebaseDatabase.getInstance().getReference("Queue");
 
             firebaseAuth = FirebaseAuth.getInstance();
+            user = firebaseAuth.getCurrentUser();
         }
 
 
@@ -187,7 +164,7 @@ public class Cust_Search extends AppCompatActivity {
             TextView waitTime = view.findViewById(R.id.queueWaitTime);
             final ImageView user_image = view.findViewById(R.id.queueImage);
             final TextView qNumPeople = view.findViewById(R.id.queueNumPeople);
-            Button joinQ = view.findViewById(R.id.joinQ_recycler);
+            final Button joinQ = view.findViewById(R.id.joinQ_recycler);
 
             name.setText(queueName);
             qNumPeople.setText(numPeople);
@@ -213,27 +190,25 @@ public class Cust_Search extends AppCompatActivity {
             });
 // END
 
-//            //User priority code
-//            customerRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if (snapshot.child("priority").getValue() != null) {
-//                        priority = snapshot.child("priority").getValue().toString();
-//                    }
-//                    if (snapshot.hasChild("merchantID")) {
-//                        joinQButton.setClickable(false);
-//                        joinQButton.setBackgroundResource(R.drawable.already_join_button);
-//                    }
-//                    else {
-//                        joinQButton.setClickable(true);
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
+            customerRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.hasChild("adminId")) {
+                        joinQ.setClickable(false);
+                        joinQ.setBackgroundResource(R.drawable.already_joined);
+                        joinQ.setText("Already Q-ing!");
+                    } else {
+                        joinQ.setClickable(true);
+                        joinQ.setBackgroundResource(R.drawable.primary_join_btn);
+                        joinQ.setText("Join Q!");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
 
             //when join Q is clicked, user added to queue

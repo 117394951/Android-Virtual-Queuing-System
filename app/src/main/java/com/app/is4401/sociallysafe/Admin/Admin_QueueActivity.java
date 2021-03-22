@@ -129,7 +129,6 @@ public class Admin_QueueActivity extends AppCompatActivity implements AdapterVie
         }
 
         queue_databaseReference.child(user.getUid()).setValue(upload);
-        queue_databaseReference.child(user.getUid()).child("Online").setValue("true");
         Log.d(TAG, "Merchant info saved");
         Toast.makeText(Admin_QueueActivity.this, "Merchant info saved in the database", Toast.LENGTH_SHORT).show();
 

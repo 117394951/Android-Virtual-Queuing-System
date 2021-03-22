@@ -18,14 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".User.Cust_Search"></activity>
-        <activity android:name=".Admin.Edit_Queue" />
-        <activity android:name=".Login.SegregationPostRegistration" />
         <activity android:name=".User.User_CreateProfile" />
-        <activity android:name=".User.User_MyQueues" />
-        <activity android:name=".User.MainActivity" />
-        <activity android:name=".User.User_Profile" />
+        <activity android:name=".User.User_Main" />
+
         <activity android:name=".Admin.Admin_QueueConfigurated" />
-        <activity android:name=".Login.SegregationActivity" />
         <activity android:name=".Login.FirebaseRegister" />
 
         <activity android:name=".Login.FirebaseLogin">

@@ -51,16 +51,16 @@ public class User_QueueGallery extends AppCompatActivity {
 
       firebaseAuth = FirebaseAuth.getInstance();
       user = firebaseAuth.getCurrentUser();
-
       getIncomingIntent(user);
-      btnBack = findViewById(R.id.btnBack);
+
+      btnBack  = findViewById(R.id.btnBack);
       btnBack.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            startActivity(new Intent(User_QueueGallery.this, MainActivity.class));
             finish();
          }
       });
+
    }
 
 

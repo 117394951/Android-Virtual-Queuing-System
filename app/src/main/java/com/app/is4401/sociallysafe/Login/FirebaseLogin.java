@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.app.is4401.sociallysafe.Admin.Admin_Main;
 import com.app.is4401.sociallysafe.Model.User;
 import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.User.MainActivity;
+import com.app.is4401.sociallysafe.User.User_Main;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -117,7 +117,7 @@ public class FirebaseLogin extends AppCompatActivity {
                                     startActivity(new Intent(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, Admin_Main.class));
                                     Toast.makeText(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, "Signing In", Toast.LENGTH_LONG).show();
                                 }else{
-                                    startActivity(new Intent(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, MainActivity.class));
+                                    startActivity(new Intent(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, User_Main.class));
                                     Toast.makeText(com.app.is4401.sociallysafe.Login.FirebaseLogin.this, "Signing In", Toast.LENGTH_LONG).show();
                                 }
                             }

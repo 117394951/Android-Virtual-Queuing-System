@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/grey_gradient">
 
     <TextView
         android:id="@+id/dialog_title"
@@ -22,12 +23,12 @@
 
     <TextView
         android:id="@+id/textView18"
-        style="@style/card_estimated_time_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:paddingLeft="10dp"
-        android:textSize="15dp"
+        android:textSize="18dp"
+        android:textStyle="bold"
         android:text="How many guests?"
         app:layout_constraintTop_toBottomOf="@+id/dialog_title"
         tools:layout_editor_absoluteX="8dp" />

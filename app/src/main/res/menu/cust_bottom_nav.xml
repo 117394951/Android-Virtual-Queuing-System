@@ -3,7 +3,7 @@
     <item
         android:title="My Queues"
         android:id="@+id/firstFragment"
-        android:icon="@drawable/ic_baseline_group_24"/>
+        android:icon="@drawable/ic_baseline_people_outline_24"/>
 
     <item
         android:title="Explore"
@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_home"/>
 
     <item
-        android:title="Settings"
+        android:title="Profile"
         android:id="@+id/thirdFragment"
-        android:icon="@drawable/ic__settings_24"/>
+        android:icon="@drawable/ic_baseline_person_outline_24"/>
 </menu>

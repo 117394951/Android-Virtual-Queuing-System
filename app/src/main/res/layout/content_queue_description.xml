@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
-
-    android:layout_marginTop="45dp"
+    android:layout_marginTop="70dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/user_queuegallery">
 
@@ -22,7 +21,7 @@
             android:id="@+id/stall_image_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="8dp"
             tools:ignore="ExtraText">
 
             <TextView
@@ -99,9 +98,9 @@
 
             <ImageView
                 android:id="@+id/stall_image"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
                 android:layout_height="120dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,10 +126,11 @@
 
             <TextView
                 android:id="@+id/stall_desc"
+                style="@style/profile_detail_toEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/stall_desc_header"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="Stall Desc Info"
                 android:textAlignment="center" />
 
@@ -147,6 +147,7 @@
 
             <TextView
                 android:id="@+id/stall_location"
+                style="@style/profile_detail_toEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/stall_location_header"
@@ -161,9 +162,10 @@
                 android:layout_below="@id/stall_location"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="6dp"
-                android:src="@drawable/ic_map"
+                android:layout_marginBottom="12dp"
+                android:background="@color/colorTransparentGrey"
                 android:scaleType="centerInside"
-                android:background="@color/colorTransparentGrey"/>
+                android:src="@drawable/ic_map" />
 
 
         </RelativeLayout>

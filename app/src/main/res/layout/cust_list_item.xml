@@ -11,7 +11,7 @@
     android:focusable="true"
     android:scrollbars="vertical"
     app:cardCornerRadius="10dp"
-    android:elevation="8dp">
+    android:elevation="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +23,9 @@
 
         <ImageButton
             android:id="@+id/queueImage"
-            android:layout_width="175dp"
-            android:layout_height="150dp"
+            android:layout_width="180dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="8dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_baseline_add_photo_alternate_24" />
@@ -45,7 +46,7 @@
 
                 <TextView
                     android:id="@+id/queueName"
-                    style="@style/card_outlet_name"
+                    style="@style/stall_desc_name"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"
@@ -54,7 +55,6 @@
                 <TextView
                     android:id="@+id/queueWaitTimeHeader"
                     android:layout_width="wrap_content"
-                    style="@style/card_estimated_time_header"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:text="Estimated Waiting Time" />
@@ -73,7 +73,6 @@
 
                     <TextView
                         android:id="@+id/minutes"
-                        style="@style/card_estimated_time_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -84,8 +83,8 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
                 android:layout_weight="4.5"
                 android:orientation="vertical">
 
@@ -106,22 +105,21 @@
                     <TextView
                         android:id="@+id/queueNumPeopleHeader"
                         android:layout_width="wrap_content"
-                        style="@style/queueing_now"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="queuing"/>
+                        android:text="queuing" />
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/joinQ_recycler"
+                    style="@style/floatJoinQ"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_below="@id/queueNumPeopleLayout"
+                    android:layout_alignParentRight="true"
                     android:layout_gravity="bottom"
                     android:background="@drawable/primary_join_btn"
                     android:paddingLeft="12dp"
-                    style="@style/floatJoinQ"
                     android:paddingRight="12dp"
                     android:text="Join Q!" />
             </LinearLayout>

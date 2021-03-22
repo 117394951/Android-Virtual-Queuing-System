@@ -6,13 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".User.User_QueueGallery"
-    android:background="@color/colorPrimaryDark">
+    android:background="@drawable/corkcity2">
 
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_baseline_arrow2_back_24" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_marginEnd="250dp"/>
+
+        <ImageView
+            android:id="@+id/imageView61"
+            android:layout_marginTop="8dp"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:cropToPadding="false"
+            app:srcCompat="@drawable/logo" />
+
+    </LinearLayout>
 
     <include layout="@layout/content_queue_description" />
 

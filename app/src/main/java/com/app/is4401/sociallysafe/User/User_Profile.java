@@ -8,7 +8,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,7 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.app.is4401.sociallysafe.Login.FirebaseLogin;
 import com.app.is4401.sociallysafe.Model.User;
@@ -38,7 +40,7 @@ import com.google.firebase.storage.StorageTask;
 
 import java.io.InputStream;
 
-public class User_Profile extends AppCompatActivity {
+public class User_Profile extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
@@ -63,25 +65,28 @@ private ImageView btnBack;
 
     private final String TAG = "CustSettings";
 
+    public User_Profile(){
+
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.activity_user_profile, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         mStorageRef = FirebaseStorage.getInstance().getReference("Customers");
         custRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        btnBack = findViewById(R.id.btnBack);
-        mobile = findViewById(R.id.cust_profile_mobile);
-        btnMyQueue = findViewById(R.id.btnMyQueue);
-        btnUpdate = findViewById(R.id.btnUpdateProfile);
-        btnCancel = findViewById(R.id.cust_profile_CancelButton);
-        btnSignOut = findViewById(R.id.cust_profile_switchModeButton);
-        email = findViewById(R.id.cust_profile_email_editText);
-        name = findViewById(R.id.cust_profile_nameOld);
-        profilePic = findViewById(R.id.cust_profile_image_new);
+        btnBack = view.findViewById(R.id.btnBack);
+        mobile = view.findViewById(R.id.cust_profile_mobile);
+        btnUpdate = view.findViewById(R.id.btnUpdateProfile);
+        btnCancel = view.findViewById(R.id.cust_profile_CancelButton);
+        btnSignOut = view.findViewById(R.id.cust_profile_switchModeButton);
+        email = view.findViewById(R.id.cust_profile_email_editText);
+        name = view.findViewById(R.id.cust_profile_nameOld);
+        profilePic = view.findViewById(R.id.cust_profile_image_new);
 
 
 
@@ -89,33 +94,19 @@ private ImageView btnBack;
         setBtnCancel();
         retrieveDetails();
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
-                startActivity(new Intent(User_Profile.this, FirebaseLogin.class));
-                finish();
-            }
-        });
-
-        btnMyQueue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(User_Profile.this, User_MyQueues.class));
+                startActivity(new Intent(getContext(), FirebaseLogin.class));
             }
         });
 
 
-
-
+        return view;
     }
+
+
 
     private void setBtnCancel() {
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -128,10 +119,9 @@ private ImageView btnBack;
 
     private void setBtnUpdate() {
         if(isEmailChanged() || isMobileChanged() ){
-            Toast.makeText(this, "Data Updated", Toast.LENGTH_LONG).show();
             updateDetails();
         }
-        else Toast.makeText(this,"Data is the same", Toast.LENGTH_LONG).show();
+        else Toast.makeText(getContext(),"Data is the same", Toast.LENGTH_LONG).show();
     }
 
 

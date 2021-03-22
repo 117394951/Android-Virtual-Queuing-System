@@ -23,7 +23,7 @@ import android.widget.Toolbar;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +42,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends Fragment
         //implements ActivityCompat.OnRequestPermissionsResultCallback
 {
 
@@ -53,9 +53,8 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "* MainActivity";
 
-    TextView name, waitTime, qNumPeople, queueWaitTimeHeader, minutes, queueNumPeopleHeader;
     Button btnJoinQ, btnMyQueue, btnSearch;
-    ImageView ivProfile;
+    ImageView ivProfile, ivIcon;
     RecyclerView list;
     DatabaseReference queueRef, custRef;
     Context context;
@@ -64,60 +63,33 @@ public class MainActivity extends AppCompatActivity
     private  FirebaseUser user;
 
 
+    public MainActivity(){
+
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.activity_main, container, false);
+
         ArrayList<Queue> queue = new ArrayList<>();
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         custRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        btnSearch = findViewById(R.id.ivSearch);
+        btnSearch = view.findViewById(R.id.ivSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Cust_Search.class));
-            }
-        });
 
-        btnMyQueue = findViewById(R.id.btnMyQueue);
-        custRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild("adminId")){
-                    btnMyQueue.setVisibility(View.VISIBLE);
-                }else{
-                    btnMyQueue.setVisibility(View.INVISIBLE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                startActivity(new Intent(getContext(), Cust_Search.class));
 
             }
         });
 
-        btnMyQueue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, User_MyQueues.class));
-            }
-        });
-
-        list = findViewById(R.id.recycler1);
-        list.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-        ivProfile = findViewById(R.id.ivProfile);
-        ivProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), User_Profile.class));
-            }
-        });
-
-
+        list = view.findViewById(R.id.recycler1);
+        list.setLayoutManager(new LinearLayoutManager(getContext()));
         queueRef = FirebaseDatabase.getInstance().getReference().child("Queue");
         queueRef.keepSynced(true);
         FirebaseRecyclerOptions<Queue> options = new FirebaseRecyclerOptions.Builder<Queue>()
@@ -141,7 +113,7 @@ public class MainActivity extends AppCompatActivity
                 int total_wait_time = model.getAvewaiting() * model.getNumPeople();
 
                 if (model.getOnline().equals(true)) {
-                    holder.setDetails(getApplicationContext(), model.getName(), Integer.toString(total_wait_time), model.getimageUrl(),
+                    holder.setDetails(getContext(), model.getName(), Integer.toString(total_wait_time), model.getimageUrl(),
                             Integer.toString(model.getNumPeople()),
                             model.getDesc(), model.getLocation());
                 } else {
@@ -159,7 +131,10 @@ public class MainActivity extends AppCompatActivity
         list.setAdapter(adpater);
 
 
+        return view;
     }
+
+
 
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
@@ -283,7 +258,7 @@ public class MainActivity extends AppCompatActivity
 
                                 if (queueInfo.queue.contains(user.getUid())) {
                                     Log.d("Join Queue", "Already in queue.");
-                                    Toast.makeText(getApplicationContext(), "Already in this queue!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "Already in this queue!", Toast.LENGTH_SHORT).show();
                                 } else {
                                     showGuestDialog(queueInfo, adminId);
                                 }
@@ -332,10 +307,10 @@ public class MainActivity extends AppCompatActivity
         private void showGuestDialog(final Queue queueInfo, final String adminId) {
 
 
-            LayoutInflater layoutInflater = LayoutInflater.from(getBaseContext());
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             final View view = layoutInflater.inflate(R.layout.numguests_dialog, null);
 
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
             alertDialogBuilder.setView(view);
 
             final Spinner spinner = view.findViewById(R.id.spinner);
@@ -379,7 +354,7 @@ public class MainActivity extends AppCompatActivity
 
                     Log.d(TAG, "adding customer to queue");
 
-                    Toast.makeText(getApplicationContext(), "Joined Queue!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Joined Queue!", Toast.LENGTH_SHORT).show();
 
                     alertDialog.cancel();
                     alertDialog.hide();

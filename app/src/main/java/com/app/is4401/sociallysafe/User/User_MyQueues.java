@@ -1,12 +1,13 @@
 package com.app.is4401.sociallysafe.User;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -15,10 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-import com.app.is4401.sociallysafe.R;
 import com.app.is4401.sociallysafe.Model.Queue;
+import com.app.is4401.sociallysafe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,8 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
-public class User_MyQueues extends AppCompatActivity {
-
+public class User_MyQueues extends Fragment {
 
 
     private FirebaseAuth firebaseAuth;
@@ -40,48 +40,36 @@ public class User_MyQueues extends AppCompatActivity {
     private ImageView ivLogo, ivProfile, btnBack;
     public int len;
     Queue queue;
-    private DatabaseReference queueRef,custRef;
+    private DatabaseReference queueRef, custRef;
     private Switch notificationEnabled;
     private TextView notificationEnabledText;
 
+    public User_MyQueues() {
+
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_myqueue);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.user_myqueue, container, false);
+
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
-        btnBack = findViewById(R.id.btnBack);
-        ivProfile = findViewById(R.id.ivProfile);
-        ivLogo= findViewById(R.id.imageView62);
-        queue_name = findViewById(R.id.queue_name);
-        btnDropQ = findViewById(R.id.btnDropQueue);
-        btnRefresh= findViewById(R.id.buttonCurrentRefresh);
-        est_wait= findViewById(R.id.waiting_time_data);
-        num_people = findViewById(R.id.num_people_data);
+        ivLogo = view.findViewById(R.id.imageView62);
+        queue_name = view.findViewById(R.id.queue_name);
+        btnDropQ = view.findViewById(R.id.btnDropQueue);
+        btnRefresh = view.findViewById(R.id.buttonCurrentRefresh);
+        est_wait = view.findViewById(R.id.waiting_time_data);
+        num_people = view.findViewById(R.id.num_people_data);
 
         custRef = FirebaseDatabase.getInstance().getReference("Users");
         queueRef = FirebaseDatabase.getInstance().getReference("Queue");
 
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
-        ivProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                startActivity(new Intent(User_MyQueues.this,User_Profile.class ));
-            }
-        });
-
         custRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild("adminId")){
+                if (snapshot.hasChild("adminId")) {
 
                     queueRef.child(snapshot.child("adminId").getValue().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -93,10 +81,9 @@ public class User_MyQueues extends AppCompatActivity {
                             int queueSize = queue.getNumPeople();
                             int index = queue.queue.indexOf(user.getUid());
                             int av_wait_time = queue.getAvewaiting();
-                            int waitTime = (index+1) * av_wait_time;
+                            int waitTime = (index + 1) * av_wait_time;
                             String imageurl = queue.getimageUrl();
                             new GetImageFromURL(ivLogo).execute(imageurl);
-
 
 
                             est_wait.setText(Integer.toString(waitTime) + " mins");
@@ -112,7 +99,7 @@ public class User_MyQueues extends AppCompatActivity {
                     });
 
                     System.out.println(snapshot.child("adminId").getValue());
-                }else{
+                } else {
                     System.out.println("Hard Luck");
                 }
                 System.out.println(snapshot);
@@ -140,7 +127,7 @@ public class User_MyQueues extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        if(snapshot.child("adminId").exists()){
+                        if (snapshot.child("adminId").exists()) {
                             final String admin_id = snapshot.child("adminId").getValue().toString();
                             custRef.child(user.getUid()).child("adminId").removeValue();
 
@@ -156,7 +143,6 @@ public class User_MyQueues extends AppCompatActivity {
                                     est_wait.setText("No Queue Yet");
                                     num_people.setText("No Queue Yet");
                                     ivLogo.setVisibility(View.INVISIBLE);
-                                    finish();
                                 }
 
                                 @Override
@@ -166,11 +152,11 @@ public class User_MyQueues extends AppCompatActivity {
                             });
 
 
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(),"You are not in any queue at the moment",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getContext(), "You are not in any queue at the moment", Toast.LENGTH_LONG).show();
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -178,38 +164,42 @@ public class User_MyQueues extends AppCompatActivity {
                 });
             }
         });
-    }
-}
-@SuppressLint("StaticFieldLeak")
-class GetImageFromURL extends AsyncTask<String, Void, Bitmap> {
 
-    ImageView imgV;
-    private Bitmap bitmap;
+        return view;
 
-    public GetImageFromURL(ImageView imgV) {
-        this.imgV = imgV;
     }
 
-    @Override
-    protected Bitmap doInBackground(String... url) {
-        String urldisplay = url[0];
+    @SuppressLint("StaticFieldLeak")
+    class GetImageFromURL extends AsyncTask<String, Void, Bitmap> {
 
-        bitmap = null;
-        try {
-            InputStream srt = new java.net.URL(urldisplay).openStream();
-            bitmap = BitmapFactory.decodeStream(srt);
+        ImageView imgV;
+        private Bitmap bitmap;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        public GetImageFromURL(ImageView imgV) {
+            this.imgV = imgV;
         }
 
-        return bitmap;
-    }
+        @Override
+        protected Bitmap doInBackground(String... url) {
+            String urldisplay = url[0];
 
-    @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        super.onPostExecute(bitmap);
-        imgV.setImageBitmap(bitmap);
+            bitmap = null;
+            try {
+                InputStream srt = new java.net.URL(urldisplay).openStream();
+                bitmap = BitmapFactory.decodeStream(srt);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            imgV.setImageBitmap(bitmap);
+        }
     }
 }
 

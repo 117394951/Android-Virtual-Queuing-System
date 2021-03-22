@@ -6,7 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:id="@+id/fragSearch"
     android:layout_height="match_parent"
+    android:background="@drawable/corkcity1"
     tools:context=".User.Cust_Search">
 
     <LinearLayout
@@ -18,52 +20,29 @@
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_marginStart="8dp"
             android:src="@drawable/ic_baseline_arrow_back_24" />
         <ImageView
             android:id="@+id/imageView61"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:cropToPadding="false"
-            app:srcCompat="@drawable/logo" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_baseline_people_outline_24"
-            android:layout_marginStart="45dp"
-            android:padding="8dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="My Queues"
-            android:textSize="18dp"
-            android:id="@+id/btnMyQueue"
-            android:layout_gravity="right"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:background="@color/colorWhite"/>
-
-
-        <ImageView
-            app:srcCompat="@drawable/ic_baseline_person_outline_24"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:id="@+id/ivProfile"
-            android:padding="8dp"/>
-
+            app:srcCompat="@drawable/logo"
+            android:layout_marginStart="250dp"/>
 
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp">
 
         <LinearLayout
             android:id="@+id/cme_LY01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:gravity="center|center_horizontal"
             android:orientation="horizontal"
@@ -85,18 +64,18 @@
                 android:id="@+id/testcme_editTxt_SearchBar"
                 android:layout_width="137dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="5dp"
+                android:layout_margin="8dp"
                 android:layout_weight="7"
                 android:background="@drawable/seach_layout"
+                android:backgroundTint="@color/colorWhite"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Queue Name"
                 android:inputType="textPersonName"
                 android:padding="8dp"
                 android:paddingLeft="8dp"
-                android:textColor="#adadad"
+                android:textColor="@color/colorGrey"
+                style="@style/profile_detail_toEdit"
                 android:windowSoftInputMode="adjustNothing">
 
             </EditText>
@@ -106,6 +85,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="25dp"
                 android:layout_alignTop="@+id/cme_editTxt_SearchBar"
                 android:layout_margin="5dp"
                 android:layout_toStartOf="@+id/cme_editTxt_SearchBar"
@@ -120,19 +100,21 @@
         android:id="@+id/cme_LY02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/testSearchText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingBottom="5dp"
+            android:gravity="center"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:layout_marginTop="8dp"
             android:text="Results"
+            android:textStyle="bold"
             android:textColor="@color/colorAccent"
             style="@style/recyclerJoinQ"
-            android:textSize="24dp"
-            android:textStyle="normal" />
+            android:textSize="30dp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

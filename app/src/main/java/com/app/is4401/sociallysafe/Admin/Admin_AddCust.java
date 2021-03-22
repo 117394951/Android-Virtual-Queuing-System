@@ -99,23 +99,19 @@ public class Admin_AddCust extends AppCompatActivity {
             return;
         }
         if (email.isEmpty()) {
-            etName.setError("Email is required!");
-            etName.requestFocus();
+            etEmail.setError("Email is required!");
+            etEmail.requestFocus();
             return;
         }
         if (mobile.isEmpty()) {
-            etName.setError("Mobile is required!");
-            etName.requestFocus();
+            etMobile.setError("Mobile is required!");
+            etMobile.requestFocus();
             return;
         }
-        if (numGuests.isEmpty()) {
-            etName.setError("Num Guests is required!");
-            etName.requestFocus();
-            return;
-        }
+
         if (code.isEmpty()) {
-            etName.setError("Code is required!");
-            etName.requestFocus();
+            etCode.setError("Code is required!");
+            etCode.requestFocus();
             return;
         }
         final String imageUrl = "";

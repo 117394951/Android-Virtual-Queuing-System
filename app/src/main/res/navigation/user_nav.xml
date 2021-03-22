@@ -20,9 +20,9 @@
 
     <fragment
         android:id="@+id/thirdFragment"
-        android:name="com.app.is4401.sociallysafe.User.cust_profile"
+        android:name="com.app.is4401.sociallysafe.User.User_Profile"
         android:label="fragment_cust_profile"
-        tools:layout="@layout/fragment_cust_profile" />
+        tools:layout="@layout/activity_user_profile" />
 
 
 </navigation>
