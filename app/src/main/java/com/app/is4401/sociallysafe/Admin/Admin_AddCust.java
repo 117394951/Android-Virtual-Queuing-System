@@ -13,9 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.app.is4401.sociallysafe.R;
-import com.app.is4401.sociallysafe.Model.Queue;
 import com.app.is4401.sociallysafe.Model.User;
+import com.app.is4401.sociallysafe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -32,11 +31,8 @@ public class Admin_AddCust extends AppCompatActivity {
     Spinner spNumGuestCust;
     TextView tvKey;
     Button btnAdd;
-    private FirebaseUser user;
-    Queue queue;
-    private DatabaseReference queueRef, custRef, newCustRef;
-    private FirebaseAuth firebaseAuth, newCustAuth, mAuth;
-    private DatabaseReference lastRef;
+    private DatabaseReference queueRef, custRef;
+    private FirebaseAuth firebaseAuth, newCustAuth;
 
 
     @Override
@@ -58,6 +54,8 @@ public class Admin_AddCust extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
+        //Linking my database inorder to create a new authorised user in-app, as another logged in user
+        //https://stackoverflow.com/questions/37094631/get-the-pushed-id-for-specific-value-in-firebase-android#:~:text=In%20Java%20%2D%20Android%20Studio%2C%20you,written%20to%20the%20db...&text=use%20push()%20to%20create,the%20Key%20for%20that%20record
         FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
                 .setDatabaseUrl("https://console.firebase.google.com/u/3/project/sociallysafe-f43b8/database/sociallysafe-f43b8/data")
                 .setApiKey("AIzaSyAnWJr2g4bDKrJYRqb7hBfNnwtanS7n8XY")
@@ -65,6 +63,7 @@ public class Admin_AddCust extends AppCompatActivity {
 
         try {
             FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "SociallySafe");
+            //This gives new created user access to database
             newCustAuth = FirebaseAuth.getInstance(myApp);
         } catch (IllegalStateException e) {
             newCustAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("SociallySafe"));
@@ -117,49 +116,6 @@ public class Admin_AddCust extends AppCompatActivity {
         final String imageUrl = "";
         final Boolean priority = false;
 
-
-        /**this is the code that works but not well
-         * going to try code below, autherise an new account and sign out of new.
-         */
-        //https://stackoverflow.com/questions/37094631/get-the-pushed-id-for-specific-value-in-firebase-android#:~:text=In%20Java%20%2D%20Android%20Studio%2C%20you,written%20to%20the%20db...&text=use%20push()%20to%20create,the%20Key%20for%20that%20record.
-//                    queueRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//
-//                            User upload = new User(name, email, mobile, imageUrl, numGuests, priority);
-//                            ArrayList<String> testUser = upload.getUser();
-//                            if (testUser != null) {
-//                                for (String s : testUser) {
-//                                    System.out.println("extra consumers" + s);
-//                                }
-//                            }
-//                            String key = custRef.push().getKey();
-//                            System.out.println("NEW CUSTOMER " + key);
-//                            custRef.push().setValue(upload);
-//                            Toast.makeText(Admin_AddCust.this, "Added User to the Queue", Toast.LENGTH_SHORT).show();
-//
-//
-//                            //Add this customer to queue
-//                            user = firebaseAuth.getCurrentUser();
-//
-//                            for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-//                                Queue queueInfo = childSnapshot.getValue(Queue.class);
-//                                queueInfo.queue.add(key);
-//                                queueRef.child(user.getUid()).setValue(queueInfo);
-//
-//
-//
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-
-
         newCustAuth.createUserWithEmailAndPassword(email, code)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
@@ -174,20 +130,21 @@ public class Admin_AddCust extends AppCompatActivity {
                             Toast.makeText(Admin_AddCust.this, "Registration Success",
                                     Toast.LENGTH_LONG).show();
 
+                            //Technically logging in as a new user
                             FirebaseUser newCust;
                             newCust = newCustAuth.getCurrentUser();
                             final String newCustId = newCust.getUid();
                             tvKey.setText(newCustId);
                             Boolean admin = false;
-                            User upload = new User(name, email, mobile, imageUrl, numGuests, priority,admin);
+                            String status = "In queue";
+                            User upload = new User(name, email, mobile, imageUrl, numGuests, priority, admin, status);
                             custRef.child(newCustId).setValue(upload);
                             Toast.makeText(Admin_AddCust.this, "New Customer Joined Queue ", Toast.LENGTH_SHORT).show();
 
                             etCode.setText(newCustId);
 
-
+                            //signing out as new user, to re-sign in the admin
                             newCustAuth.signOut();
-
 
                             final String newCustKey = tvKey.getText().toString();
                             Toast.makeText(Admin_AddCust.this, "Need to sign in to Verify Admin Id", Toast.LENGTH_SHORT).show();
@@ -195,42 +152,8 @@ public class Admin_AddCust extends AppCompatActivity {
                             intent.putExtra("CUSTID", newCustKey);
                             startActivity(intent);
                             finish();
-
-
-
-//                            Intent intent = new Intent(getApplicationContext(), UserUpdate.class);
-//                            intent.putExtra("FIRST NAME", etFName);
-//                            queueRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                    //add new customer to queue
-//                                    for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-//                                        Queue queueInfo = childSnapshot.getValue(Queue.class);
-//                                        queueInfo.queue.add(newCustKey);
-//                                        queueRef.child(user.getUid()).setValue(queueInfo);
-//                                    }
-//                                }
-//
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                }
-//                            });
-
-
                         }
-
                     }
-
-
                 });
-
-
-
-
     }
-
-
-
-                }
+}

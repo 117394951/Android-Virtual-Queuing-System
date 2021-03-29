@@ -8,9 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.app.is4401.sociallysafe.Admin.AdminManageQueue;
-import com.app.is4401.sociallysafe.Admin.Admin_Edit;
-import com.app.is4401.sociallysafe.Admin.Admin_QueueConfiguration;
 import com.app.is4401.sociallysafe.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -20,6 +17,7 @@ public class User_Main extends AppCompatActivity {
     public User_Main(){
         //empty constructor
     }
+    // code for navigation and fragment https://www.youtube.com/watch?v=tPV8xA7m-iw&t=838s
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

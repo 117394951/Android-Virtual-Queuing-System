@@ -133,6 +133,9 @@ User userInfo;
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Log.d(TAG, "Upload Customer Profile Image successful");
 
+// Retrieve Firebase Storage data of User
+// inspired by Youtube video by Nick Tivov 6th May 2020
+// https://www.youtube.com/watch?v=KY5vOVNqkGM
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                             while (!urlTask.isSuccessful()) ;
                             Uri imageUri = urlTask.getResult();
@@ -153,7 +156,9 @@ User userInfo;
                                         }
                                     });
 
-                            User userInfo = new User(getName, getEmail, getMobile, getimageURL, numGuests, priority, admin);
+                            String status = "In queue";
+
+                            User userInfo = new User(getName, getEmail, getMobile, getimageURL, numGuests, priority, admin, status);
                             databaseReference.child(user.getUid()).setValue(userInfo);
                             Toast.makeText(User_CreateProfile.this, "Information saved! Welcome to SociallySafe", Toast.LENGTH_LONG).show();
 
@@ -176,10 +181,10 @@ User userInfo;
                             Log.d(TAG, "Image Upload in progress");
                         }
                     });
-
+//END
         }
     }
-
+//Code same as image reference at bottom
     private void setLogoChooser() {
         ivLogo.setOnClickListener(new View.OnClickListener() {
             @Override

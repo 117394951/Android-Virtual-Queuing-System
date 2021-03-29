@@ -23,9 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-//Merc_QueueDisplay
-//this is behind manage queue, operate button
-//here is where you can put next customer etc . . . .
+
 public class Admin_OperateQueue extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
@@ -36,7 +34,6 @@ public class Admin_OperateQueue extends AppCompatActivity {
     private TextView c1, c2, c3, c4;
     public int len;
     Queue queueInfo;
-    String nextCustEmail, subject, message;
     private DatabaseReference queueDatabaseRef, customerDatabaseReference;
     private ImageView ivAdd;
 
@@ -47,27 +44,16 @@ public class Admin_OperateQueue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin__operate_queue);
 
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//
-//        View decorView = getWindow().getDecorView();
-//        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-//        decorView.setSystemUiVisibility(uiOptions);
-//        getSupportActionBar().hide();
-
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Admin_OperateQueue.this, AdminManageQueue.class));
                 finish();
             }
         });
 
         btnNext = findViewById(R.id.nextCustomer);
         queuedisplayrefreshButton = findViewById(R.id.queuedisplayrefresh);
-
         queuedisplayrefreshButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -92,18 +78,6 @@ public class Admin_OperateQueue extends AppCompatActivity {
 
         queueDatabaseRef = FirebaseDatabase.getInstance().getReference("Queue");
         customerDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
-
-//        ivAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Admin_OperateQueue.this, Admin_AddCust.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-
-
 
         queueDatabaseRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

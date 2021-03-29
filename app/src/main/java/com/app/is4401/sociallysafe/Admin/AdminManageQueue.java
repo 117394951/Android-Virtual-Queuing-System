@@ -9,8 +9,10 @@ import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +24,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.is4401.sociallysafe.R;
 import com.app.is4401.sociallysafe.Model.Queue;
+import com.app.is4401.sociallysafe.Model.StatusAdapter;
+import com.app.is4401.sociallysafe.Model.StatusItem;
+import com.app.is4401.sociallysafe.Model.User;
+import com.app.is4401.sociallysafe.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -60,6 +65,9 @@ private ImageView ivAdd;
     ImageView iv1, iv2, iv3, iv4, iv5, iv6, iv7, iv8, iv9, iv10, iv11,iv12, iv13,iv14,iv15,iv16,iv17,iv18,iv19,iv20, iv21,iv22,iv23,iv24,iv25,iv26,iv27,iv28,iv29,iv30, iv31,iv32,iv33,iv34,iv35,iv36,iv37,iv38,iv39,iv40;
 
     TextView party1, party2, party3, party4, party5, party6 ,party7,party8,party9,party10;
+
+    private ArrayList<StatusItem> mStatusList;
+    private Spinner spStatus1, spStatus2,spStatus3,spStatus4,spStatus5,spStatus6,spStatus7,spStatus8,spStatus9,spStatus10;
 
     String mobile1 = "";
     String mobile2 = "";
@@ -111,6 +119,16 @@ private ImageView ivAdd;
         super.onCreate(savedInstanceState);
         mNames = new ArrayList<>();
         mImageUrls = new ArrayList<>();
+        initList();
+    }
+
+    private void initList(){
+        mStatusList = new ArrayList<>();
+        mStatusList.add(new StatusItem("Queuing", R.drawable.spinner_queue));
+        mStatusList.add(new StatusItem("Contacted", R.drawable.spinner_contact));
+        mStatusList.add(new StatusItem("Late", R.drawable.spinner_late));
+
+
     }
 
     @Nullable
@@ -231,9 +249,52 @@ private ImageView ivAdd;
         iv40 = view.findViewById(R.id.imageView60);
         iv40.setVisibility(INVISIBLE);
 
+// YouTube video by Coding In Flow 16th December 2017
+// https://www.youtube.com/watch?v=GeO5F0nnzAw
+        StatusAdapter mAdpater1 = new StatusAdapter(getContext(), mStatusList);
+        spStatus1 = view.findViewById(R.id.spStatus1);
+        spStatus1.setVisibility(INVISIBLE);
+        spStatus1.setAdapter(mAdpater1);
+        StatusAdapter mAdpater2 = new StatusAdapter(getContext(), mStatusList);
+        spStatus2 = view.findViewById(R.id.spStatus2);
+        spStatus2.setVisibility(INVISIBLE);
+        spStatus2.setAdapter(mAdpater2);
+        StatusAdapter mAdpater3 = new StatusAdapter(getContext(), mStatusList);
+        spStatus3 = view.findViewById(R.id.spStatus3);
+        spStatus3.setVisibility(INVISIBLE);
+        spStatus3.setAdapter(mAdpater3);
+        StatusAdapter mAdpater4 = new StatusAdapter(getContext(), mStatusList);
+        spStatus4 = view.findViewById(R.id.spStatus4);
+        spStatus4.setVisibility(INVISIBLE);
+        spStatus4.setAdapter(mAdpater4);
+        StatusAdapter mAdpater5 = new StatusAdapter(getContext(), mStatusList);
+        spStatus5 = view.findViewById(R.id.spStatus5);
+        spStatus5.setVisibility(INVISIBLE);
+        spStatus5.setAdapter(mAdpater5);
+        StatusAdapter mAdpater6 = new StatusAdapter(getContext(), mStatusList);
+        spStatus6 = view.findViewById(R.id.spStatus6);
+        spStatus6.setVisibility(INVISIBLE);
+        spStatus6.setAdapter(mAdpater6);
+        StatusAdapter mAdpater7 = new StatusAdapter(getContext(), mStatusList);
+        spStatus7 = view.findViewById(R.id.spStatus7);
+        spStatus7.setVisibility(INVISIBLE);
+        spStatus7.setAdapter(mAdpater7);
+        StatusAdapter mAdpater8 = new StatusAdapter(getContext(), mStatusList);
+        spStatus8 = view.findViewById(R.id.spStatus8);
+        spStatus8.setVisibility(INVISIBLE);
+        spStatus8.setAdapter(mAdpater8);
+        StatusAdapter mAdpater9 = new StatusAdapter(getContext(), mStatusList);
+        spStatus9 = view.findViewById(R.id.spStatus9);
+        spStatus9.setVisibility(INVISIBLE);
+        spStatus9.setAdapter(mAdpater9);
+        StatusAdapter mAdpater10 = new StatusAdapter(getContext(), mStatusList);
+        spStatus10 = view.findViewById(R.id.spStatus10);
+        spStatus10.setVisibility(INVISIBLE);
+        spStatus10.setAdapter(mAdpater10);
+//END
 
-
-
+// Code to allow permission of SMS and Phone Calls
+// https://stackoverflow.com/questions/32742327/neither-user-10102-nor-current-process-has-android-permission-read-phone-state
         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE},
                 PackageManager.PERMISSION_GRANTED);
 
@@ -244,7 +305,7 @@ private ImageView ivAdd;
         } else {
             //TODO
         }
-
+//END
 
         c1 = view.findViewById(R.id.c1);
         c2 = view.findViewById(R.id.c2);
@@ -325,29 +386,57 @@ private ImageView ivAdd;
                                 if (queueInformation.queue.size() > 0) {
                                     customer1 = queueInformation.queue.get(0);
 
+                                    customerDatabaseReference.child(customer1).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
+
+
+                                                    UpdateStatus(id1, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     customerDatabaseReference.child(customer1).addListenerForSingleValueEvent(new ValueEventListener() {
 
                                         @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                                             iv1.setVisibility(INVISIBLE);
+
                                             if (dataSnapshot.child("name").exists()) {
+
+                                                spStatus1.setVisibility(VISIBLE);
                                                 cust_name1 = dataSnapshot.child("name").getValue().toString();
                                                 mobile1 = dataSnapshot.child("mobile").getValue().toString();
-
                                                 p1 = dataSnapshot.child("numGuests").getValue().toString();
                                                 iv31.setVisibility(VISIBLE);
                                                 party1.setText(p1);
-
-
                                                 iv21.setVisibility(VISIBLE);
                                                 id1 = dataSnapshot.getKey().toString();
                                                 iv21.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id1);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
+
 
                                                 cc1 = cust_name1;
 
@@ -388,7 +477,32 @@ private ImageView ivAdd;
 
                                 if (queueInformation.queue.size() > 1) {
                                     customer2 = queueInformation.queue.get(1);
+                                    customerDatabaseReference.child(customer2).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
 
+
+                                                    UpdateStatus(id2, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     customerDatabaseReference.child(customer2).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -398,6 +512,8 @@ private ImageView ivAdd;
 
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus2.setVisibility(VISIBLE);
+
                                                 cust_name2 = dataSnapshot.child("name").getValue().toString();
                                                 c2.setText(cust_name2);
                                                 cc2 = cust_name2;
@@ -409,6 +525,7 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id2);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
 
@@ -454,7 +571,32 @@ private ImageView ivAdd;
 
                                 if (queueInformation.queue.size() > 2) {
                                     customer3 = queueInformation.queue.get(2);
+                                    customerDatabaseReference.child(customer3).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
 
+
+                                                    UpdateStatus(id3, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     customerDatabaseReference.child(customer3).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -462,6 +604,7 @@ private ImageView ivAdd;
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus2.setVisibility(VISIBLE);
                                                 cust_name3 = dataSnapshot.child("name").getValue().toString();
                                                 mobile3 = dataSnapshot.child("mobile").getValue().toString();
                                                 c3.setText(cust_name3);
@@ -480,6 +623,8 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id3);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
 
@@ -518,12 +663,41 @@ private ImageView ivAdd;
                                     customer4 = queueInformation.queue.get(3);
 
 
+                                    customerDatabaseReference.child(customer4).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
+
+
+                                                    UpdateStatus(id4, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
                                     customerDatabaseReference.child(customer4).addListenerForSingleValueEvent(new ValueEventListener() {
 
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus4.setVisibility(VISIBLE);
+
                                                 cust_name4 = dataSnapshot.child("name").getValue().toString();
                                                 c4.setText(cust_name4);
                                                 mobile4 = dataSnapshot.child("mobile").getValue().toString();
@@ -548,6 +722,8 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id4);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
 
@@ -577,6 +753,32 @@ private ImageView ivAdd;
                                 if (queueInformation.queue.size() > 4) {
                                     customer5 = queueInformation.queue.get(4);
 
+                                    customerDatabaseReference.child(customer5).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
+
+
+                                                    UpdateStatus(id5, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     customerDatabaseReference.child(customer5).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -584,6 +786,8 @@ private ImageView ivAdd;
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus5.setVisibility(VISIBLE);
+
                                                 cust_name5 = dataSnapshot.child("name").getValue().toString();
                                                 c5.setText(cust_name5);
                                                 cc5 = cust_name5;
@@ -613,6 +817,8 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id5);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
                                                 System.out.println("myname" + cust_name5);
@@ -635,6 +841,32 @@ private ImageView ivAdd;
                                 if (queueInformation.queue.size() > 5) {
                                     customer6 = queueInformation.queue.get(5);
 
+                                    customerDatabaseReference.child(customer6).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
+
+
+                                                    UpdateStatus(id6, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     customerDatabaseReference.child(customer6).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -642,7 +874,11 @@ private ImageView ivAdd;
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus6.setVisibility(VISIBLE);
+
                                                 cust_name6 = dataSnapshot.child("name").getValue().toString();
+                                                spStatus6.setVisibility(VISIBLE);
+
                                                 c6.setText(cust_name6);
                                                 cc6 = cust_name6;
                                                 iv6.setVisibility(VISIBLE);
@@ -664,6 +900,8 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id6);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
 
@@ -694,6 +932,32 @@ private ImageView ivAdd;
                                 if (queueInformation.queue.size() > 6) {
                                     customer7 = queueInformation.queue.get(6);
 
+                                    customerDatabaseReference.child(customer7).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus7.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
+
+
+                                                    UpdateStatus(id7, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     customerDatabaseReference.child(customer7).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -701,6 +965,8 @@ private ImageView ivAdd;
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus7.setVisibility(VISIBLE);
+
                                                 cust_name7 = dataSnapshot.child("name").getValue().toString();
                                                 c7.setText(cust_name7);
                                                 cc7 = cust_name7;
@@ -731,6 +997,8 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id7);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
 
@@ -755,12 +1023,40 @@ private ImageView ivAdd;
                                     customer8 = queueInformation.queue.get(7);
 
 
+                                    customerDatabaseReference.child(customer8).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus8.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
+
+
+                                                    UpdateStatus(id8, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
                                     customerDatabaseReference.child(customer8).addListenerForSingleValueEvent(new ValueEventListener() {
 
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus8.setVisibility(VISIBLE);
+
                                                 cust_name8 = dataSnapshot.child("name").getValue().toString();
                                                 c8.setText(cust_name8);
                                                 cc8 = cust_name8;
@@ -792,6 +1088,8 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id8);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
 
@@ -815,6 +1113,32 @@ private ImageView ivAdd;
                                 if (queueInformation.queue.size() > 8) {
                                     customer9 = queueInformation.queue.get(8);
 
+                                    customerDatabaseReference.child(customer9).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus9.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
+
+
+                                                    UpdateStatus(id9, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     customerDatabaseReference.child(customer9).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -822,6 +1146,8 @@ private ImageView ivAdd;
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus9.setVisibility(VISIBLE);
+
                                                 cust_name9 = dataSnapshot.child("name").getValue().toString();
                                                 c9.setText(cust_name9);
                                                 cc9 = cust_name9;
@@ -851,6 +1177,8 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id9);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
 
@@ -874,6 +1202,32 @@ private ImageView ivAdd;
                                 if (queueInformation.queue.size() > 9) {
                                     customer10 = queueInformation.queue.get(9);
 
+                                    customerDatabaseReference.child(customer10).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            spStatus10.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    StatusItem clickedItem = (StatusItem) parent.getItemAtPosition(position);
+                                                    String clickedStatusName = clickedItem.getStatus();
+
+
+                                                    UpdateStatus(id10, clickedStatusName);
+
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     customerDatabaseReference.child(customer10).addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -881,6 +1235,7 @@ private ImageView ivAdd;
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             if (dataSnapshot.child("name").exists()) {
+                                                spStatus10.setVisibility(VISIBLE);
                                                 cust_name10 = dataSnapshot.child("name").getValue().toString();
                                                 c10.setText(cust_name10);
                                                 cc10 = cust_name10;
@@ -903,6 +1258,8 @@ private ImageView ivAdd;
                                                     @Override
                                                     public void onClick(View v) {
                                                         removeUser(id10);
+                                                        Toast.makeText(getContext(), "Removed From the Queue", Toast.LENGTH_SHORT).show();
+
                                                     }
                                                 });
                                                 iv20.setVisibility(VISIBLE);
@@ -937,6 +1294,7 @@ private ImageView ivAdd;
                 }
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -944,6 +1302,23 @@ private ImageView ivAdd;
         });
 
         return view;
+    }
+
+    private void UpdateStatus(final String id, final String clickedStatusName) {
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                customerDatabaseReference.child(id).child("status").setValue(clickedStatusName);
+                User userInfo = snapshot.getValue(User.class);
+                userInfo.setStatus(clickedStatusName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        customerDatabaseReference.child(id).addListenerForSingleValueEvent(valueEventListener);
     }
 
     private void removeUser(final String id) {
@@ -968,6 +1343,9 @@ private ImageView ivAdd;
 
     }
 
+// Youtube vidoe to call mobile number by Coding In Flow 25 Nov 2017
+// https://www.youtube.com/watch?v=UDwj5j4tBYg
+
     private void callMobile(String mobile) {
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
@@ -982,7 +1360,8 @@ private ImageView ivAdd;
 
     }
 
-
+//Send automatic SMS, Youtube video by ProgrammerWorld, 7th June 2019
+// https://www.youtube.com/watch?v=pajvuBZc2WA
 
     public void SendSMS(String mobile) {
 
@@ -992,7 +1371,10 @@ private ImageView ivAdd;
 
 
     }
+//END
 
+// Code to allow permission of SMS and Phone Calls
+// https://stackoverflow.com/questions/32742327/neither-user-10102-nor-current-process-has-android-permission-read-phone-state
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -1013,4 +1395,5 @@ private ImageView ivAdd;
                 break;
         }
     }
+//END
 }

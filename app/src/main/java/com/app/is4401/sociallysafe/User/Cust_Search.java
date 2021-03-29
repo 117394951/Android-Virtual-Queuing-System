@@ -93,6 +93,10 @@ public class Cust_Search extends AppCompatActivity {
     private void firebaseUserSearch(String searchText) {
         Toast.makeText(Cust_Search.this, "Started Search", Toast.LENGTH_SHORT).show();
 
+
+// Search Firebase Database with RecyclerAdpterView
+// Md Jamal 19 July 2020 YouTube video
+//https://www.youtube.com/watch?v=Pr4Jz5Lc5pM
         DatabaseReference queueRef = FirebaseDatabase.getInstance().getReference("Queue");
         Query fireSearchQuery = queueRef.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
 
@@ -133,7 +137,7 @@ public class Cust_Search extends AppCompatActivity {
 
         };
         mResultList.setAdapter(adpater);
-
+//END
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder {

@@ -82,7 +82,7 @@
                 android:layout_height="120dp"
                 android:layout_marginTop="9dp"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:contentDescription="@string/business_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +108,7 @@
                 android:layout_marginTop="8dp"
                 style="@style/profile_detail_toEdit"
                 android:duplicateParentState="false"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stall_desc_header" />
@@ -129,7 +130,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                style="@style/stall_desc_header"
+                android:gravity="center"
+                style="@style/profile_detail_toEdit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stall_location_header" />

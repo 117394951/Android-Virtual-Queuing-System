@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.app.is4401.sociallysafe.Login.FirebaseLogin;
 import com.app.is4401.sociallysafe.Model.Queue;
 import com.app.is4401.sociallysafe.R;
+import com.app.is4401.sociallysafe.User.User_Main;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +37,7 @@ import static android.view.View.INVISIBLE;
 
 public class Admin_Edit extends Fragment {
 
-    Button btnDrop, btnSignOut, btnUpdate, btnCancel;
+    Button btnDrop, btnSignOut, btnUpdate, btnCancel, btnSwitch;
     Bitmap bitmap;
     Switch sw;
     EditText etName, etLocation, etDesc, etAvgTime;
@@ -67,7 +68,15 @@ public class Admin_Edit extends Fragment {
         etDesc = view.findViewById(R.id.etDesc);
         etAvgTime = view.findViewById(R.id.etAveWait);
         ivLogo = view.findViewById(R.id.imageView2);
+        btnSwitch = view.findViewById(R.id.btnSwitch);
 
+        btnSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), User_Main.class));
+                getActivity().finish();
+            }
+        });
 
         queueRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -134,15 +143,14 @@ public class Admin_Edit extends Fragment {
         });
     }
 
+//Update Code adapted from a Youtube video https://www.youtube.com/watch?v=L0IIMlJggns, by CodingWithTea 26 Feb 2020
     private void setBtnUpdate() {
         if (isNameChanged() || isLocationChanged() || isDescriptionChanged() || isAvgWaitChanged()) {
-            Toast.makeText(getContext(), "Data Updated", Toast.LENGTH_LONG).show();
             updateDetails();
-        } else {
-            Toast.makeText(getContext(), "Data is the same", Toast.LENGTH_LONG).show();
         }
 
     }
+
 
     void updateDetails() {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -158,11 +166,15 @@ public class Admin_Edit extends Fragment {
                 queueRef.child(user.getUid()).child("desc").setValue(desc);
                 queueRef.child(user.getUid()).child("avewaiting").setValue(aveWait);
 
+                Toast.makeText(getContext(), "Queue Updated", Toast.LENGTH_SHORT).show();
+
 
 
             }
         });
     }
+
+//END
 
     private boolean isAvgWaitChanged() {
         String _avgWait = queueRef.child(user.getUid()).child("avewaiting").toString();
@@ -219,6 +231,7 @@ public class Admin_Edit extends Fragment {
                     if (imageUrl.isEmpty()) {
                         Toast.makeText(getContext(), "error loading image", Toast.LENGTH_LONG).show();
                     } else {
+
                         //download from firebase reference
                         new GetImageFromURL(ivLogo).execute(imageUrl);
                     }

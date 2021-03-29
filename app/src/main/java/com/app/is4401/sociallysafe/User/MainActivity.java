@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
@@ -46,19 +45,11 @@ public class MainActivity extends Fragment
         //implements ActivityCompat.OnRequestPermissionsResultCallback
 {
 
-    /**
-     * https://www.geeksforgeeks.org/how-to-populate-recyclerview-with-firebase-data-using-firebaseui-in-android-studio/
-     */
-
-
     private static final String TAG = "* MainActivity";
 
-    Button btnJoinQ, btnMyQueue, btnSearch;
-    ImageView ivProfile, ivIcon;
+    Button btnSearch;
     RecyclerView list;
     DatabaseReference queueRef, custRef;
-    Context context;
-    Toolbar toolbar;
     private FirebaseAuth mAuth;
     private  FirebaseUser user;
 
@@ -87,6 +78,9 @@ public class MainActivity extends Fragment
 
             }
         });
+
+//How to populate RecyclerViewAdpater with FirebaseDatabase
+// https://www.geeksforgeeks.org/how-to-populate-recyclerview-with-firebase-data-using-firebaseui-in-android-studio/
 
         list = view.findViewById(R.id.recycler1);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -132,6 +126,7 @@ public class MainActivity extends Fragment
 
 
         return view;
+//END
     }
 
 
@@ -170,6 +165,7 @@ public class MainActivity extends Fragment
             final ImageView user_image = view.findViewById(R.id.queueImage);
             final TextView qNumPeople = view.findViewById(R.id.queueNumPeople);
             final Button joinQ = view.findViewById(R.id.joinQ_recycler);
+            final TextView tvAlready = view.findViewById(R.id.tvAlready);
 
             name.setText(queueName);
             qNumPeople.setText(numPeople);
@@ -199,13 +195,15 @@ public class MainActivity extends Fragment
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.hasChild("adminId")) {
-                        joinQ.setClickable(false);
-                        joinQ.setBackgroundResource(R.drawable.already_joined);
-                        joinQ.setText("Already Q-ing!");
+//                        joinQ.setClickable(false);
+//                        joinQ.setBackgroundResource(R.drawable.already_joined);
+//                        joinQ.setText("Already Q-ing!");
+                        joinQ.setVisibility(View.INVISIBLE);
                     } else {
-                        joinQ.setClickable(true);
-                        joinQ.setBackgroundResource(R.drawable.primary_join_btn);
-                        joinQ.setText("Join Q!");
+//                        joinQ.setClickable(true);
+//                        joinQ.setBackgroundResource(R.drawable.primary_join_btn);
+//                        joinQ.setText("Join Q!");
+                        joinQ.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -215,7 +213,7 @@ public class MainActivity extends Fragment
                 }
             });
 
-//            //User priority code
+//            //User priority code didnt use in the end
 //            customerRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
 //                public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -263,31 +261,6 @@ public class MainActivity extends Fragment
                                     showGuestDialog(queueInfo, adminId);
                                 }
                                 qNumPeople.setText(String.valueOf(queueInfo.getNumPeople()));
-//
-//
-//
-//                                if(queueInfo.queue.contains(user.getUid())){
-//                                    Log.d("Join Queue", "Already in queue.");
-//                                    Toast.makeText(getContext(), "Already in this queue!", Toast.LENGTH_SHORT).show();
-//                                }
-//                                else {
-//                                    if (priority.equals("true")) {
-//                                        queueInfo.queue.add(0, user.getUid());
-//                                        showGuestDialog();
-//                                    } else {
-//                                        queueInfo.queue.add(user.getUid());
-//                                        showGuestDialog();
-//                                    }
-//
-////                                    queueRef.child(adminId).setValue(queueInfo);
-////                                    customerRef.child(user.getUid()).child("adminId").setValue(adminId);
-//////                                    customerRef.child(user.getUid()).child("NumGuests").setValue(partySize);
-////                                    qNumPeople.setText(String.valueOf(queueInfo.getNumPeople()));
-////                                    Log.d(TAG, "adding customer to queue");
-////
-////                                    Toast.makeText(getContext(), "Joined Queue!", Toast.LENGTH_SHORT).show();
-
-//                                }
                             }
                         }
 
@@ -306,7 +279,8 @@ public class MainActivity extends Fragment
 
         private void showGuestDialog(final Queue queueInfo, final String adminId) {
 
-
+// Alert Dialog pop-up
+// Code adpater from Michael Gleeson code from Lecture in IS4447SQLNotesAdpater
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             final View view = layoutInflater.inflate(R.layout.numguests_dialog, null);
 
@@ -371,7 +345,7 @@ public class MainActivity extends Fragment
             });
         }
     }
-
+//END
 
     ///**
 // * code to download image

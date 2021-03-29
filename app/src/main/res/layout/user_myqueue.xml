@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/corkcity1"
     android:orientation="vertical">
 
     <LinearLayout
@@ -67,6 +66,7 @@
                     android:id="@+id/imageView62"
                     android:layout_width="180dp"
                     android:layout_height="138dp"
+                    android:scaleType="fitXY"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
 
@@ -167,6 +167,7 @@
 
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"

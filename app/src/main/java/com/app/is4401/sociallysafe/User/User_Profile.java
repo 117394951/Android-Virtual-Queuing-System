@@ -211,6 +211,7 @@ private ImageView btnBack;
                        });
 
                custRef.child(user.getUid()).child("mobile").setValue(mobile.getText().toString());
+               Toast.makeText(getContext(),"Updated", Toast.LENGTH_SHORT).show();
            }
        });
 

@@ -62,6 +62,8 @@ public class FirebaseRegister extends AppCompatActivity {
             return;
         }
 
+// YouTube video by Code With Mazn July 7,2020
+// https://www.youtube.com/watch?v=Z-RE1QuUWPg&t=37s
         firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -84,6 +86,6 @@ public class FirebaseRegister extends AppCompatActivity {
                 }
             }
         });
-
+//END
     }
 }

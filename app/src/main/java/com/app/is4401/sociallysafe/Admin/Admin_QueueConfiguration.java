@@ -37,7 +37,7 @@ import static android.view.View.VISIBLE;
 public class Admin_QueueConfiguration extends Fragment {
 
     private Button btnCreateQ;
-    TextView tvName, waitTime, queueSize, tv1, tv20,tv23, location, description;
+    TextView tvName, waitTime, queueSize, tv1, tv20,tv23, location, description, descHeader, locHeader;
     ImageView ivLogo, iv2, ivReview;
     Bitmap bitmap;
     SwitchCompat swOnline;
@@ -62,6 +62,8 @@ public class Admin_QueueConfiguration extends Fragment {
         imageRef = queueRef.child("imageUrl");
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        locHeader = view.findViewById(R.id.stall_location_header);
+        locHeader.setVisibility(View.INVISIBLE);
         tv20 = view.findViewById(R.id.textView20);
         tv20.setVisibility(View.INVISIBLE);
         tv23 = view.findViewById(R.id.textView23);
@@ -83,6 +85,8 @@ public class Admin_QueueConfiguration extends Fragment {
         description = view.findViewById(R.id.etDescription);
         description.setVisibility(View.INVISIBLE);
         btnCreateQ = view.findViewById(R.id.btnCreateQ);
+        descHeader = view.findViewById(R.id.stall_desc_header);
+        descHeader.setVisibility(View.INVISIBLE);
 
 
         //turn queue online or offline
@@ -119,20 +123,6 @@ public class Admin_QueueConfiguration extends Fragment {
             }
         });
 
-//        queueRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.child("Online").getValue().equals(true)) {
-//                    swOnline.setChecked(true);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
 
         //only having create queue button appear when the admin has no queue availible
         queueRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -153,6 +143,8 @@ public class Admin_QueueConfiguration extends Fragment {
                             ivLogo.setVisibility(View.VISIBLE);
                             swOnline.setVisibility(View.VISIBLE);
                             queueSize.setVisibility(View.VISIBLE);
+                            descHeader.setVisibility(View.VISIBLE);
+                            locHeader.setVisibility(View.VISIBLE);
 
 
 

@@ -6,6 +6,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,10 +27,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static android.view.View.INVISIBLE;
+
 public class FirebaseLogin extends AppCompatActivity {
 
     private Button btnLogin, btnRegister;
     private EditText etEmail, etPassword;
+    private TextView tvHeader;
     private FirebaseAuth mAuth;
     private DatabaseReference custRef;
     User userInfo;
@@ -42,6 +46,8 @@ public class FirebaseLogin extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
+        tvHeader = findViewById(R.id.registerHeader);
+        tvHeader.setVisibility(INVISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
 

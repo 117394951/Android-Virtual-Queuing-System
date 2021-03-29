@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/corkcity1">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
     android:layout_width="match_parent"
@@ -33,14 +32,22 @@
     </LinearLayout>
 
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/search_layout2"
+    android:orientation="vertical"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:padding="12dp">
+
 
         <LinearLayout
             android:id="@+id/relative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_margin="8dp"
             android:background="@drawable/seach_layout"
             android:backgroundTint="@color/colorWhite"
             android:orientation="vertical">
@@ -49,7 +56,6 @@
                 android:id="@+id/stall_image_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:padding="12dp"
                 tools:ignore="ExtraText">
 
@@ -194,7 +200,7 @@
                     style="@style/profileButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/round_button"
                     android:text="Update Details"
@@ -217,6 +223,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+</LinearLayout>
 
         <Button
             android:id="@+id/btnDrop"
@@ -239,6 +246,19 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Sign Out"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btnSwitch"
+            style="@style/joinQ"
+            android:background="@drawable/dark_round"
+            android:layout_width="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Switch to User"
             android:layout_marginTop="8dp"/>
     </LinearLayout>
 </ScrollView>

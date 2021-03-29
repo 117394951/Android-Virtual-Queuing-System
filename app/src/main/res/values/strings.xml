@@ -20,6 +20,12 @@
         <item>10</item>
     </string-array>
 
+    <string-array name="status">
+        <item>@drawable/spinner_queue</item>
+        <item>@drawable/spinner_contact</item>
+        <item>@drawable/spinner_late</item>
+    </string-array>
+
     <string name="title_activity_confirmation">Confirmation</string>
     <string name="leave_queue">Leave Queue</string>
     <string name="retrieve_data">Retrieve Data</string>

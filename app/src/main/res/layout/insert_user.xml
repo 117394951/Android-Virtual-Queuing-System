@@ -192,6 +192,7 @@
                 android:layout_marginBottom="8dp"
                 android:ellipsize="start"
                 android:gravity="center"
+                android:inputType="textPassword"
                 android:hint="Code:"
                 android:textColor="@color/colorGrey"
                 app:layout_constraintEnd_toEndOf="parent"

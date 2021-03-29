@@ -9,7 +9,7 @@ public class User {
 
     //Alternative to getter and setter methods below
     //These will be my fields in the database, they are JSON keys
-    private String Name, Email, Mobile, imageUrl, NumGuests;
+    private String Name, Email, Mobile, imageUrl, NumGuests, Status;
     private Long time;
     private boolean priority = false, admin = false;
     public ArrayList<String> user;
@@ -24,9 +24,10 @@ public class User {
         this.NumGuests = "";
         this.priority = false;
         this.admin = false;
+        this.Status = "In Queue";
     }
 
-    public User(String Name, String Email, String Mobile, String imageUrl, String NumGuests, Boolean priority, Boolean admin) {
+    public User(String Name, String Email, String Mobile, String imageUrl, String NumGuests, Boolean priority, Boolean admin, String status) {
         this.Name = Name;
         this.Email = Email;
         this.Mobile = Mobile;
@@ -35,8 +36,17 @@ public class User {
 //        this.time = time;
         this.priority = priority;
         this.admin = admin;
+        this.Status = status;
         user = new ArrayList<>();
 
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 
     public boolean isAdmin() {

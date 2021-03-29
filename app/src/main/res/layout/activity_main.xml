@@ -38,8 +38,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/ivSearch"
             android:text="Search &#62;"
+            android:layout_marginTop="8dp"
             style="@style/floatJoinQ"
-            android:background="@drawable/round_button"
+            android:background="@drawable/dark_round"
             android:src="@drawable/ic_baseline_search_24" />
 
     </LinearLayout>

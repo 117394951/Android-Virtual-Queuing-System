@@ -5,14 +5,15 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.app.is4401.sociallysafe.R;
 import com.app.is4401.sociallysafe.Model.Queue;
+import com.app.is4401.sociallysafe.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,9 +25,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static android.view.View.INVISIBLE;
+
 public class VerifyLogin extends AppCompatActivity {
 
     EditText etEmail, etPassword;
+    TextView header;
     Button btnLogin, btnRegister;
     private FirebaseAuth mAuth;
    String custId;
@@ -37,9 +41,11 @@ public class VerifyLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_login);
 
+        header = findViewById(R.id.loginHeader);
+        header.setVisibility(INVISIBLE);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
-        btnRegister.setVisibility(View.INVISIBLE);
+        btnRegister.setVisibility(INVISIBLE);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         mAuth = FirebaseAuth.getInstance();
@@ -82,7 +88,7 @@ public class VerifyLogin extends AppCompatActivity {
             return;
         }
 
-
+        //Login code same as Firebase Login class
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

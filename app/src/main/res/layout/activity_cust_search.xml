@@ -50,19 +50,9 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints">
 
-            <!--SearchView
-            android:id="@+id/cme_editTxt_SearchBar"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/seach_layout"
-            android:queryHint="Queue ID / Name"
-            android:searchHintIcon="@null"
-            android:iconifiedByDefault="false"
-            android:searchIcon="@null"
-             /-->
             <EditText
                 android:id="@+id/testcme_editTxt_SearchBar"
-                android:layout_width="137dp"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="7"

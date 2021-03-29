@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -38,7 +39,9 @@ public class User_MyQueues extends Fragment {
     private Button btnDropQ, btnRefresh;
     private FirebaseUser user;
     private ImageView ivLogo, ivProfile, btnBack;
-    public int len;
+    private ImageButton map;
+    int len;
+    private
     Queue queue;
     private DatabaseReference queueRef, custRef;
     private Switch notificationEnabled;

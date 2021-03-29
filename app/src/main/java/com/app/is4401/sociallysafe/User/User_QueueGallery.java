@@ -100,6 +100,8 @@ public class User_QueueGallery extends AppCompatActivity {
       TextView location = findViewById(R.id.stall_location);
       location.setText(queueLocation);
 
+//YouTube video to launch Google maps
+// https://www.youtube.com/watch?v=VVYaqod9In4
       ImageButton map = findViewById(R.id.mapButton);
       map.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -188,7 +190,7 @@ public class User_QueueGallery extends AppCompatActivity {
 
    }
 
-
+// Same as MainActivity class reference
    private void showGuestDialog(final Queue queue, final String admin_id) {
       LayoutInflater layoutInflater = LayoutInflater.from(getBaseContext());
       final View view = layoutInflater.inflate(R.layout.numguests_dialog, null);

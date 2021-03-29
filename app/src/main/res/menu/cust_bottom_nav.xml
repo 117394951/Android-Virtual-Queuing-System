@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="My Queues"
+        android:title="My Queue"
         android:id="@+id/firstFragment"
         android:icon="@drawable/ic_baseline_people_outline_24"/>
 
